@@ -1,0 +1,68 @@
+
+
+service: fotorgasm-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  # memorySize: 128 # set the maximum memory of the Lambdas in Megabytes
+  timeout: 10 # the timeout is 10 seconds (default is 6 seconds)
+  stage: dev # setting the env stage to dev, this will be visible in the routes
+  region: ap-southeast-1
+
+layers:
+  fotorgasmLayer:
+    path: layers
+  
+
+functions:
+  create:
+    handler: createHandler.create # point to exported create function is handler.js
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  getOne:
+    handler: getOneHandler.getOne
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts/{id} # path will be domain.name.com/dev/posts/1
+          method: get
+          cors: true
+  getAll:
+    handler: getAllHandler.getAll
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts
+          method: get
+          cors: true
+  update:
+    handler: updateHandler.update
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts/{id}
+          method: put
+          cors: true
+  delete:
+    handler: deleteHandler.deletePost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts/{id}
+          method: delete
+          cors: true
+
+# plugins:
+#   - serverless-offline # adding the plugin to able to run the offline emulation
