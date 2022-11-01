@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const PostSchema = new mongoose.Schema({
     postType:{
         type: String,
-        // require: true
+        require: true
     },
     title:{
         type: String,
@@ -12,7 +12,7 @@ const PostSchema = new mongoose.Schema({
     },
     slug:{
         type: String,
-        // require: true,
+        require: true,
         unique: true
     },
     desc:{
@@ -21,27 +21,15 @@ const PostSchema = new mongoose.Schema({
     },
     coverPhoto:{
         type: String,
-        required: false
-    },
-    username:{
-        type: String,
-        // required: true
-    },
-    authorname:{
-        type: String,
-        // required: true
+        required: true
     },
     photographer:{
         type: String,
         required: false
     },
-    section:{
-        type: String,
-        // required: true
-    },
     categories:{
         type: Array,
-        // required: true
+        required: true
     },
     tag:{
         type: String,
@@ -49,7 +37,7 @@ const PostSchema = new mongoose.Schema({
     },
     content:{
         type: String,
-        // required: true
+        required: true
     }
 },{timestamps: true});
 

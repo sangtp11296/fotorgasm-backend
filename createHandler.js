@@ -1,5 +1,4 @@
 'use strict';
-// import {connectToDatabase} from './connectDB.js'
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js'
 import {Post} from '/opt/nodejs/database/models/Post.js';
 import dotenv from '/opt/nodejs/node_modules/dotenv/lib/main.js'
