@@ -11,15 +11,20 @@ provider:
   timeout: 10 # the timeout is 10 seconds (default is 6 seconds)
   stage: dev # setting the env stage to dev, this will be visible in the routes
   region: ap-southeast-1
-
+  environment:
+    fotorgasmImageUploadBucket: ${self:custom.fotorgasmImageUploadBucket}
+    region: ${self:provider.region}
 layers:
   fotorgasmLayer:
     path: layers
   
+custom:
+  bucketName: fotorgasm-backend-bucket
+  fotorgasmImageUploadBucket: fotorgasm-image-upload-bucket
 
 functions:
   create:
-    handler: createHandler.create # point to exported create function is handler.js
+    handler: lambdas/createHandler.create # point to exported create function is handler.js
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -28,7 +33,7 @@ functions:
           method: post
           cors: true
   getOne:
-    handler: getOneHandler.getOne
+    handler: lambdas/getOneHandler.getOne
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -37,7 +42,7 @@ functions:
           method: get
           cors: true
   getAll:
-    handler: getAllHandler.getAll
+    handler: lambdas/getAllHandler.getAll
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -46,7 +51,7 @@ functions:
           method: get
           cors: true
   update:
-    handler: updateHandler.update
+    handler: lambdas/updateHandler.update
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -55,7 +60,7 @@ functions:
           method: put
           cors: true
   delete:
-    handler: deleteHandler.deletePost
+    handler: lambdas/deleteHandler.deletePost
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -63,6 +68,22 @@ functions:
           path: posts/{id}
           method: delete
           cors: true
+  imageUpload:
+    handler: lambdas/imageUpload.handler # point to exported create function is handler.js
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: image-upload # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
 
+resources:
+  Resources:
+    FotorgasmImageUploadBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fotorgasmImageUploadBucket}
+        AccessControl: PublicRead
 # plugins:
 #   - serverless-offline # adding the plugin to able to run the offline emulation

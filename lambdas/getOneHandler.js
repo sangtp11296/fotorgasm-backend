@@ -2,7 +2,7 @@
 import {connectToDatabase}  from '/opt/nodejs/functions/connectDB.js';
 import {Post} from '/opt/nodejs/database/models/Post.js';
 import dotenv from '/opt/nodejs/node_modules/dotenv/lib/main.js'
-dotenv.config({ path: './variables.env' });
+dotenv.config({ path: '../variables.env' });
 
 export const getOne = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
