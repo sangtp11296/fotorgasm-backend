@@ -5,7 +5,6 @@ mongoose.Promise = global.Promise;
 let isConnected = null;
 
 export const connectToDatabase = async () => {
-    // context.callbackWaitsForEmptyEventLoop = false;
 
     if (isConnected == null){
         console.log('=> using new database connection')
