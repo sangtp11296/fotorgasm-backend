@@ -1,0 +1,124 @@
+.gridBlock{
+    background-color: var(--surface-04);
+    border-radius: 15px;
+}
+.menuContainer{
+    grid-column: span 2;
+    grid-row: span 9;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+.menuContainer > div{
+    padding-left: 15%;
+    padding-top: 15%;
+    padding-bottom: 15%;
+    width: 100%;
+}
+.brandName{
+    position: relative;
+    display: block;
+    height: 80px;
+    width: 100%;
+    margin-top: 100px;
+    transition: all .2s;
+}
+.logoBrand{
+    object-fit: contain;
+}
+.mainMenu ul{
+    color: var(--on-surface);
+    list-style: none;
+}
+.mainMenu ul li{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.iconContainer{
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.iconContainer svg{
+    height: 30px;
+    width: 30px;
+    transition: all .2s ease-in-out;
+}
+.mainMenu ul{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: all .2s;
+
+}
+.mainMenu ul li span{
+    transition: all .2s ease-in-out;
+    font-family: 'Neue Helvetica';
+    font-size: 15px;
+    font-weight: 400px;
+    padding-left: 10px;
+}
+.logOut{
+    opacity: .7;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all .3s ease-in-out;
+}
+.logOut:hover{
+    opacity: 1;
+    transition: all .3s ease-in-out;
+}
+.logOut div{
+    width: 30px;
+    display: flex;
+    align-items: center;
+}
+.logOut span{
+    font-family: 'Neue Helvetica';
+    color: var(--on-background);
+    font-size: 15px;
+    font-weight: 400px;
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 1540px) {
+    .brandName{
+        position: relative;
+        display: block;
+        height: 60px;
+        width: 100%;
+        margin-top: 100px;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .menuContainer{
+        grid-column: span 1;
+    }
+    .brandName{
+        height: 80px;
+        width: 100%;
+        margin-top: 50px;
+    }
+    .menuContainer > div{
+        padding: 0 !important;
+    }
+    .mainMenu ul{
+        align-items: center;
+    }
+    .logOut{
+        margin-bottom: 50px;
+        justify-content: center;
+        align-items: center;
+    }
+}
