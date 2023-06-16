@@ -5,7 +5,7 @@
     box-sizing: border-box;
     font-family: 'Neue Helvetica';
     font-weight: 400;
-    line-height: 1.1rem;
+    /* line-height: 1.1rem; */
 
     /* font-family: 'Baloo 2', cursive;
       font-family: 'Baloo Tammudu 2', cursive;
@@ -28,42 +28,42 @@
     src: url(../public/assets/fonts/NeueHelvatica/helvetica-neue-regular.ttf);
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'Neue Helvetica';
     src: url(../public/assets/fonts/NeueHelvatica/helvetica-neue-light.ttf);
     font-weight: 300;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'Neue Helvetica';
     src: url(../public/assets/fonts/NeueHelvatica/helvetica-neue-medium.ttf);
     font-weight: 500;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'Neue Helvetica';
     src: url(../public/assets/fonts/NeueHelvatica/helvetica-neue-ultra-light.ttf);
     font-weight: 200;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'Neue Helvetica';
     src: url(../public/assets/fonts/NeueHelvatica/helvetica-neue-bold.ttf);
     font-weight: 700;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'Neue Helvetica';
     src: url(../public/assets/fonts/NeueHelvatica/helvetica-neue-italic.ttf);
     font-weight: 400;
     font-style: italic;
-    font-display: swap;
+    font-display: fallback;
   }
   *, *::before, *::after {
   border-width: 0;

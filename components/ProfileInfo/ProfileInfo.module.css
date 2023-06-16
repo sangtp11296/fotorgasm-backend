@@ -1,0 +1,201 @@
+.profileInfo{
+    margin-top: 35vh;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 40px;
+    justify-content: center;
+    align-items: center;
+}
+.profileAvatar{
+    /* margin-right: 30px; */
+    width: 250px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+.logoBrand{
+    height: 130px;
+    width: 130px;
+    border-radius: 100%;
+}
+.profileMain{
+    flex-grow: 3;
+    flex-basis: 30px;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    line-height: 1.1rem;
+}
+.profileName{
+    color: var(--on-background);
+    font-family: 'Neue Helvetica';
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.profileName h1{
+    display: inline;
+    font-size: 20px;
+}
+.profileName span{
+    font-weight: 300;
+    font-size: 18px;
+    margin-right: 2px;
+}
+.profileDesc h3{
+    font-family: 'Neue Helvetica';
+    font-weight: 700;
+    font-style: normal ;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.profileDesc{
+    color: var(--on-background);
+    font-family: 'Neue Helvetica';
+    font-weight: 300;
+    font-size: 14px;
+}
+.hashTag{
+    text-decoration: none;
+    color: var(--hashtag);
+}
+.socialMenu{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.socialMenu a{
+    margin-right: 10px;
+}
+.socialMenu svg{
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    fill: var(--on-background-matte);
+    transition: all .2s ease-out;
+}
+.socialMenu svg:hover{
+    fill: var(--on-background);
+    transition: all .2s ease-out;
+}
+
+.profileAvatar .ringOne{
+    position: absolute;
+    fill:none;
+    stroke:url('#linearRing1');
+    stroke-linecap: round;
+    stroke-width: 3;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: stroke-draw 1.5s ease-in 1 normal;
+} 
+@keyframes stroke-draw {
+    0%{
+        stroke-dasharray: 8;
+        /* transform: rotate(-200deg); */
+    }
+    100%{
+        fill: transparent;
+        stroke-dasharray: 1;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .profileInfo{
+        margin-bottom: 20px;
+    }
+    .profileMain{
+        line-height: unset;
+    }
+    .profileAvatar{
+        width: 150px;
+        height: 100px;
+    }
+    .profileAvatar svg{
+        width: 100px;
+        height: 100px;
+    }
+    .profileAvatar img{
+        width: 87px;
+        height: 87px;
+    }
+    .profileName{
+        margin-bottom: 5px;
+    }
+    .profileName h1{
+        font-size: 16px;
+    }
+    .profileName span{
+        font-size: 15px;
+    }
+    .profileDesc h3{
+        margin-bottom: 5px;
+        font-size: 10px;
+    }
+    .profileDesc{
+        font-size: 10px;
+    }
+    .socialMenu{
+        margin-top: 5px;
+    }
+    .socialMenu a{
+        margin-right: 7px;
+    }
+    .socialMenu svg{
+        height: 18px;
+        width: 18px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .profileInfo{
+        margin-bottom: 20px;
+        width: 320px;
+    }
+    .profileMain{
+        line-height: unset;
+    }
+    .profileAvatar{
+        margin-right: 10px;
+        width: 80px;
+        height: 80px;
+    }
+    .profileAvatar svg{
+        width: 80px;
+        height: 80px;
+    }
+    .profileAvatar img{
+        width: 70px;
+        height: 70px;
+    }
+    .profileName{
+        margin-bottom: 5px;
+    }
+    .profileName h1{
+        font-size: 12px;
+    }
+    .profileName span{
+        font-size: 11px;
+    }
+    .profileDesc h3{
+        margin-bottom: 1px;
+        font-size: 9px;
+    }
+    .profileDesc{
+        font-size: 8px;
+    }
+    .socialMenu{
+        margin-top: 2px;
+    }
+    .socialMenu a{
+        margin-right: 5px;
+    }
+    .socialMenu svg{
+        height: 12px;
+        width: 12px;
+    }
+}

@@ -1,0 +1,40 @@
+.slick-slider{
+    position: relative;
+}
+.slick-list{
+    overflow: hidden;
+}
+.slick-track{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+.custom-arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--surface-06);
+    cursor: pointer;
+}
+.custom-arrow i{
+    color: var(--on-background);
+}
+.custom-arrow:hover{
+    background-color: var(--on-background);
+}
+.custom-arrow:hover i{
+    color: var(--background-color);
+}
+.custom-prev-arrow{
+    left: -25px;
+}
+.custom-next-arrow{
+    right: -25px;
+}

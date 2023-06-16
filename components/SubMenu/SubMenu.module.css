@@ -1,0 +1,64 @@
+.postCatalog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--on-separate);
+    width: 100%;
+    height: 52px;
+}
+.postSort{
+    width: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 60px;
+    cursor: pointer;
+    height: inherit;
+    margin-top: -1px;
+}
+.postSort span{
+    font-family: 'Neue Helvetica';
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-left: 6px;
+}
+.postSort:last-child{
+    margin-right: 0;
+}
+.postSort i{
+    scale: .8;
+}
+.postSort svg{
+    height: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .postCatalog{
+        height: 25px;
+    }
+    .postSort{
+        width: 50px;
+        margin-right: 20px;
+    }
+    .postSort span{
+        font-size: 8px;
+    }
+    .postSort svg{
+        height: 15px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .postCatalog{
+        height: 20px;
+    }
+    .postSort{
+        width: 40px;
+        margin-right: 10px;
+    }
+    .postSort span{
+        font-size: 7px;
+    }
+    .postSort svg{
+        height: 10px;
+    }
+}

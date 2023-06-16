@@ -8,9 +8,12 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode}) => {
   return (
     <html lang='en'>
-        <body>
-            {children}
-        </body>
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+      </head>
+      <body suppressHydrationWarning={true} >
+          {children}
+      </body>
     </html>
   )
 }
