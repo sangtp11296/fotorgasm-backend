@@ -1,0 +1,14 @@
+.gridBlock{
+    background-color: var(--surface-04);
+    border-radius: 15px;
+}
+.chatNotiContainer{
+    grid-column: 6 / 9;
+    grid-row: 2 / 10;
+}
+
+@media screen and (max-width: 1355px) {
+    .chatNotiContainer{
+        grid-column: 7 / 11;
+    }
+}

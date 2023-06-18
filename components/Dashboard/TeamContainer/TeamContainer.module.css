@@ -1,0 +1,129 @@
+.teamContainer{
+    grid-column: 3 / 6;
+    grid-row: 6 / 10;
+}
+.gridBlock{
+    background-color: var(--surface-04);
+    border-radius: 15px;
+}
+.teamHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.teamHeader h1{
+    font-family: 'Neue Helvetica';
+    font-size: 23px;
+    font-weight: 600;
+    color: var(--on-background);
+    letter-spacing: 1px;
+}
+.teamCount{
+    background-color: var(--surface-08);
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary);
+}
+.teamCount div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.scheduleContainer{
+    grid-column: 3 / 6;
+    grid-row: 6 / 10;
+}
+.teamMembers{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 85%;
+    height: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
+    overflow-y: scroll;
+    border-bottom: 2px solid var(--on-separate);
+}
+.teamMembers::-webkit-scrollbar{
+    display: none;
+}
+.memberContainer{
+    display: flex;
+    flex-direction: row;
+}
+.memberContainer img{
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.memberName{
+    font-family: 'Neue Helvetica';
+    color: var(--on-background);
+}
+.memberName h2{
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .7px;
+}
+.memberName h3{
+    font-size: 13px;
+    font-weight: 300;
+    opacity: .8;
+    letter-spacing: .5px;
+}
+.functionDot{
+    margin-left: auto;
+    background-color: var(--surface-08);
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.functionDot:hover svg{
+    transition: all .2s;
+    fill: var(--primary);
+}
+.addMembers{
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 85%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.addMembers .button{
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    background: linear-gradient(90deg, rgba(41,79,182,1) 0%, rgba(69,163,228,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+.addMembers h2{
+    font-family: "Neue Helvetica";
+    font-size: 15px;
+    color: var(--on-background);
+}
+@media screen and (max-width: 1355px) {
+    .teamContainer{
+        grid-column: 2 / 7;
+    }
+}

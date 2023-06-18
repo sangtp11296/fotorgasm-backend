@@ -1,0 +1,81 @@
+.formInput{
+    position: relative;
+    border: 2px solid var(--surface-08);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.formInput .iconContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 17.5px;
+    margin: 10px 0px;
+    /* border-right: 2px solid var(--on-separate); */
+}
+.iconContainer svg{
+    height: 15px;
+}
+.iconContainer.password svg{
+    height: 20px;
+}
+.iconContainer.password{
+    padding: 5px 15px;
+}
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.inputContainer h4{
+    color: var(--on-background-matte);
+    font-size: 12px;
+    font-weight: 500;
+}
+.inputContainer input{
+    background-color: transparent;
+    width: 184px;
+    color: var(--on-background);
+}
+.inputContainer input:focus{
+    outline: none;
+}
+/* .inputContainer input:-webkit-autofill,
+.inputContainer input:-webkit-autofill:hover,
+.inputContainer input:-webkit-autofill:focus,
+.inputContainer input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--on-background) !important;
+} */
+.inputContainer input:-webkit-autofill,
+.inputContainer input:-webkit-autofill:hover,
+.inputContainer input:-webkit-autofill:focus,
+.inputContainer input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--surface-02) inset !important;
+    -webkit-text-fill-color: var(--on-background) !important;
+    caret-color: var(--on-background)
+}
+.checkerContainer{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+.button{
+    margin-top: 10px;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--primary);
+    color: var(--on-background);
+    font-size: 15px;
+    letter-spacing: .8px;
+    cursor: pointer;
+    transition: all .2s;
+}
+.button:hover{
+    transition: all .2s;
+    background-color: var(--blue);
+}

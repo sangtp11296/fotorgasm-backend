@@ -1,0 +1,14 @@
+.gridBlock{
+    background-color: var(--surface-04);
+    border-radius: 15px;
+}
+.postSumContainer{
+    grid-column: 3 / 6;
+    grid-row: 2 / 6;
+}
+
+@media screen and (max-width: 1355px) {
+    .postSumContainer{
+        grid-column: 2 / 7;
+    }
+}
