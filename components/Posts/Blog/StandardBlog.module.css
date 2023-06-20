@@ -1,0 +1,195 @@
+.postBlog{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transition: all .3s;
+}
+.postBlog:hover .postOverlay{
+    transition: all .2s;
+    opacity: 1;
+}
+/* .standardType.active{
+    grid-column: 1 / -1;
+    grid-row: auto / span 2;
+    z-index: 2;
+    background-color: var(--surface-16);
+    border-radius: 15px;
+    flex-direction:row-reverse;
+    width: 1200px;
+} */
+.standardType{
+    grid-column: span 3;
+    grid-row: span 5;
+}
+
+.postCover{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+.postCover.active{
+    display: none;
+    background-color: var(--surface-02);
+    /* border-radius: 15px 15px 0px 0px; */
+    /* max-height: 550px; */
+    overflow: hidden;
+    flex: 0 0 400px;
+}
+.coverImage{
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.coverImage.active{
+    height: 900px;
+    border-radius: 0%;
+    /* margin-left: auto;
+    margin-right: auto; */
+}
+.fullScreen,.minorScreen{
+    position: absolute;
+    background-color: transparent;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    transition: all .2s;
+    opacity: 0;
+}
+.fullScreen svg{
+    height: 20px;
+    transition: all .2s;
+}
+.minorScreen svg{
+    height: 25px;
+    transition: all .2s;
+}
+.postCover:hover .fullScreen{
+    opacity: 1;
+    transition: all .2s;
+}
+.postCover:hover .minorScreen{
+    opacity: 1;
+    transition: all .2s;
+}
+.fullScreen:hover svg{
+    height: 23px;
+    transition: all .2s;
+}
+.postInfo{
+    z-index: 1;
+    bottom: 10px;
+    left: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    width: 85%;
+    height: 88px;
+}
+.postOverlay{
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    bottom: 0;
+    transition: all .2s ease-in-out;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(5,5,5,.8) 100%);
+    opacity: .8;
+    border-radius: 0 0 15px 15px;
+}
+/* .postOverlay.dimBackground{
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100%;
+    top:0;
+    left: 0;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6);
+} */
+.postCat{
+    width: fit-content;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+.postCat img{
+    box-shadow: 0px 0px 2px 0px rgba(255, 255, 255, 0.153);
+    border-radius: 100%;
+}
+.postCat span{
+    padding-left: 5px;
+    color: var(--on-background);
+    font-size: 12px;
+    font-weight: 300;
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.285);
+}
+.postInfo .titlePost{
+    width: 100%;
+    display: block;
+    padding-bottom: 2px;
+}
+.postInfo .titlePost h1{
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.285);
+    color: var(--on-background);
+    font-size: 13px;
+    font-weight: 500;
+}
+.postDesc{
+    color: var(--on-background-matte);
+    font-size: 13px;
+    font-weight: 300;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+.standardType .postDesc{
+    height: 35px;
+    -webkit-line-clamp: 2;
+}
+.postSocial{
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    right: 10px;
+    bottom: 10px;
+    width: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.postSocial span{
+    color: var(--on-background);
+    font-size: 10px;
+}
+.postSocial button{
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    background-color: transparent;
+}
+.postSocial button:last-child{
+    margin-bottom: 0;
+    margin-top: 13px;
+}
+.postSocial button:hover svg path{
+    transition: all .1s;
+    fill: rgba(72,149,239,1);
+    stroke: rgba(72,149,239,1);
+}
+.postSocial button svg{
+    height: 20px;
+}
+.postSocial button svg path{
+    transition: all .1s;
+    fill: none
+    /* stroke-width: 1; */
+}

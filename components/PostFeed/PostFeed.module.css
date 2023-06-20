@@ -1,0 +1,18 @@
+.postFeed{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.masonryContainer{
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    /* grid-template-rows: repeat(auto-fit, minmax(0, 1fr)); */
+    /* grid-auto-rows: 1fr; */
+    /* grid-auto-rows: minmax(90.55px,auto); */
+    grid-auto-rows: 90.55px;
+    grid-gap: 15px;
+    min-width: 935px;
+}
