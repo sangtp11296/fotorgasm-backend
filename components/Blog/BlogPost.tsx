@@ -1,14 +1,15 @@
 
 import { Photo } from '@/types/Photos.type'
 import React from 'react'
-import styles from './StandardBlog.module.css'
+import styles from './Post.module.css'
+import Image from 'next/image'
+import { Video } from '@/types/Videos.type'
 
 interface Props {
-  photo: Photo
-  cat: string
-  title: string
+  photo: Photo | Video
 }
-const StandardBlog: React.FC<Props> = ({ photo, cat, title }) => {
+const BlogPost: React.FC<Props> = ({ photo }) => {
+  
   function randomNum(){
     // Generate a random number between min and max
     const num = Math.floor(Math.random() * (100000000 - 0 + 1)) + 0;
@@ -32,7 +33,7 @@ const StandardBlog: React.FC<Props> = ({ photo, cat, title }) => {
     } 
   }
   return (
-    <div className={`${styles.standardType} ${styles.postBlog}`}>
+    <div className={`${photo.width < photo.height ? styles.portrait : (photo.width > photo.height ? styles.landscape : styles.square)} ${styles.postBlog}`}>
       <div className={`${styles.postCover}`}>
         <button className={styles.fullScreen}>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,21 +48,21 @@ const StandardBlog: React.FC<Props> = ({ photo, cat, title }) => {
         {/* <button className={styles.minorScreen}>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" strokeWidth="0.00024000000000000003"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#ffffff"></path> </g></svg>
         </button> */}
-        <img className={`${styles.coverImage}`} key={photo.id} src={photo.urls.full} alt={photo.alt_description}></img>
+        <div className={styles.coverImage}>
+          <Image priority={true} fill  key={photo.id} src={photo.urls.full} alt={photo.alt_description} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
+        </div>
         <div className={`${styles.postOverlay} `}/>
 
         <div className={styles.postInfo}>
-            {cat ? 
-                <div className={`${styles.postCat}`}>
-                    <img alt={`on ${cat}`} src={`/assets/images/on ${cat}.png`} height={25} width={25}/>
-                    <span>on {cat}</span>
-                </div> : ''
-            }
+            <div className={`${styles.postCat}`}>
+                <Image alt={`on ${photo.cat}`} src={`/assets/images/on ${photo.cat}.png`} height={25} width={25}/>
+                <span>on {photo.cat}</span>
+            </div>
             <div className={styles.titlePost}>
-                <h1>{title}</h1>
+                <h2>{photo.title}</h2>
             </div>
             <div className={styles.postDesc}>
-                {photo.alt_description}<br/>{photo.alt_description}
+                {photo.desc}
             </div>
         </div>
 
@@ -91,4 +92,4 @@ const StandardBlog: React.FC<Props> = ({ photo, cat, title }) => {
   )
 }
 
-export default StandardBlog
+export default BlogPost

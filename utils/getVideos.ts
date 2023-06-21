@@ -1,8 +1,7 @@
-import { Photo, fetchedPhoto } from "@/types/Photos.type";
+
 import { Video, fetchedVideo } from "@/types/Videos.type";
 
-
-export const getPosts = async (query: string, page: number | string, perPage: number | string) => {
+export const  getVideos = async (query: string, page: number | string, perPage: number | string) => {
 
     const cat = ['Films','Something','Vinyls','Moods','Memories','Running','Music','Reading'];
     const title = [
@@ -92,37 +91,14 @@ export const getPosts = async (query: string, page: number | string, perPage: nu
         "The storm was fierce, with winds that howled and rain that poured down in sheets. But as I watched from my window, I felt a sense of awe and wonder. The power of nature was on full display, and it was both terrifying and beautiful. It was a reminder that even in the face of uncontrollable forces, there was still a sense of order and purpose in the universe.",
         ];
 
-    // Get Photos
-    const resPhoto = await fetch(`https://api.unsplash.com/photos?page=${page}&?per_page=${perPage}&client_id=oToAvK2epPDap7yqFnLiUzugpJ2Za7bOuPgu2Crq_QE`)
-    
-    if (!resPhoto.ok) {
-        throw new Error('Failed to fetch data')
-    }
-    const photosData: fetchedPhoto[] = await resPhoto.json();
-    const photos: Photo[] = photosData.map(({
-        id, created_at, width, height, likes, description, alt_description, urls, title, cat, desc, type
-    }: fetchedPhoto) => (
-        {
-        id, created_at, width, height, likes, description, alt_description, urls, title, cat, desc, type
-        }
-    ))
-    
-    photos.forEach(function(obj){
-        obj.type = 'photo';
-        obj.title = title[Math.floor(Math.random() * title.length)];
-        obj.cat = cat[Math.floor(Math.random() * cat.length)];
-        obj.desc = desc[Math.floor(Math.random() * desc.length)];
-    })
-
-    // Get Videos
     const headers = { Authorization: 'UcBD3Kb5HiiEZMeOkJs9r5t6eEdlfBSUWiLnGnNkAYZ0ncopY8NT4FkY' };
-    const resVideo = await fetch(`https://api.pexels.com/videos/search?query=${query}&page=${page}&per_page=${perPage}`, { headers });
+    const res = await fetch(`https://api.pexels.com/videos/search?query=${query}&page=${page}&per_page=${perPage}`, { headers });
     
-    if (!resVideo.ok) {
+    if (!res.ok) {
         throw new Error('Failed to fetch data')
     }
 
-    const videosData: fetchedVideo[] = await resVideo.json();
+    const videosData: fetchedVideo[] = await res.json();
     const videos: Video[] = videosData.flatMap((videosData) => videosData.videos)
     
     videos.forEach(function(obj){
@@ -131,17 +107,5 @@ export const getPosts = async (query: string, page: number | string, perPage: nu
         obj.cat = cat[Math.floor(Math.random() * cat.length)];
         obj.desc = desc[Math.floor(Math.random() * desc.length)];
     })
-
-    // Mix 2 arrays
-    const mixedData = [...photos, ...videos];
-    for (let i = mixedData.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); // Generate a random index
-      
-        // Swap elements at indices i and j
-        const temp = mixedData[i];
-        mixedData[i] = mixedData[j];
-        mixedData[j] = temp;
-      }
-
-    return mixedData
+    return videos
 };

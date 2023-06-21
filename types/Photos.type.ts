@@ -10,6 +10,10 @@ export interface fetchedPhoto{
     "liked_by_user": boolean,
     "description": string,
     "alt_description": string,
+    'title': string,
+    'cat': string,
+    'desc': string,
+    'type': string,
     "user": {
         "id": string,
         "username": string,
@@ -62,4 +66,9 @@ export interface fetchedPhoto{
 }
     
 
-export type Photo = Pick<fetchedPhoto, 'id' | 'created_at' | 'width' | 'height' | 'likes' | 'description' | 'alt_description' | 'urls'>
+export type Photo = Pick<fetchedPhoto, 'id' | 'created_at' | 'width' | 'height' | 'likes' | 'description' | 'alt_description' | 'urls'> & {
+    'title': string;
+    'cat': string;
+    'desc': string;
+    'type': string
+}
