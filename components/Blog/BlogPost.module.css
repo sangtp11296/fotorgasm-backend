@@ -1,4 +1,4 @@
-.postBlog{
+.blogPost{
     position: relative;
     width: 100%;
     height: 100%;
@@ -7,8 +7,10 @@
     justify-content: center;
     align-items: flex-start;
     transition: all .3s;
+    border-radius: 15px;
+    overflow: hidden;
 }
-.postBlog:hover .postOverlay{
+.blogPost:hover .postOverlay{
     transition: all .2s;
     opacity: 1;
 }
@@ -21,18 +23,6 @@
     flex-direction:row-reverse;
     width: 1200px;
 } */
-.portrait{
-    grid-column: span 3;
-    grid-row: span 5;
-}
-.square{
-    grid-column: span 3;
-    grid-row: span 3;
-}
-.landscape{
-    grid-column: span 3;
-    grid-row: span 2;
-}
 .postCover{
     display: flex;
     justify-content: center;
@@ -55,7 +45,6 @@
 .coverImage img{
     width: 100%;
     height: 100%;
-    border-radius: 15px;
     object-fit: cover;
 }
 .coverImage.active{
@@ -83,7 +72,7 @@
     transition: all .2s;
 }
 .fullScreen:hover svg{
-    height: 23px;
+    scale: 1.1;
     transition: all .2s;
 }
 .minorScreen svg{
@@ -182,14 +171,13 @@
     color: var(--on-background);
     font-size: 10px;
 }
-.postSocial button{
+.postSocial button,.iconContainer{
     height: 20px;
     margin-top: 5px;
     margin-bottom: 3px;
-    cursor: pointer;
     background-color: transparent;
 }
-.postSocial button:last-child{
+.postSocial .iconContainer{
     margin-bottom: 0;
     margin-top: 13px;
 }
@@ -199,18 +187,15 @@
     stroke: rgba(72,149,239,1);
 }
 .postSocial button svg{
+    cursor: pointer;
     height: 20px;
 }
 .postSocial button svg path{
     transition: all .1s;
     fill: none
-    /* stroke-width: 1; */
 }
-@media screen and (max-width: 1000px){
-    .landscape{
-        grid-column: span 3;
-        grid-row: span 3;
-    }
+.iconContainer svg{
+    height: 20px;
 }
 @media screen and (max-width: 768px) {
     .postInfo{
@@ -248,31 +233,23 @@
     .postSocial span{
         font-size: 8px;
     }
-    .postSocial button{
+    .postSocial button, .iconContainer{
         height: 15px;
         width: 15px;
-    }
-    .postSocial button:last-child{
-        margin-bottom: 0;
-        margin-top: 10px;
     }
     .postSocial button svg{
         height: 15px;
     }
+    .postSocial .iconContainer{
+        margin-bottom: 0;
+        margin-top: 10px;
+    }
+    .iconContainer svg{
+        height: 15px;
+    }
 }
 @media screen and (max-width: 550px) {
-    .portrait{
-        grid-column: span 4;
-        grid-row: span 7;
-    }
-    .square{
-        grid-column: span 4;
-        grid-row: span 4;
-    }
-    .landscape{
-        grid-column: span 4;
-        grid-row: span 4;
-    }
+    
     .coverImage{
         border-radius: 10px;
     }
@@ -307,15 +284,18 @@
     .postSocial span{
         font-size: 8px;
     }
-    .postSocial button{
+    .postSocial button, .iconContainer{
         height: 18px;
         width: 18px;
     }
-    .postSocial button:last-child{
+    .postSocial .iconContainer{
         margin-bottom: 0;
         margin-top: 11px;
     }
     .postSocial button svg{
+        height: 18px;
+    }
+    .iconContainer svg{
         height: 18px;
     }
 }
@@ -349,15 +329,18 @@
     .postSocial span{
         font-size: 8px;
     }
-    .postSocial button{
+    .postSocial button, .iconContainer{
         height: 15px;
         width: 15px;
     }
-    .postSocial button:last-child{
+    .postSocial .iconContainer{
         margin-bottom: 0;
         margin-top: 10px;
     }
     .postSocial button svg{
+        height: 15px;
+    }
+    .iconContainer svg{
         height: 15px;
     }
 }

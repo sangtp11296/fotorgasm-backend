@@ -95,10 +95,10 @@ export const  getPhotos = async (page: number | string, perPage: number | string
   }
   const photosData: fetchedPhoto[] = await res.json();
   const photos: Photo[] = photosData.map(({
-    id, created_at, width, height, likes, description, alt_description, urls, title, cat, desc
+    id, created_at, width, height, likes, description, alt_description, urls, title, cat, desc, type
   }: fetchedPhoto) => (
     {
-    id, created_at, width, height, likes, description, alt_description, urls, title, cat, desc
+    id, created_at, width, height, likes, description, alt_description, urls, title, cat, desc, type
     }
   ))
   
@@ -107,5 +107,6 @@ export const  getPhotos = async (page: number | string, perPage: number | string
     obj.cat = cat[Math.floor(Math.random() * cat.length)];
     obj.desc = desc[Math.floor(Math.random() * desc.length)];
   })
+  console.log(photos)
   return photos
 };

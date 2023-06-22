@@ -99,6 +99,7 @@ export const  getVideos = async (query: string, page: number | string, perPage: 
     }
 
     const videosData: fetchedVideo[] = await res.json();
+    console.log(videosData)
     const videos: Video[] = videosData.flatMap((videosData) => videosData.videos)
     
     videos.forEach(function(obj){

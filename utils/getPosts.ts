@@ -122,8 +122,8 @@ export const getPosts = async (query: string, page: number | string, perPage: nu
         throw new Error('Failed to fetch data')
     }
 
-    const videosData: fetchedVideo[] = await resVideo.json();
-    const videos: Video[] = videosData.flatMap((videosData) => videosData.videos)
+    const videosData: fetchedVideo = await resVideo.json();
+    const videos: Video[] = videosData.videos;
     
     videos.forEach(function(obj){
         obj.type = 'video';
