@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from './PostFeed.module.css'
 import { Photo } from '@/types/Photos.type'
 import BlogPost from '../Blog/BlogPost'
@@ -14,8 +14,6 @@ interface Props {
 }
 
 const PostFeed: React.FC<Props> = ({ data }) => {
-
-  const postRef = useRef<HTMLDivElement>(null);
 
   const [posts, setPosts] = useState<(Photo | Video)[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -46,7 +44,13 @@ const PostFeed: React.FC<Props> = ({ data }) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const { top, height } = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const scrollPosition = top + window.scrollY - (windowHeight / 2) + (height / 2);
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth',
+      });
     }
   }, []);
   
@@ -68,7 +72,7 @@ const PostFeed: React.FC<Props> = ({ data }) => {
                 const photo = post as Photo; // Type assertion
                 return(
                   <Link key={photo.id} onClick={(e) => handleClick(e, photo.id)} href={''} className={`${styles.postWrapper} ${photo.width < photo.height ? styles.portrait : (photo.width > photo.height ? styles.landscape : styles.square)}`}>
-                    <div ref={postRef} style={{height: '100%', width: '100%'}}>
+                    <div style={{height: '100%', width: '100%'}}>
                       <BlogPost photo={photo}/>
                     </div>
                   </Link>
@@ -77,7 +81,7 @@ const PostFeed: React.FC<Props> = ({ data }) => {
                 const video = post as Video; // Type assertion
                 return (
                   <Link key={video.id} onClick={(e) => handleClick(e, `${video.id}`)} href={``} className={`${styles.postWrapper} ${video.width < video.height ? styles.portrait : (video.width > video.height ? styles.landscape : styles.square)}`}>
-                    <div ref={postRef} style={{height: '100%', width: '100%'}}>
+                    <div style={{height: '100%', width: '100%'}}>
                       <VideoPost video={video}/>
                     </div>
                   </Link>

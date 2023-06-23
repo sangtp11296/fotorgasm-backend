@@ -67,12 +67,49 @@
     background-color: var(--surface-02);
 }
 .signForm{
-    max-height: 130px;
+    max-height: 220px;
     /* transition: all 5s; */
 }
 .signForm.signUp{
     transition: all 1s;
     max-height: 288px;
+}
+.thirdPartySignIn{
+    padding-top: 15px;
+    width: 100%;
+}
+.line{
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid var(--on-background-matte); 
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+}
+.line span{
+    font-size: 13px;
+    background: var(--surface-02);
+    padding: 0 10px;
+    color: var(--on-background-matte);
+}
+.iconContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.signInButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    border-radius: 100%;
+}
+.signInButton svg{
+    width: 15px;
+    height: 15px;
 }
 @media screen and (max-width: 390px) {
     .welcomeAdminContainer{
