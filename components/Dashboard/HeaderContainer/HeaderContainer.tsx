@@ -3,12 +3,24 @@ import React, { useEffect, useState } from 'react'
 import styles from './HeaderContainer.module.css'
 import Image from 'next/image';
 
-const HeaderContainer = () => {
+type User = {
+    id: string;
+    avatar: string;
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+}
+
+interface Props {
+    user: User
+}
+
+const HeaderContainer: React.FC<Props> = ({user}) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [searchBar, setSearchBar] = useState<boolean>(false);
     const [popup, setPopup] = useState<boolean>(false);
     const [popupAdmin, setPopupAdmin] = useState<string>('off');
     const [newName, setNewName] = useState<string>('');
+    const [searchBar, setSearchBar] = useState<boolean>(false);
 
     // Get window innerwidth
     const windowWidth = useWindowWidth();
@@ -46,6 +58,7 @@ const HeaderContainer = () => {
         return formattedDate;
     }
     const formattedDate = formatDate(currentDate);
+
     // Handle search
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement>){
         setSearchTerm(event.target.value);
@@ -53,7 +66,9 @@ const HeaderContainer = () => {
 
     // Handle toggle popup
     function togglePopup() {
+        setSearchBar(false);
         setPopup((prev) => !prev);
+
         if (popupAdmin === 'off') {
             setPopupAdmin('on');
         }
@@ -69,7 +84,7 @@ const HeaderContainer = () => {
         <div className={styles.firstSection}>
             <div className={styles.adminPart}>
                 <div className={styles.adminImageContainer}>
-                    <Image width={50} height={50} alt='Fotorgasm Avatar' src='/assets/icons/fotorgasm-logo-no-ring.png'></Image>
+                    <Image width={50} height={50} alt='Fotorgasm Avatar' src={user.avatar}></Image>
                 </div>
                 <div className={styles.adminName}>
                     <span>@fotorgasm</span>
@@ -145,7 +160,9 @@ const HeaderContainer = () => {
                     }
                 }} height='18px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M14 5H20" stroke="var(--on-background)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="0.4" d="M14 8H17" stroke="var(--on-background)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="var(--on-background)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="0.4" d="M22 22L20 20" stroke="var(--on-background)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
                 <input
-                    style={{width: searchBar ? '180px' : '0', marginLeft: searchBar ? '10px' : '0'}}
+                    style={{
+                        width: (windowWidth! < 1000 && searchBar) ? '180px' : (windowWidth! < 1000 && !searchBar) ?'0' : '', 
+                        marginLeft: (windowWidth! < 1000 && searchBar) ? '10px' : (windowWidth! < 1000 && !searchBar) ?'0' : ''}}
                     type='text'
                     placeholder="Search..."
                     value={searchTerm}

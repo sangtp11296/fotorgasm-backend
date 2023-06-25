@@ -23,6 +23,7 @@ const SignUp = () => {
                     const email = emailRef.current.value;
                     const username = userRef.current.value;
                     const password = passRef.current.value;
+                    const avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 
                     const res = await fetch('https://w9esxs9q88.execute-api.ap-southeast-1.amazonaws.com/dev/register', {
                         method: "POST",
@@ -32,7 +33,8 @@ const SignUp = () => {
                         body: JSON.stringify({
                             email,
                             username,
-                            password
+                            password,
+                            avatar
                         })
                     })
 

@@ -28,6 +28,8 @@
 }
 .logoBrand{
     object-fit: contain;
+    width: 70% !important;
+    margin: auto;
 }
 .mainMenu ul{
     color: var(--on-surface);

@@ -11,10 +11,10 @@
     position: relative;
     top: 5vh;
     margin: auto;
-    width: 90vw;
+    width: 70vw;
     height: 90vh;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    /* grid-template-columns: repeat(8, 1fr); */
     grid-template-rows: repeat(9, 1fr);
     grid-gap: 25px;
     transition: all .2s;
@@ -22,6 +22,11 @@
 
 
 
+@media screen and (max-width: 2200px) {
+    .dashboardWrapper{
+        width: 90vw;
+    }
+}
 @media screen and (max-width: 1355px) {
     .dashboardWrapper{
         grid-template-columns: repeat(10, 1fr);
