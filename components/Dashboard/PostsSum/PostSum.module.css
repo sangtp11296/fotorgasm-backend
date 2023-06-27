@@ -6,7 +6,188 @@
     grid-column: 3 / 6;
     grid-row: 2 / 6;
 }
-
+.sumHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.leftHeader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sumHeader h2{
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--on-background);
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin-right: 10px;
+}
+.sumHeader h3{
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    transition: all .2s;
+} 
+.button{
+    display: flex;
+    background-color: var(--surface-08);
+    padding: 5px 10px;
+    border-radius: 15px;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+}
+.button:hover h3{
+    color: var(--blue);
+}
+.button:hover svg{
+    fill: var(--blue);
+    stroke: var(--blue);
+}
+.button svg{
+    transition: all .2s;
+    fill: var(--primary);
+    stroke: var(--primary);
+    
+    padding-right: 5px;
+}
+.listCount{
+    background-color: var(--surface-08);
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary);
+}
+.listCount .iconContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.iconContainer svg{
+    height: 20px;
+    stroke: var(--primary);
+    /* fill: var(--primary); */
+}
+.editField{
+    padding: 10px 35px;
+    color: var(--on-background-matte);
+    height: 85%;
+}
+.textField{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.textField:nth-child(6){
+    margin-bottom: 5px;
+}
+.textField label{
+    font-size: 14px;
+    font-weight: 500;
+}
+.textDanger{
+    color: var(--red);
+}
+.textInput{
+    width: 250px;
+    margin-left: 10px;
+    height: 28px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: var(--surface-08);
+    color: var(--on-background-matte);
+    font-size: 13px;
+}
+.textInput:focus{
+    outline: none;
+    color: var(--on-background);
+}
+.textInput::-webkit-scrollbar{
+    display: none;
+}
+.items{
+    padding: 20px;
+    font-weight: 300;
+}
+.submit .button{
+    font-weight: 600;
+    padding: 5px 10px;
+    transition: all .2s;
+    color: var(--on-background-matte);
+}
+.submit .button:hover{
+    color: var(--on-background);
+}
+.previewField{
+    width: 100%;
+    margin-left: 10px;
+}
+.uploadImage{
+    width: 200px;
+    height: 100%;
+    background-color: var(--surface-08);
+    border-radius: 10px;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.uploadImage i{
+    scale: 1.2;
+    cursor: pointer;
+}
+.uploadBtn{
+    cursor: pointer;
+    padding-top: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.coverGrid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 100%;
+    height: 230.14px;
+    grid-gap: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.portrait{
+    grid-column: span 3;
+    grid-row: span 5;
+}
+.square{
+    grid-column: span 3;
+    grid-row: span 3;
+}
+.landscape{
+    grid-column: span 6;
+    grid-row: 2 / 5;
+}
+@media screen and (max-width: 1920px) {
+    .textField label{
+        font-size: 12px;
+    }
+    /* .textInput{
+        width: 150px;
+        margin-left: 5px;
+    } */
+}
 @media screen and (max-width: 1355px) {
     .postSumContainer{
         grid-column: 2 / 7;

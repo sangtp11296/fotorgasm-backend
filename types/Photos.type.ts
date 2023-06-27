@@ -65,7 +65,6 @@ export interface fetchedPhoto{
     }
 }
     
-
 export type Photo = Pick<fetchedPhoto, 'id' | 'created_at' | 'width' | 'height' | 'likes' | 'description' | 'alt_description' | 'urls'> & {
     'title': string;
     'cat': string;

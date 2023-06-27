@@ -14,7 +14,7 @@
     width: 70vw;
     height: 90vh;
     display: grid;
-    /* grid-template-columns: repeat(8, 1fr); */
+    grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(9, 1fr);
     grid-gap: 25px;
     transition: all .2s;

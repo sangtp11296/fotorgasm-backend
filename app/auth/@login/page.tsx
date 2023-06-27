@@ -8,7 +8,6 @@ const Login = () => {
   const userRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<boolean>();
-  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const session = useSession();
 

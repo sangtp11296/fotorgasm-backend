@@ -41,7 +41,9 @@ const handler = NextAuth({
                     id: data.userData.id, 
                     name: data.userData.username, 
                     email: data.userData.email,
-                    avatar: data.userData.avatar
+                    avatar: data.userData.avatar,
+                    role: data.userData.role,
+                    team: data.userData.team
                   }
                   console.log(user, 'user')
                   return Promise.resolve(user) 
@@ -61,7 +63,9 @@ const handler = NextAuth({
           return {
             ...token,
             id: u.id,
-            avatar: u.avatar
+            avatar: u.avatar,
+            role: u.role,
+            team: u.team
           }
         }
         return token
@@ -72,7 +76,9 @@ const handler = NextAuth({
           user: {
             ...session.user,
             id: token.id,
-            avatar: token.avatar
+            avatar: token.avatar,
+            role: token.role,
+            team: token.team
           }
         }
       }
