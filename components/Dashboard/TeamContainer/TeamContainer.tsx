@@ -165,7 +165,7 @@ const TeamContainer: React.FC<Props> = ({ editorMode }) => {
             <div className={styles.header}>
                 <h2>Main Content</h2>
             </div>
-            <RichEditor/>
+            {/* <RichEditor/> */}
         </>
         }
     </div>

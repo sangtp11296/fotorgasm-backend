@@ -3,7 +3,6 @@
     overflow: hidden;
 }
 .ck.ck-toolbar__items *{
-    scale: .8;
 }
 .ck.ck-editor__main{
     /* height: 40%; */
