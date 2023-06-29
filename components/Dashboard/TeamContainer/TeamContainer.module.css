@@ -6,22 +6,23 @@
     background-color: var(--surface-04);
     border-radius: 15px;
 }
-.teamHeader{
+.header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 25px;
+    margin-top: 20px;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
 }
-.teamHeader h2{
-    font-family: 'Neue Helvetica';
-    font-size: 23px;
-    font-weight: 600;
+.header h2{
+    font-size: 20px;
+    font-weight: 300;
     color: var(--on-background);
     letter-spacing: 1px;
+    text-transform: capitalize;
+    margin-right: 10px;
 }
 .teamCount{
     background-color: var(--surface-08);

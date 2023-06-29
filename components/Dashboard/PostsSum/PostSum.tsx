@@ -66,6 +66,12 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
   const [tag, setTag] = useState<string[]>([]);
   const [error, setError] = useState<boolean>(false);
 
+  // Trigger Add Mode
+  useEffect(() => {
+    addPost(addTrigger);
+  }, [addTrigger])
+  
+  // Send post Info to Dashboard
   useEffect(() => {
     const newPost: PostInfo = {
       format: format,
@@ -117,7 +123,6 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
           <h2>{menuType}</h2>
           <div className={styles.button} onClick={() => {
             setAddTrigger((prev) => !prev);
-            addPost(addTrigger);
             }}>
               {
                 !addTrigger ? 

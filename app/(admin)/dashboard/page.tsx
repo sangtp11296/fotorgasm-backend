@@ -16,13 +16,23 @@ import { PreviewPost } from '@/types/Posts.type'
 interface Props {
   previewPost: PreviewPost
 }
-
+// Define Info Post type
+interface PostInfo {
+  format: string,
+  title: string,
+  slug: string,
+  author: string,
+  category: string,
+  description: string,
+  tags: string[],
+}
 const Dashboard: React.FC<Props> = ({ previewPost }) => {
   const session = useSession();
   const router = useRouter();
   const [menuType, setMenuType] = useState<string>('')
-  const [addPost, setAddPost] = useState<boolean>(false)
-  const [finalPost, setFinalPost] = useState<PreviewPost | null>(null);
+  const [editor, setEditor] = useState<boolean>(false)
+  const [postInfo, setPostInfo] = useState<PostInfo | null>(null);
+
   if  (session.status === 'loading'){
     return <p style={{color: 'white'}}>Loading...</p>
   }
@@ -35,17 +45,12 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
   function handlePostMenu(data: string) {
     setMenuType(data);
   }
-  // Switch to add post format
+  // Switch to editorMode
   function handleAddPost(value: boolean){
-    setAddPost(value)
+    setEditor(value)
   }
-  // Handle post info
-  function handlePostInfo(newPost: any){
-    // const merged = {...newPost};
-    // setFinalPost(merged);
-  }
-  console.log(finalPost, 'finalPost')
-  if (session.status === 'authenticated' && session.data.user?.name === 'fotorgasm'){
+  console.log(postInfo, 'postInfo')
+  if (session.status === 'authenticated'){
     return (
       <div className={styles.dashboard}>
           <div className={styles.dashboardWrapper}>
@@ -54,18 +59,14 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
               <PostSum 
               menuType={menuType} 
               addPost={handleAddPost} 
-              postInfo={(value) => setFinalPost((prev) => (
+              postInfo={(value) => setPostInfo((prev) => (
                 prev ? { ...prev, ...value } : value
                 ))}/>
-              <TeamContainer switchEditor={addPost}/>
-              <InteractiveComponent/>
+              <TeamContainer editorMode={editor}/>
+              <InteractiveComponent postInfo={postInfo} editorMode={editor}/>
           </div>
       </div>
     ) 
-  } else {
-    setTimeout(() => {
-      router.push('/');
-    }, 100)
   }
 }
 

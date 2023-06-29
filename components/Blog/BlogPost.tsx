@@ -52,7 +52,7 @@ const BlogPost: React.FC<Props> = ({ photo }) => {
         <div className={styles.coverImage}>
           {
             // Check if photo cover is available or not
-            photo.cover && <Image priority={true} fill  key={photo.id} src={photo.cover} alt={photo.title} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
+            photo.cover && <Image priority={true} fill  key={photo.id} src={photo.cover} alt={`${photo.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
           }
           
         </div>

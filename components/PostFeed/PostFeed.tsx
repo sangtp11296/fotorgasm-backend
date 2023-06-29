@@ -8,6 +8,7 @@ import { Video } from '@/types/Videos.type'
 import VideoPost from '../Video/VideoPost'
 import { getPosts } from '@/utils/getPosts'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   data: Array<Photo|Video>
@@ -18,7 +19,8 @@ const PostFeed: React.FC<Props> = ({ data }) => {
   const [posts, setPosts] = useState<(Photo | Video)[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(2)
-  
+  const session = useSession()
+  console.log(session)
   useEffect(() => {
     setPosts(data);
   }, [])

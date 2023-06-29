@@ -1,14 +1,84 @@
 .gridBlock{
     background-color: var(--surface-04);
     border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .interContainer{
     grid-column: 6 / 9;
     grid-row: 2 / 10;
 }
+.previewField{
+    width: 100%;
+    margin-left: 10px;
+}
+.uploadImage{
+    width: 200px;
+    height: 100%;
+    border-radius: 10px;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.uploadImage:hover .uploadBtn{
+    opacity: 1;
+}
+.uploadImage:hover svg{
+    opacity: 1;
+}
+.uploadImage svg{
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    transition: all .2s;
+    opacity: .7;
+}
+.uploadBtn{
+    cursor: pointer;
+    opacity: .7;
+    padding-top: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--on-background);
+    transition: all .2s;
+}
+.coverGrid{
+    position: relative;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-gap: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    aspect-ratio: 1/1; /* Ensures the square shape */
+}
+.iconContainer{
+    position: absolute;
+    top: -15px;
+    left: 15px;
+    cursor: pointer;
+}
+.portrait{
+    grid-column: 2 / 5;
+    grid-row: span 5;
+}
+.square{
+    grid-column: span 3;
+    grid-row: span 3;
+}
+.landscape{
+    grid-column: span 6;
+    grid-row: 2 / 5;
+}
 
 @media screen and (max-width: 1355px) {
-    .chatNotiContainer{
+    .interContainer{
         grid-column: 7 / 11;
     }
 }

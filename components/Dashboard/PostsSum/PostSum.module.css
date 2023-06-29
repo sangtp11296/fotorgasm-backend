@@ -130,55 +130,7 @@
 .submit .button:hover{
     color: var(--on-background);
 }
-.previewField{
-    width: 100%;
-    margin-left: 10px;
-}
-.uploadImage{
-    width: 200px;
-    height: 100%;
-    background-color: var(--surface-08);
-    border-radius: 10px;
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.uploadImage i{
-    scale: 1.2;
-    cursor: pointer;
-}
-.uploadBtn{
-    cursor: pointer;
-    padding-top: 5px;
-    font-size: 15px;
-    font-weight: 600;
-}
-.coverGrid{
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    width: 100%;
-    height: 230.14px;
-    grid-gap: 5px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.portrait{
-    grid-column: span 3;
-    grid-row: span 5;
-}
-.square{
-    grid-column: span 3;
-    grid-row: span 3;
-}
-.landscape{
-    grid-column: span 6;
-    grid-row: 2 / 5;
-}
+
 @media screen and (max-width: 1920px) {
     .textField label{
         font-size: 12px;

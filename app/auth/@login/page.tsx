@@ -30,7 +30,6 @@ const Login = () => {
       signIn("credentials", { username, password});
     }
   }
-
   return (
     <form autoComplete='off' onSubmit={(e) => handleSignIn(e)}>
       <div className={styles.formInput}>
