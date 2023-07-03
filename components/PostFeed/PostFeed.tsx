@@ -82,7 +82,7 @@ const PostFeed: React.FC<Props> = ({ data }) => {
               } else {
                 const video = post as Video; // Type assertion
                 return (
-                  <Link key={video.id} onClick={(e) => handleClick(e, `${video.id}`)} href={``} className={`${styles.postWrapper} ${video.width < video.height ? styles.portrait : (video.width > video.height ? styles.landscape : styles.square)}`}>
+                  <Link key={video.id}  href={``} className={`${styles.postWrapper} ${video.width < video.height ? styles.portrait : (video.width > video.height ? styles.landscape : styles.square)}`}>
                     <div style={{height: '100%', width: '100%'}}>
                       <VideoPost video={video}/>
                     </div>
