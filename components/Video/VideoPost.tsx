@@ -11,6 +11,7 @@ const VideoPost: React.FC<Props> = ({ video }) => {
   const [isAudio, setAudio] = useState<boolean>();
   const [sound, setSound] = useState<boolean>()
   const videoRef = useRef<HTMLVideoElement>(null);
+
   function randomNum(){
     // Generate a random number between min and max
     const num = Math.floor(Math.random() * (100000000 - 0 + 1)) + 0;
@@ -34,20 +35,6 @@ const VideoPost: React.FC<Props> = ({ video }) => {
     } 
   }
 
-  // Focus to chosen post
-  const handleClick = useCallback((e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const { top, height } = element.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const scrollPosition = top + window.scrollY - (windowHeight / 2) + (height / 2);
-      window.scrollTo({
-        top: scrollPosition,
-        behavior: 'smooth',
-      });
-    }
-  }, []);
   // Hover to Play video
   let timeoutID: NodeJS.Timeout;
   const handleHoverPlay = () => {
@@ -62,10 +49,10 @@ const VideoPost: React.FC<Props> = ({ video }) => {
             (videoRef.current as any).audioTracks.length)){
             if(videoRef.current?.muted){
               setAudio(true);
-              setSound(true);
+              setSound(false);
             }
           } else {
-            setAudio(true);
+            setAudio(false);
             setSound(false);
           }
         }, 100);
@@ -82,8 +69,13 @@ const VideoPost: React.FC<Props> = ({ video }) => {
       setSound(false);
     }
   }
+
   // Toggle sound
-  const toggleSound = () => {
+  const toggleSound = (e: React.MouseEvent) => {
+    // Prevent ScrollToElement function from triggering
+    e.stopPropagation();
+    // Prevent reloading
+    e.preventDefault();
     if (videoRef.current){
       videoRef.current.muted = !videoRef.current.muted;
       if (sound){
@@ -93,31 +85,32 @@ const VideoPost: React.FC<Props> = ({ video }) => {
       }
     }
   }
+
   return (
-    <div id={`${video.id}`} className={`${styles.videoPost}`} onMouseEnter={handleHoverPlay} onMouseLeave={handleHoverStop} onClick={(e) => handleClick(e, `${video.id}`)}>
+    <div id={`${video.id}`} className={`${styles.videoPost}`} onMouseEnter={handleHoverPlay} onMouseLeave={handleHoverStop}>
       <div className={styles.videoAudio}>
         {/* no sound */}
         <button style={{display: !isAudio ? '' : 'none', scale:'none', opacity:'.5'}} disabled>
           <svg viewBox="0 0 24 24" height='21px' width='21px' fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 8.14307C3.4148 8.66137 3 9.49393 3 10.5V13.5C3 14.6046 3.5 15.5 5.5 16C7.5 16.5 9 21 12 21C12.6098 21 13.0337 19.3265 13.2717 17M3 3L21 21M9 4.60756C9.84604 3.71548 10.8038 3 12 3C12.7739 3 13.2484 5.69533 13.4233 9" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
         </button>
         {/* muted */}
-        <button className='muted' style={{display: isAudio && !sound ? '':'none',cursor:'pointer'}} onClick={toggleSound}>
+        <button className='muted' style={{display: isAudio && !sound ? '':'none', cursor:'pointer'}} onClick={(e) => toggleSound(e)}>
           <svg height='21px' width='21px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22 9L16 15M16 9L22 15M3 10.5V13.5C3 14.6046 3.5 15.5 5.5 16C7.5 16.5 9 21 12 21C14 21 14 3 12 3C9 3 7.5 7.5 5.5 8C3.5 8.5 3 9.39543 3 10.5Z" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
         </button>
         {/* unmuted */}
-        <button className='unmuted' style={{display: isAudio &&sound ? '':'none',cursor:'pointer'}} onClick={toggleSound}>
+        <button className='unmuted' style={{display: isAudio && sound ? '':'none', cursor:'pointer'}} onClick={(e) => toggleSound(e)}>
           <svg height='21px' width='21px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 6C20.5 7.5 21 10 21 12C21 14 20.5 16.5 19 18M16 8.99998C16.5 9.49998 17 10.5 17 12C17 13.5 16.5 14.5 16 15M3 10.5V13.5C3 14.6046 3.5 15.5 5.5 16C7.5 16.5 9 21 12 21C14 21 14 3 12 3C9 3 7.5 7.5 5.5 8C3.5 8.5 3 9.39543 3 10.5Z" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> 
         </button>
       </div>
       <div className={styles.postCover} >
-        <video ref={videoRef} className={styles.videoSrc} poster={video.image} muted>
+        <video controls ref={videoRef} className={styles.videoSrc} poster={video.image} muted>
           {video.video_files.map((video) => {
             return(
               <source src={`${video.link}`} type={`${video.file_type}`} key={video.id}/>
             )
           })}
         </video>
-        <div className={styles.postOverlay}></div>
+        {/* <div className={styles.postOverlay}></div>
         <button className={styles.fullScreen}>
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -160,7 +153,7 @@ const VideoPost: React.FC<Props> = ({ video }) => {
           <div className={styles.iconContainer}>
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke='var(--on-background-matte)'><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.0799 8.58003V15.42C21.0799 16.54 20.4799 17.58 19.5099 18.15L13.5699 21.58C12.5999 22.14 11.3999 22.14 10.4199 21.58L4.47992 18.15C3.50992 17.59 2.90991 16.55 2.90991 15.42V8.58003C2.90991 7.46003 3.50992 6.41999 4.47992 5.84999L10.4199 2.42C11.3899 1.86 12.5899 1.86 13.5699 2.42L19.5099 5.84999C20.4799 6.41999 21.0799 7.45003 21.0799 8.58003Z" stroke="inherrit" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M9.75 11.9999V10.7999C9.75 9.25989 10.84 8.62993 12.17 9.39993L13.21 9.9999L14.25 10.5999C15.58 11.3699 15.58 12.6299 14.25 13.3999L13.21 13.9999L12.17 14.5999C10.84 15.3699 9.75 14.7399 9.75 13.1999V11.9999Z" stroke="inherrit" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -74,18 +74,14 @@ const PostFeed: React.FC<Props> = ({ data }) => {
                 const photo = post as Photo; // Type assertion
                 return(
                   <Link key={photo.id} onClick={(e) => handleClick(e, photo.id)} href={''} className={`${styles.postWrapper} ${photo.width < photo.height ? styles.portrait : (photo.width > photo.height ? styles.landscape : styles.square)}`}>
-                    <div style={{height: '100%', width: '100%'}}>
-                      <BlogPost photo={photo}/>
-                    </div>
+                    <BlogPost photo={photo}/>
                   </Link>
                 )
               } else {
                 const video = post as Video; // Type assertion
                 return (
-                  <Link key={video.id}  href={``} className={`${styles.postWrapper} ${video.width < video.height ? styles.portrait : (video.width > video.height ? styles.landscape : styles.square)}`}>
-                    <div style={{height: '100%', width: '100%'}}>
-                      <VideoPost video={video}/>
-                    </div>
+                  <Link key={video.id} onClick={(e) => handleClick(e, `${video.id}`)} href={``} className={`${styles.postWrapper} ${video.width < video.height ? styles.portrait : (video.width > video.height ? styles.landscape : styles.square)}`}>
+                    <VideoPost video={video}/>
                   </Link>
                 )
               }
