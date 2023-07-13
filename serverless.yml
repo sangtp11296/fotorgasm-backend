@@ -1,0 +1,123 @@
+
+
+service: fotorgasm-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: sangtp11296
+  memorySize: 128 # set the maximum memory of the Lambdas in Megabytes
+  timeout: 10 # the timeout is 10 seconds (default is 6 seconds)
+  stage: dev # setting the env stage to dev, this will be visible in the routes
+  region: ap-southeast-1
+  environment:
+    fotorgasmImagesUploadBucket: ${self:custom.fotorgasmImagesUploadBucket}
+    region: ${self:provider.region}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+          - dynamadb:*
+          - s3:*
+          - ses:*
+      Resource: '*'
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    binaryMediaTypes:
+      - 'multipart/form-data'
+
+layers:
+  fotorgasmLayer:
+    path: layers
+  
+custom:
+  fotorgasmImagesUploadBucket: fotorgasm-images-upload-bucket
+
+functions:
+  create:
+    handler: lambdas/createHandler.createPost # point to exported create function is handler.js
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  getOne:
+    handler: lambdas/getOneHandler.getOne
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts/{id} # path will be domain.name.com/dev/posts/1
+          method: get
+          cors: true
+  getAll:
+    handler: lambdas/getAllHandler.getAll
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts
+          method: get
+          cors: true
+  update:
+    handler: lambdas/updateHandler.updatePost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts/{id}
+          method: put
+          cors: true
+  delete:
+    handler: lambdas/deleteHandler.deletePost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: posts/{id}
+          method: delete
+          cors: true
+  register:
+    handler: lambdas/admin/registerHandler.registerUser
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+  login:
+    handler: lambdas/admin/loginHandler.loginUser
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+  adminUpdate:
+    handler: lambdas/admin/updateHandler.updateHandler # point to exported create function is handler.js
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: admin/update # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    FotorgasmImagesUploadBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fotorgasmImagesUploadBucket}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
+
+
