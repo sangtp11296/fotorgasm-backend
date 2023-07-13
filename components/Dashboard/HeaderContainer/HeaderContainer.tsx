@@ -95,7 +95,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                 const res = await fetch('https://w9esxs9q88.execute-api.ap-southeast-1.amazonaws.com/dev/admin/update', {
                     method: 'POST',
                     body: formData,
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    // headers: { 'Content-Type': 'multipart/form-data' }
                 });
                 res.status === 200 && window.location.reload();
             }
