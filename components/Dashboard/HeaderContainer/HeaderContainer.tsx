@@ -86,18 +86,25 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
     // Handle avatar update
     const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const image = event.target.files?.[0] || null
-
+        console.log(image)
         try {
             if(image){
-                const formData = new FormData();
-                formData.append('userID', user.id);
-                formData.append('avatar', image);
-                const res = await fetch('https://w9esxs9q88.execute-api.ap-southeast-1.amazonaws.com/dev/admin/update', {
+                // const formData = new FormData();
+                // formData.append('userID', user.id);
+                // formData.append('avatar', image);
+                // const res = await fetch('https://w9esxs9q88.execute-api.ap-southeast-1.amazonaws.com/dev/admin/update', {
+                //     method: 'POST',
+                //     body: formData,
+                // });
+                // res.status === 200 && window.location.reload();
+                const res = await fetch('url', {
                     method: 'POST',
-                    body: formData,
-                    // headers: { 'Content-Type': 'multipart/form-data' }
+                    body: JSON.stringify({
+                        userID: user.id,
+                        fileName: user.name + '-avatar',
+                        fileType: image.type,
+                    }),
                 });
-                res.status === 200 && window.location.reload();
             }
         } catch (err) {
             console.log(err);
