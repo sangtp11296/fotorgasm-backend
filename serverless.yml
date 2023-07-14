@@ -98,8 +98,17 @@ functions:
           path: login
           method: post
           cors: true
+  getPresignedUrl:
+    handler: lambdas/getPresignedUrl.getPresignedUrl
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: admin/update # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
   adminUpdate:
-    handler: lambdas/admin/updateHandler.updateHandler # point to exported create function is handler.js
+    handler: lambdas/admin/updateHandler.updateHandler
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -115,9 +124,22 @@ resources:
       Properties:
         BucketName: ${self:custom.fotorgasmImagesUploadBucket}
         PublicAccessBlockConfiguration:
-          BlockPublicAcls: false
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
         OwnershipControls:
           Rules:
             - ObjectOwnership: ObjectWriter
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - PUT
+                - GET
+                - POST
+              AllowedOrigins:
+                - "*"
 
 
