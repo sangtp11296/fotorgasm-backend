@@ -89,15 +89,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
         console.log(image)
         try {
             if(image){
-                // const formData = new FormData();
-                // formData.append('userID', user.id);
-                // formData.append('avatar', image);
-                // const res = await fetch('https://w9esxs9q88.execute-api.ap-southeast-1.amazonaws.com/dev/admin/update', {
-                //     method: 'POST',
-                //     body: formData,
-                // });
-                // res.status === 200 && window.location.reload();
-                const res = await fetch('url', {
+                const res = await fetch('https://e6jskhc5k6.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: user.id,
@@ -105,6 +97,19 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                         fileType: image.type,
                     }),
                 });
+                const resData = await res.json();
+                const presignedUrl = JSON.parse(resData.body)
+                console.log(presignedUrl);
+
+                // Upload avatar to presigned Url
+                const uploadAvatar = await fetch(presignedUrl.presignedUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': image.type,
+                    },
+                    body: image
+                })
+                uploadAvatar.status === 200 && window.location.reload();
             }
         } catch (err) {
             console.log(err);
