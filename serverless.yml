@@ -104,7 +104,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: admin/update # path will be domain.name.com/dev/posts
+          path: get-presigned-url # path will be domain.name.com/dev/posts
           method: post
           cors: true
   adminUpdate:
