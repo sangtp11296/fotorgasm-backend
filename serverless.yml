@@ -33,6 +33,7 @@ layers:
   
 custom:
   fotorgasmImagesUploadBucket: fotorgasm-images-upload-bucket
+  fotorgasmPublicDataBucket: fotorgasm-public-data-bucket
 
 functions:
   create:
@@ -107,18 +108,30 @@ functions:
           path: get-presigned-url # path will be domain.name.com/dev/posts
           method: post
           cors: true
-  adminUpdate:
-    handler: lambdas/admin/updateHandler.updateHandler
+  adminAvatarUpdate:
+    handler: lambdas/admin/updateAvatarHandler.updateAvatarHandler
     layers:
       - !Ref FotorgasmLayerLambdaLayer
-    events:
-      - http:
-          path: admin/update # path will be domain.name.com/dev/posts
-          method: post
-          cors: true
 
 resources:
-  Resources:
+  Resources:   
+    FotorgasmPublicDataBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fotorgasmPublicDataBucket}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+              - "*"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
     FotorgasmImagesUploadBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -139,6 +152,7 @@ resources:
                 - PUT
                 - GET
                 - POST
+                - DELETE
               AllowedOrigins:
                 - "*"
 

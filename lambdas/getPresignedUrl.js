@@ -16,12 +16,12 @@ export const getPresignedUrl = async (event) => {
         const { userID, fileName, fileType } = JSON.parse(event.body);
         // Random uploaded file name
         const name = uuid();
-        const key = `${name}'-'${fileName}`;
+        const key = `${name}-${fileName}`;
 
         //Get signed URL form S3
         const s3Params = {
             Bucket: uploadBucket,
-            Key: `${userID}/${key}`,
+            Key: `avatar/${userID}-${key}`,
             ContentType: fileType,
             ACL: 'bucket-owner-full-control'
         }
