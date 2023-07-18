@@ -10,7 +10,6 @@ const Login = () => {
   const [error, setError] = useState<boolean>();
   const router = useRouter();
   const session = useSession();
-
   if (session.status === 'authenticated' && session.data.user?.name === 'fotorgasm'){
     setTimeout(() => {
       router.push('/dashboard');

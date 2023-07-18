@@ -24,7 +24,7 @@ const SignUp = () => {
                     const avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
                     const role = 'Project Admin';
 
-                    const res = await fetch('https://w9esxs9q88.execute-api.ap-southeast-1.amazonaws.com/dev/register', {
+                    const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/register', {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

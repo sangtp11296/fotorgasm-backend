@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './HeaderContainer.module.css'
 import Image from 'next/image';
+import * as fileType from 'file-type'
 
 type User = {
     id: string;
@@ -85,7 +86,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
 
     // Handle avatar update
     const handleUserUpdate = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const image = event.target.files?.[0] || null
+        const image = event.target.files?.[0] || null;
         try {
             if(image){
                 // const formData = new FormData();
@@ -100,13 +101,12 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: user.id,
-                        fileName: user.name + '-avatar',
+                        fileName: user.name + `-avatar.${image.type.split('/')[1]}`,
                         fileType: image.type,
                     }),
                 });
                 const resData = await res.json();
                 const presignedUrl = JSON.parse(resData.body)
-                console.log(presignedUrl);
 
                 // Upload avatar to presigned Url
                 const uploadAvatar = await fetch(presignedUrl.presignedUrl, {
