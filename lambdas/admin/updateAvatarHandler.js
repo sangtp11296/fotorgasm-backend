@@ -1,15 +1,11 @@
 import { User } from '/opt/nodejs/database/models/User.js';
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
-import { v4 as uuid } from 'uuid';
-import { S3Client } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
-import * as fileType from 'file-type';
 import sharp from 'sharp';
 import util from 'util';
 
 const s3 = new S3Client({ region: process.env.region});
-
-const allowedMimes = ['image/jpeg','image/png','image/jpg'];
 
 export async function updateAvatarHandler(event, context, callback) {
 
@@ -17,7 +13,7 @@ export async function updateAvatarHandler(event, context, callback) {
     console.log("Reading options from event:\n", util.inspect(event, {depth: 5}));
     const srcBucket = event.Records[0].s3.bucket.name;
     // Object key may have spaces or unicode non-ASCII characters
-    const srcKey = 'avatar/' + decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
+    const srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
     const destBucket = process.env.fotorgasmPublicDataBucket;
     const destKey = `avatar/${srcKey}`;
 
@@ -29,7 +25,7 @@ export async function updateAvatarHandler(event, context, callback) {
     }
     // Check that the image type is supported
     const imageType = typeMatch[1].toLowerCase();
-    if (imageType != "jpg" && imageType != "jepg" && imageType != "png") {
+    if (imageType != "jpg" && imageType != "jpeg" && imageType != "png") {
         console.log(`Unsupported image type: ${imageType}`);
         return;
     }
@@ -41,15 +37,14 @@ export async function updateAvatarHandler(event, context, callback) {
         };
         var response = await s3.send(new GetObjectCommand(params));
         var stream = response.Body;
-        
     // Convert stream to buffer to pass to public bucket.
         if (stream instanceof Readable) {
-        var contentBuffer = Buffer.concat(await stream.toArray());
+            var contentBuffer = Buffer.concat(await stream.toArray());
         } else {
             throw new Error('Unknown object stream type');
         }
     } catch (error) {
-        console.log(error);
+        console.log('Cannot convert stream to buffer', error);
         return;
     }
 
@@ -60,7 +55,7 @@ export async function updateAvatarHandler(event, context, callback) {
     try {    
         var outputBuffer = await sharp(contentBuffer).resize(width).toBuffer();
     } catch (error) {
-        console.log(error);
+        console.log('Cannot resize the image and save in a buffer', error);
         return;
     }
     
@@ -73,50 +68,36 @@ export async function updateAvatarHandler(event, context, callback) {
             ContentType: "image"
         };
         const putResult = await s3.send(new PutObjectCommand(destParams));
-        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3-${process.env.region}.amazonaws.com/${destKey}`;
         console.log('Successfully resized ' + srcBucket + '/' + srcKey + ' and uploaded to ' + destBucket + '/' + destKey);
-        return Responses._200({
-            imageURL: url,
-        });
     } catch (error) {
-        console.log(error);
+        console.log("Cannot upload the avatar to the public bucket", error);
         return Responses._400({ message: error.message || 'Failed to upload avatar!' });
     }
-    
-    
 
-    // try{
-        
-    //     const fileInfo = await fileType.fileTypeFromBuffer(parsedData.files.content);
-    //     const detectedExt = fileInfo.ext;
-    //     const detectedMime = fileInfo.mime;
+    // Update the avatar url to User model schema
+    try{
+        // Extract the user Id from source key
+        const startIndex = srcKey.lastIndexOf('/') + 1;
+        const endIndex = srcKey.indexOf('-');
+        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3-${process.env.region}.amazonaws.com/${destKey}`;
+        if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+            const userID = srcKey.substring(startIndex, endIndex);
+            console.log('Desired userID:', userID);
+            const updatedUser = User.findByIdAndUpdate(
+                { userID },
+                { $set: { avatar: url } },
+                { new: true }
+            )
+            if (updatedUser) {
+                console.log('Avatar URL updated successfully:', updatedUser);
+            } else {
+                console.log('User not found.');
+            }
+        } else {
+            console.log('UserID not found.');
+        }
 
-    //     if(!allowedMimes.includes(detectedMime)){
-    //         return Responses._400({ message: 'Mime types dont match!' })
-    //     }
-    //     const name = uuid() + `-${parsedData.fileName}`;
-    //     const key = `${name}.${detectedExt}`;
-
-    //     console.log(`Writting image to bucket called ${key}`);
-
-    //     await s3.
-    //         putObject({
-    //             Body: imageBuffer,
-    //             Key: key,
-    //             ContentType: detectedMime,
-    //             Bucket: process.env.fotorgasmImagesUploadBucket,
-    //             ACL: 'public-read',
-    //         })
-    //         .promise();
-    //     const url = `https://${process.env.fotorgasmImagesUploadBucket}.s3-${process.env.region}.amazonaws.com/${key}`;
-
-    //     // Update avatar url to User Model
-    //     User.findByIdAndUpdate();
-    //     return Responses._200({
-    //         imageURL: url,
-    //     });
-    // } catch (err) {
-    //     console.log('error', err);
-    //     return Responses._400({ message: err.message || 'Failed to upload avatar!' });
-    // }
+    } catch (error) {
+        console.log('Cannot update avatar url!', error)
+    }
 }
