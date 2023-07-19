@@ -113,6 +113,15 @@ functions:
     handler: lambdas/admin/updateAvatarHandler.updateAvatarHandler
     layers:
       - !Ref FotorgasmLayerLambdaLayer
+  userInfoUpdate:
+    handler: lambdas/admin/updateInfoHandler.updateInfoHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: info-update
+          method: put
+          cors: true
 
 resources:
   Resources:   

@@ -1,4 +1,8 @@
 import { User } from '/opt/nodejs/database/models/User.js';
+import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: './variables.env' });
+
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
@@ -15,7 +19,7 @@ export async function updateAvatarHandler(event, context, callback) {
     // Object key may have spaces or unicode non-ASCII characters
     const srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
     const destBucket = process.env.fotorgasmPublicDataBucket;
-    const destKey = `avatar/${srcKey}`;
+    const destKey = srcKey;
 
     // Infer the image type from the file suffix
     const typeMatch = srcKey.match(/\.([^.]*)$/);
@@ -65,7 +69,8 @@ export async function updateAvatarHandler(event, context, callback) {
             Bucket: destBucket,
             Key: destKey,
             Body: outputBuffer,
-            ContentType: "image"
+            ContentType: `image/${imageType}`,
+            ACL: 'public-read'
         };
         const putResult = await s3.send(new PutObjectCommand(destParams));
         console.log('Successfully resized ' + srcBucket + '/' + srcKey + ' and uploaded to ' + destBucket + '/' + destKey);
@@ -76,18 +81,18 @@ export async function updateAvatarHandler(event, context, callback) {
 
     // Update the avatar url to User model schema
     try{
+        await connectToDatabase();
         // Extract the user Id from source key
         const startIndex = srcKey.lastIndexOf('/') + 1;
         const endIndex = srcKey.indexOf('-');
-        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3-${process.env.region}.amazonaws.com/${destKey}`;
+        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/${destKey}`;
         if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
             const userID = srcKey.substring(startIndex, endIndex);
-            console.log('Desired userID:', userID);
-            const updatedUser = User.findByIdAndUpdate(
-                { userID },
+            const updatedUser = await User.findByIdAndUpdate(
+                userID,
                 { $set: { avatar: url } },
                 { new: true }
-            )
+            );
             if (updatedUser) {
                 console.log('Avatar URL updated successfully:', updatedUser);
             } else {
