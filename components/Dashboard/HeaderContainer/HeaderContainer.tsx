@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './HeaderContainer.module.css'
 import Image from 'next/image';
-import * as fileType from 'file-type'
+import { signOut } from 'next-auth/react';
 
 type User = {
     id: string;
@@ -23,7 +23,8 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
     const [popup, setPopup] = useState<boolean>(false);
     const [popupAdmin, setPopupAdmin] = useState<string>('off');
     const [selectedImg, setSelectedImg] = useState<File | null>(null);
-    const [newName, setNewName] = useState<string>('');
+    const [newName, setNewName] = useState<string>(`${user.name}`);
+    const [newTitle, setNewTitle] = useState<string>(`${user.role}`);
     const [searchBar, setSearchBar] = useState<boolean>(false);
 
     // Get window innerwidth
@@ -85,18 +86,10 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
     }
 
     // Handle avatar update
-    const handleUserUpdate = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAvatarUpdate = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const image = event.target.files?.[0] || null;
         try {
             if(image){
-                // const formData = new FormData();
-                // formData.append('userID', user.id);
-                // formData.append('avatar', image);
-                // formData.append('fileName', user.name + '-avatar');
-                // const res = await fetch('https://e6jskhc5k6.execute-api.ap-southeast-1.amazonaws.com/dev/admin/update', {
-                //     method: 'POST',
-                //     body: formData
-                // });
                 const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
@@ -116,9 +109,29 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                     },
                     body: image
                 })
-                uploadAvatar.status === 200 && window.location.reload();
+                uploadAvatar.status === 200 && signOut();
             }
         } catch (err) {
+            console.log(err);
+        }
+    }
+    // Handle Info Update
+    const handleInfoUpdate = async (e: React.FormEvent<HTMLFormElement>,name: string, title: string) => {
+        e.preventDefault();
+        try {
+            if(name && title){
+                // change params along ID
+                const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/info-update', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        userID: user.id,
+                        username: name,
+                        role: title
+                    }),
+                });
+                res.status === 200 && signOut();
+            }
+        } catch(err) {
             console.log(err);
         }
     }
@@ -151,13 +164,13 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                     }
                 </div>
             </div>
-            <form id='adminUpdate' className={styles.editForm} >
+            <form id='adminUpdate' className={styles.editForm} onSubmit={(e) => handleInfoUpdate(e, newName, newTitle)}>
                 <label htmlFor='avatarUpload' 
                     style={{transform: popupAdmin === 'on' ? 'translateX(10px)' : 'translateX(0px)',
                         opacity: popupAdmin === 'on' ? '1' : '0',
                         visibility: popupAdmin === 'on' ? 'visible' : 'hidden'}} 
                     className={`${styles.iconContainer} ${styles.editItem}`}>
-                    <input hidden id='avatarUpload' type="file" accept="image/*" onChange={handleUserUpdate}/>
+                    <input hidden id='avatarUpload' type="file" accept="image/*" onChange={handleAvatarUpdate}/>
                     <svg height='18px' fill="#ffffff" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 33.7033 50.6023 C 45.8956 50.6023 56 40.4980 56 28.3056 C 56 16.1355 45.8735 6.0088 33.6809 6.0088 C 22.4539 6.0088 12.9559 14.6536 11.6086 25.5437 C 18.5918 25.6560 24.4523 30.7755 25.6648 37.4668 C 28.0449 36.4563 30.8068 35.8725 33.7033 35.8725 C 39.2269 35.8725 44.0994 37.9383 47.0632 41.1267 C 43.6952 44.6071 38.9575 46.8076 33.6809 46.8076 C 30.5822 46.8076 27.6632 46.0217 25.1034 44.6969 C 24.6993 45.8870 24.1604 47.0096 23.4194 48.0650 C 26.5405 49.6817 30.0209 50.6023 33.7033 50.6023 Z M 33.6809 32.1002 C 29.3921 32.1002 26.1363 28.3505 26.1363 23.6800 C 26.1363 19.2566 29.4595 15.4170 33.6809 15.4170 C 37.9246 15.4170 41.2703 19.2566 41.2478 23.6800 C 41.2478 28.3505 37.9920 32.1002 33.6809 32.1002 Z M 11.4066 51.4555 C 17.6039 51.4555 22.8132 46.2911 22.8132 40.0489 C 22.8132 33.8068 17.6712 28.6424 11.4066 28.6424 C 5.1644 28.6424 0 33.8068 0 40.0489 C 0 46.3360 5.1644 51.4555 11.4066 51.4555 Z M 11.4290 47.4587 C 10.6431 47.4587 9.9471 46.9198 9.9471 46.0666 L 9.9471 41.4186 L 5.6584 41.4186 C 4.8949 41.4186 4.2662 40.7899 4.2662 40.0489 C 4.2662 39.2855 4.8949 38.6568 5.6584 38.6568 L 9.9471 38.6568 L 9.9471 34.0088 C 9.9471 33.1780 10.6431 32.6391 11.4290 32.6391 C 12.1925 32.6391 12.8885 33.1780 12.8885 34.0088 L 12.8885 38.6568 L 17.1772 38.6568 C 17.9407 38.6568 18.5469 39.2855 18.5469 40.0489 C 18.5469 40.7899 17.9407 41.4186 17.1772 41.4186 L 12.8885 41.4186 L 12.8885 46.0666 C 12.8885 46.9198 12.1925 47.4587 11.4290 47.4587 Z"></path></g>
                     </svg>
@@ -181,7 +194,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                     className={`${styles.iconContainer} ${styles.editItem}`}
                     onClick={() => setPopupAdmin('title')}>
                     <svg height='18px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M22 7.7699V8.9999H2V7.5399C2 5.2499 3.86 3.3999 6.15 3.3999H16V5.9699C16 7.2399 16.76 7.9999 18.03 7.9999H20.97C21.37 7.9999 21.71 7.9299 22 7.7699Z" fill="#ffffff"></path> <path d="M2 9V16.46C2 18.75 3.86 20.6 6.15 20.6H17.85C20.14 20.6 22 18.75 22 16.46V9H2ZM8 17.25H6C5.59 17.25 5.25 16.91 5.25 16.5C5.25 16.09 5.59 15.75 6 15.75H8C8.41 15.75 8.75 16.09 8.75 16.5C8.75 16.91 8.41 17.25 8 17.25ZM14.5 17.25H10.5C10.09 17.25 9.75 16.91 9.75 16.5C9.75 16.09 10.09 15.75 10.5 15.75H14.5C14.91 15.75 15.25 16.09 15.25 16.5C15.25 16.91 14.91 17.25 14.5 17.25Z" fill="#ffffff"></path> <path d="M20.97 1H18.03C16.76 1 16 1.76 16 3.03V5.97C16 7.24 16.76 8 18.03 8H20.97C22.24 8 23 7.24 23 5.97V3.03C23 1.76 22.24 1 20.97 1ZM19.01 6.57C18.98 6.6 18.91 6.64 18.86 6.64L17.82 6.79C17.79 6.8 17.75 6.8 17.72 6.8C17.57 6.8 17.44 6.75 17.35 6.65C17.23 6.53 17.18 6.36 17.21 6.18L17.36 5.14C17.37 5.09 17.4 5.02 17.43 4.99L19.13 3.29C19.16 3.36 19.19 3.44 19.22 3.52C19.26 3.6 19.3 3.67 19.34 3.74C19.37 3.8 19.41 3.86 19.45 3.9C19.49 3.96 19.53 4.02 19.56 4.05C19.58 4.08 19.59 4.09 19.6 4.1C19.69 4.21 19.79 4.31 19.88 4.38C19.9 4.4 19.92 4.42 19.93 4.42C19.98 4.46 20.04 4.51 20.08 4.54C20.14 4.58 20.19 4.62 20.25 4.65C20.32 4.69 20.4 4.73 20.48 4.77C20.56 4.81 20.64 4.84 20.71 4.86L19.01 6.57ZM21.4 4.18L21.08 4.5C21.06 4.53 21.03 4.54 21 4.54C20.99 4.54 20.98 4.54 20.97 4.54C20.25 4.33 19.68 3.76 19.47 3.04C19.46 3 19.47 2.96 19.5 2.93L19.83 2.6C20.37 2.06 20.88 2.07 21.41 2.6C21.68 2.87 21.81 3.13 21.81 3.39C21.8 3.65 21.67 3.91 21.4 4.18Z" fill="#ffffff"></path> </g></svg>
-                    <input placeholder='Project Admin' type={popupAdmin === 'title' ? 'text' : 'hidden'} id='adminUpdateTitle' onChange={(e)=>setNewName(e.target.value)} />
+                    <input placeholder='Project Admin' type={popupAdmin === 'title' ? 'text' : 'hidden'} id='adminUpdateTitle' onChange={(e)=>setNewTitle(e.target.value)} />
                 </label>
                 <label htmlFor='adminUpdatePassword' style={{
                         transform: popupAdmin === 'on' ? 'translateX(40px)' : popupAdmin === 'password' ? 'translateX(-45px)' : 'translateX(0px)',
@@ -191,7 +204,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                     className={`${styles.iconContainer} ${styles.editItem}`}
                     onClick={() => setPopupAdmin('password')}>
                     <svg height='18px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M11.02 19.5H7.5C6.88 19.5 6.33 19.48 5.84 19.41C3.21 19.12 2.5 17.88 2.5 14.5V9.5C2.5 6.12 3.21 4.88 5.84 4.59C6.33 4.52 6.88 4.5 7.5 4.5H10.96" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M15.0195 4.5H16.4995C17.1195 4.5 17.6695 4.52 18.1595 4.59C20.7895 4.88 21.4995 6.12 21.4995 9.5V14.5C21.4995 17.88 20.7895 19.12 18.1595 19.41C17.6695 19.48 17.1195 19.5 16.4995 19.5H15.0195" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M15 2V22" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="0.4" d="M11.0941 12H11.1031" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="0.4" d="M7.09412 12H7.1031" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
-                    <input placeholder='Password' type={popupAdmin === 'password' ? 'text' : 'hidden'} id='adminUpdatePassword' onChange={(e)=>setNewName(e.target.value)} />
+                    <input placeholder='Password' type={popupAdmin === 'password' ? 'text' : 'hidden'} id='adminUpdatePassword' onChange={(e)=>setNewPass(e.target.value)} />
                 </label>
             </form>
         </div>
