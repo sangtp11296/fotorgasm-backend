@@ -119,7 +119,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: info-update
+          path: admin/{id}
           method: put
           cors: true
 

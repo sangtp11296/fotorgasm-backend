@@ -6,21 +6,28 @@ dotenv.config({ path: './variables.env' });
 import bcrypt from 'bcryptjs'
 
 export const updateInfoHandler = async (event, context, callback) => {
-  console.log(event);
   const req = JSON.parse(event.body);
   console.log(req);
-  context.callbackWaitsForEmptyEventLoop = false;
-  await connectToDatabase()
-    .then(() => {
-      User.findByIdAndUpdate(event.body.userID, JSON.parse(event.body), { new: true })
-        .then(user => callback(null, {
-          statusCode: 200,
-          body: JSON.stringify(user)
-        }))
-        .catch(err => callback(null, {
-          statusCode: err.statusCode || 500,
-          headers: { 'Content-Type': 'text/plain' },
-          body: 'Could not update the user.'
-        }));
-    });
+  if(event.pathParameters.id === req.userID){
+    context.callbackWaitsForEmptyEventLoop = false;
+    await connectToDatabase();
+    try{
+      const res = await User.findByIdAndUpdate(
+        req.userID,
+        { $set: req }, 
+        { new: true }
+      );
+      if (res){
+        console.log('User updated!', res);
+        return Responses._200({ message: JSON.stringify(res)});
+      } else {
+        console.log('User not found!')
+      }
+    } catch (err){
+      console.log('User cannot be updated!', err)
+      return Responses._500({ message: 'Fail to update User information! ' + err});
+    }
+  } else {
+    return Responses._503({ message: 'Authorization Fail!' });
+  }
 };

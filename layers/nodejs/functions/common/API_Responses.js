@@ -53,5 +53,16 @@ export const Responses = {
             statusCode: 500,
             body: JSON.stringify(data)
         }
+    },
+    _503(data = {}) {
+        return {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Origin': '*',
+            },
+            statusCode: 503,
+            body: JSON.stringify(data)
+        }
     }
 };
