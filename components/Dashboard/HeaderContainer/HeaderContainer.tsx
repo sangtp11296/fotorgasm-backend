@@ -22,9 +22,9 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [popup, setPopup] = useState<boolean>(false);
     const [popupAdmin, setPopupAdmin] = useState<string>('off');
-    const [selectedImg, setSelectedImg] = useState<File | null>(null);
     const [newName, setNewName] = useState<string>(`${user.name}`);
     const [newTitle, setNewTitle] = useState<string>(`${user.role}`);
+    const [newPass, setNewPass] = useState<string>('');
     const [searchBar, setSearchBar] = useState<boolean>(false);
 
     // Get window innerwidth

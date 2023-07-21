@@ -42,7 +42,7 @@ const InteractiveComponent: React.FC<Props> = ({ editorMode, postInfo }) => {
 
   // Upload Cover Image and Consider Resolution
   const handleCoverImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null
+    const file = event.target.files?.[0] || null;
     setCover(file)
     if(file) {
       const image = new Image();

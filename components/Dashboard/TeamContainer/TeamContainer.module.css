@@ -99,16 +99,26 @@
     fill: var(--primary);
 }
 .addMembers{
-    cursor: pointer;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 85%;
     margin-right: auto;
     margin-left: auto;
+    width: 85%;
+    height: 50px;
+    cursor: pointer;
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+
 }
-.addMembers .button{
+.addButton{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+}
+.addButton .button{
     height: 40px;
     width: 40px;
     border-radius: 100%;
@@ -118,11 +128,141 @@
     align-items: center;
     margin-right: 10px;
 }
-.addMembers h2{
+.addButton h2{
     font-family: "Neue Helvetica";
     font-size: 15px;
     color: var(--on-background);
 }
+.addForm{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+}
+.addForm .bubble{
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+.addForm .button{
+    background: linear-gradient(90deg, rgba(41,79,182,1) 0%, rgba(69,163,228,1) 100%);
+}
+.addForm .avatarContainer img{
+    height: inherit;
+    width: inherit;
+}
+.addForm .button label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.addForm form{
+    display: flex;
+    flex-direction: column;
+}
+.editItem input{
+    width: 250px;
+    border: none;
+    background-color: transparent;
+    color: var(--on-background);
+    padding-left: 5px;
+}
+.editItem input:focus{
+    border: none;
+    outline: none;
+}
+.verifyButton{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.verifyButton button{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: .6;
+    transition: all .2s;
+}
+.verifyButton button:hover{
+    opacity: 1;
+    transition: all .2s;
+}
+.addButton.active{
+    animation: activeAddNew .5s ease-in 1 normal forwards;
+}
+.addForm.active{
+    animation: activeAddForm .8s ease-in 1 normal forwards;
+}
+.addButton.deactive{
+    animation: deActiveAddNew .5s ease-in 1 normal forwards;
+}
+.addForm.deactive{
+    animation: deActiveAddForm .5s ease-in 1 normal forwards;
+}
+@keyframes activeAddNew {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+@keyframes activeAddForm {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+        visibility: visible;
+    }
+    50%{
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@keyframes deActiveAddNew {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    to {
+        transform: translateX(-0%);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@keyframes deActiveAddForm {
+    0% {
+        transform: translateX(-100%);
+        opacity: 1;
+        visibility: visible;
+    }
+    50%{
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
 @media screen and (max-width: 1355px) {
     .teamContainer{
         grid-column: 2 / 7;
