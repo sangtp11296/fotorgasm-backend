@@ -147,6 +147,7 @@
     width: 40px;
     border-radius: 100%;
     margin-right: 10px;
+    overflow: hidden;
 }
 .addForm .button{
     background: linear-gradient(90deg, rgba(41,79,182,1) 0%, rgba(69,163,228,1) 100%);

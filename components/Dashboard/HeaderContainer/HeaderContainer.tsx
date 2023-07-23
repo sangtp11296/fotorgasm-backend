@@ -99,7 +99,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
                     }),
                 });
                 const resData = await res.json();
-                const presignedUrl = JSON.parse(resData.body)
+                const presignedUrl = JSON.parse(resData.body);
 
                 // Upload avatar to presigned Url
                 const uploadAvatar = await fetch(presignedUrl.presignedUrl, {

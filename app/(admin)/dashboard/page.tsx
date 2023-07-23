@@ -62,7 +62,7 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
               postInfo={(value) => setPostInfo((prev) => (
                 prev ? { ...prev, ...value } : value
                 ))}/>
-              <TeamContainer editorMode={editor}/>
+              <TeamContainer user={session.data.user} editorMode={editor}/>
               <InteractiveComponent postInfo={postInfo} editorMode={editor}/>
           </div>
       </div>

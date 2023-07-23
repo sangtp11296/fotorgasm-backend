@@ -3,15 +3,25 @@ import React, { useState } from 'react'
 import styles from './TeamContainer.module.css'
 import RichEditor from '@/components/RichEditor/RichEditor'
 
+type User = {
+    id: string;
+    avatar: string;
+    role: string;
+    team: string[];
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+}
 interface teamMembers {
     name: string,
     title: string,
     img: string
 }
 interface Props{
+    user: User,
     editorMode: boolean
 }
-const TeamContainer: React.FC<Props> = ({ editorMode }) => {
+const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
     const [addNew, setAddNew] = useState<boolean>(false);
     const teamMembers: teamMembers[] = [
         {
@@ -124,8 +134,47 @@ const TeamContainer: React.FC<Props> = ({ editorMode }) => {
         const image = event.target.files?.[0] || null;
         setSelectedAva(image);
     }
-    const handleAddMemberSubmit = () => {
-        
+    const handleAddMemberSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // Upload team member info first
+        try{
+            const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
+                method: 'POST',
+                body: JSON.stringify({
+                    userID: user.id,
+                    name: newName,
+                    role: newRole
+                })
+            }).then((response) => {
+                const res = response.json()
+                console.log(res)
+                // if (selectedAva) {
+                //     const req = fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                //         method: 'POST',
+                //         body: JSON.stringify({
+                //             // userID: res.id,
+                //             fileName: newName + `-avatar.${selectedAva.type.split('/')[1]}`,
+                //             fileType: selectedAva.type,
+                //         }),
+                //     });
+                //     const reqData = req.json();
+                //     const presignedUrl = JSON.parse(reqData.body);
+    
+                //     // Upload avatar to presigned Url
+                //     const uploadAvatar = fetch(presignedUrl.presignedUrl, {
+                //         method: 'PUT',
+                //         headers: {
+                //             'Content-Type': selectedAva.type,
+                //         },
+                //         body: selectedAva
+                //     })
+                // }
+            })
+        } catch (err) {
+            console.log('Cannot upload team memmber info!', err)
+        }
+
     }
   return (
       <div className={`${styles.teamContainer} ${styles.gridBlock}`}>
@@ -189,12 +238,12 @@ const TeamContainer: React.FC<Props> = ({ editorMode }) => {
                         </button>
                     }
                     
-                    <form id='addNewMemberForm' onSubmit={handleAddMemberSubmit}>
+                    <form id='addNewMemberForm' onSubmit={(e) => handleAddMemberSubmit(e)}>
                         <label htmlFor='memberName' className={`${styles.iconContainer} ${styles.editItem}`}>
                             <input placeholder='What you want to be called?' id='adminNameUpdate' onChange={(e)=>setNewName(e.target.value)} />
                         </label>
                         <label htmlFor='memberRole' className={`${styles.iconContainer} ${styles.editItem}`}>
-                            <input placeholder='What you want to be known as?' id='adminNameUpdate' onChange={(e)=>setNewName(e.target.value)} />
+                            <input placeholder='What you want to be known as?' id='adminNameUpdate' onChange={(e)=>setNewRole(e.target.value)} />
                         </label>
                     </form>
                     <div className={styles.verifyButton}>
