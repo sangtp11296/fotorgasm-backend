@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import styles from './TeamContainer.module.css'
 import RichEditor from '@/components/RichEditor/RichEditor'
+import { signOut } from 'next-auth/react'
 
 type User = {
     id: string;
@@ -146,31 +147,35 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
                     name: newName,
                     role: newRole
                 })
-            }).then((response) => {
-                const res = response.json()
-                console.log(res)
-                // if (selectedAva) {
-                //     const req = fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
-                //         method: 'POST',
-                //         body: JSON.stringify({
-                //             // userID: res.id,
-                //             fileName: newName + `-avatar.${selectedAva.type.split('/')[1]}`,
-                //             fileType: selectedAva.type,
-                //         }),
-                //     });
-                //     const reqData = req.json();
-                //     const presignedUrl = JSON.parse(reqData.body);
-    
-                //     // Upload avatar to presigned Url
-                //     const uploadAvatar = fetch(presignedUrl.presignedUrl, {
-                //         method: 'PUT',
-                //         headers: {
-                //             'Content-Type': selectedAva.type,
-                //         },
-                //         body: selectedAva
-                //     })
-                // }
             })
+            if (!res.ok) {
+                // Handle any HTTP errors
+                throw new Error('Network response was not ok.');
+            }
+            const data = await res.json();
+            const newMemberData = JSON.parse(data.newMember);
+            if (selectedAva) {
+                const req = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        userID: newMemberData._id,
+                        fileName: newMemberData.name + `-avatar.${selectedAva.type.split('/')[1]}`,
+                        fileType: selectedAva.type,
+                    }),
+                });
+                const reqData = await req.json();
+                const presignedUrl = JSON.parse(reqData.body);
+
+                // Upload avatar to presigned Url
+                const uploadAvatar = await fetch(presignedUrl.presignedUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': selectedAva.type,
+                    },
+                    body: selectedAva
+                })
+                uploadAvatar.status === 200 && signOut();
+            }
         } catch (err) {
             console.log('Cannot upload team memmber info!', err)
         }
