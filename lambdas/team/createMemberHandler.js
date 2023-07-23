@@ -23,11 +23,12 @@ export const createMemberHandler = async (event, context, callback) => {
       await user.save();
 
       // Retrieve the newly added team member's information
-      const addedTeamMemberIndex = user.team.findIndex(member => member.name === newTeamMember.name && member.role === newTeamMember.role);
-
-
-      console.log('Team member info is added successfully!', addedTeamMemberIndex);
-      return Responses._200({ newMember: JSON.stringify(addedTeamMemberIndex)});
+      const addedTeamMemberIndex = user.team.findIndex(member => member.name === newTeamMember.name && JSON.stringify(member.role) === JSON.stringify(newTeamMember.role));
+      // Retrieve the newly added team member's information using the index
+      const addedTeamMember = user.team[addedTeamMemberIndex];
+      
+      console.log('Team member info is added successfully!', addedTeamMember);
+      return Responses._200({ newMember: JSON.stringify(addedTeamMember)});
     } else {
       console.log('User not found!');
       return Responses._500({ message: 'User not found!'});

@@ -95,11 +95,22 @@ export async function updateAvatarHandler(event, context, callback) {
             );
             if (updatedUser) {
                 console.log('Avatar URL updated successfully:', updatedUser);
+            } else if (!updatedUser) {
+                // In case the ID is team member ID
+                const memberId = { 'team._id': srcKey.substring(startIndex, endIndex)};
+                const updatedTeamMember = await User.updateOne(
+                    memberId,
+                    { $set: { 'team.$.avatar': url } },
+                    { new: true }
+                );
+                if(updatedTeamMember) {
+                    console.log('Team member avatar is uploaded successfully!', updatedTeamMember);
+                }
             } else {
                 console.log('User not found.');
             }
         } else {
-            console.log('UserID not found.');
+            console.log('Invalid ID!');
         }
 
     } catch (error) {
