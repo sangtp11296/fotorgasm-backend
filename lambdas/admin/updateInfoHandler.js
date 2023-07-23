@@ -3,11 +3,9 @@ import {User} from '/opt/nodejs/database/models/User.js';
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js'
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
-import bcrypt from 'bcryptjs'
 
 export const updateInfoHandler = async (event, context, callback) => {
   const req = JSON.parse(event.body);
-  console.log(req);
   if(event.pathParameters.id === req.userID){
     context.callbackWaitsForEmptyEventLoop = false;
     await connectToDatabase();

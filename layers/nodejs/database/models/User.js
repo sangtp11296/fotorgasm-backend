@@ -28,10 +28,12 @@ const userSchema = new mongoose.Schema({
             name: {
                 type: String
             },
-            id: {
-                type: String
-            },
-            role: {
+            role: [
+                {
+                    type: String
+                }
+            ],
+            avatar: {
                 type: String
             }
         }

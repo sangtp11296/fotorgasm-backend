@@ -123,6 +123,17 @@ functions:
           method: put
           cors: true
 
+  # Team member api
+  createMemberHandler:
+    handler: lambdas/team/createMemberHandler.createMemberHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: team
+          method: post
+          cors: true
+
 resources:
   Resources:   
     FotorgasmPublicDataBucket:
