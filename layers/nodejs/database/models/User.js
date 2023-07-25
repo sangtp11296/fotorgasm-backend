@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
     team:[
         {
             name: {
-                type: String
+                type: String,
+                unique: true
             },
             role: [
                 {

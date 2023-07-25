@@ -11,7 +11,7 @@ export const createMemberHandler = async (event, context, callback) => {
   try{
     const req = JSON.parse(event.body);
     const user = await User.findById(req.userID);
-    if (user){
+    if (user && req.name && req.role){
       // Add the new team member to the user's team
       const newTeamMember = {
         name: req.name,
