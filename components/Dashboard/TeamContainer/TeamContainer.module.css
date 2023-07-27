@@ -65,16 +65,39 @@
     align-items: center;
     margin-bottom: 15px;
 }
-.memberContainer img{
+.avatarContainer{
     height: 45px;
     width: 45px;
-    object-fit: cover;
     border-radius: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.avatarContainer img{
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+}
+.avatarContainer button{
+    position: absolute;
+    height: 45px;
+    width: 45px;
+    top: 0;
+    left: 0;
+    background-color: #a9a9a93b;
+}
+.avatarContainer label{
+    cursor: pointer;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 .memberName{
     font-family: 'Neue Helvetica';
     color: var(--on-background);
     margin-left: 10px;
+    display: flex;
+    flex-direction: column;
 }
 .memberName h2{
     font-size: 15px;
@@ -86,6 +109,24 @@
     font-weight: 300;
     opacity: .8;
     letter-spacing: .5px;
+}
+.memberName input{
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .7px;
+    color: var(--on-background);
+    width: 230px;
+}
+.memberName input:last-child{
+    font-size: 13px;
+    font-weight: 300;
+    opacity: .8;
+    letter-spacing: .5px;
+}
+.memberName input:focus{
+    outline: none;
 }
 .functionDot{
     margin-left: auto;
@@ -109,6 +150,9 @@
     justify-content: center;
     margin-right: 10px;
     gap: 10px;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
 }
 .functionWrapper button{
     position: relative;
@@ -128,6 +172,44 @@
 .functionWrapper button:hover {
     opacity: 1;
     transition: all .2s;
+}
+.functionWrapper.active{
+    animation: functionWrapperIn 0.3s ease-in 1 normal forwards;
+}
+.functionWrapper.deactive{
+    animation: functionWrapperOut 0.4s ease-in 1 normal forwards;
+}
+@keyframes functionWrapperIn {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    60%{
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@keyframes functionWrapperOut {
+    0% {
+        transform: translateX(0%);
+        opacity: 1;
+        visibility: visible;
+    }
+    50%{
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 .addMembers{
     margin-right: auto;
