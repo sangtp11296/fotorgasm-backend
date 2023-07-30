@@ -18,11 +18,10 @@ export const updateMemberHandler = async (event, context, callback) => {
             'team.$.name': req.name,
             'team.$.role': req.role.split(',').map(role => role.trim()),
         }
+        console.log(memberID);
         const updatedMember = await User.updateOne(
             memberID,
-            { $set: {
-                updateMemberInfo
-            }},
+            { $set: updateMemberInfo},
             {new: true}
         );
         if(updatedMember) {

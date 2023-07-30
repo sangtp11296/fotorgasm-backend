@@ -133,6 +133,15 @@ functions:
           path: team
           method: post
           cors: true
+  updateMemberHandler:
+    handler: lambdas/team/updateMemberHandler.updateMemberHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: team
+          method: put
+          cors: true
 
 resources:
   Resources:   
