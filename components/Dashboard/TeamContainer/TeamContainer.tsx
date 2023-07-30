@@ -112,49 +112,51 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
         const image = event.target.files?.[0] || null;
         setUpdateAvatar(image);
     }
-    const handleUpdateMemberInfo = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleUpdateMemberInfo = async (e: React.MouseEvent<HTMLButtonElement>, name: string, role: string[]) => {
         e.preventDefault();
-        console.log(updateName)
         // Upload team member info first
-        // try{
-        //     const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
-        //         method: 'POST',
-        //         body: JSON.stringify({
-        //             userID: user.id,
-        //             memberID: updateID,
-        //             name: updateName,
-        //             role: updateRole
-        //         })
-        //     })
-        //     if (!res.ok) {
-        //         // Handle any HTTP errors
-        //         throw new Error('Network response was not ok.');
-        //     }
-        //     if (updateAvatar) {
-        //         const req = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
-        //             method: 'POST',
-        //             body: JSON.stringify({
-        //                 userID: updateID,
-        //                 fileName: updateName + `-avatar.${updateAvatar.type.split('/')[1]}`,
-        //                 fileType: updateAvatar.type,
-        //             }),
-        //         });
-        //         const reqData = await req.json();
-        //         const presignedUrl = JSON.parse(reqData.body);
+        try{
+            if (name !== updateName || role.join(', ') !== updateRole){
+                const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        userID: user.id,
+                        memberID: updateID,
+                        name: updateName,
+                        role: updateRole
+                    })
+                })
+                if (!res.ok) {
+                    // Handle any HTTP errors
+                    throw new Error('Network response was not ok.');
+                }
+            };
+            if (updateAvatar) {
+                console.log(updateAvatar)
+                const req = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        userID: updateID,
+                        fileName: updateName + `-avatar.${updateAvatar.type.split('/')[1]}`,
+                        fileType: updateAvatar.type,
+                    }),
+                });
+                const reqData = await req.json();
+                const presignedUrl = JSON.parse(reqData.body);
 
-        //         // Upload avatar to presigned Url
-        //         const uploadAvatar = await fetch(presignedUrl.presignedUrl, {
-        //             method: 'PUT',
-        //             headers: {
-        //                 'Content-Type': updateAvatar.type,
-        //             },
-        //             body: selectedAva
-        //         })
-        //         uploadAvatar.status === 200 && signOut();
-        //     }
-        // } catch (err) {
-        //     console.log('Cannot upload team memmber info!', err)
-        // }
+                // Upload avatar to presigned Url
+                const uploadAvatar = await fetch(presignedUrl.presignedUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': updateAvatar.type,
+                    },
+                    body: updateAvatar
+                })
+            };
+            signOut();
+        } catch (err) {
+            console.log('Cannot upload team memmber info!', err)
+        }
     }
     // Add new member section
     const [addNew, setAddNew] = useState<boolean>(false);
@@ -271,7 +273,7 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
                                         </button>
                                         {
                                             updateID === member._id ? 
-                                            <button onClick={(e) => handleUpdateMemberInfo(e)}>
+                                            <button onClick={(e) => handleUpdateMemberInfo(e, member.name, member.role)}>
                                                 <svg height={20} width={20} fill="#ffffff" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 33.7169 50.6051 C 45.9141 50.6051 56.0000 40.4968 56.0000 28.2994 C 56.0000 16.1245 45.8920 5.9937 33.6944 5.9937 C 22.4180 5.9937 12.9611 14.6419 11.5909 25.5365 C 12.1749 25.5365 12.7365 25.5814 13.2981 25.6712 C 13.9944 25.7611 14.6908 25.9183 15.3646 26.1205 C 16.4204 16.9332 24.1926 9.8124 33.6944 9.8124 C 43.9598 9.8124 52.1812 18.0563 52.2037 28.2994 C 52.2037 33.0840 50.4294 37.3969 47.5090 40.6765 C 44.1171 37.8461 39.0406 35.9593 33.6944 35.9593 C 31.1785 35.9593 28.3258 36.4984 25.6751 37.4418 C 25.8324 38.2954 25.9222 39.1715 25.9222 40.0475 C 25.9222 42.9902 25.0012 45.7531 23.4513 48.0668 C 26.5287 49.6616 30.0329 50.6051 33.7169 50.6051 Z M 33.6944 32.0956 C 38.0073 32.0956 41.2644 28.3668 41.2644 23.6720 C 41.2644 19.2469 37.9399 15.4057 33.6944 15.4057 C 29.4714 15.4057 26.1244 19.2469 26.1244 23.6720 C 26.1244 28.3668 29.4040 32.0956 33.6944 32.0956 Z M 11.4112 51.4587 C 17.6783 51.4587 22.8224 46.3372 22.8224 40.0475 C 22.8224 33.8028 17.6783 28.6363 11.4112 28.6363 C 5.1665 28.6363 0 33.8028 0 40.0475 C 0 46.3372 5.1665 51.4587 11.4112 51.4587 Z M 10.0634 46.7415 C 9.7040 46.7415 9.2547 46.5842 8.9627 46.2698 L 4.6498 41.5301 C 4.4926 41.3504 4.3803 40.9685 4.3803 40.6540 C 4.3803 39.8903 4.9868 39.2838 5.7505 39.2838 C 6.1998 39.2838 6.5592 39.4860 6.8063 39.7555 L 9.9960 43.2148 L 15.9487 34.9709 C 16.1958 34.6115 16.6001 34.3644 17.0943 34.3644 C 17.8356 34.3644 18.4870 34.9484 18.4870 35.7122 C 18.4870 35.9593 18.3747 36.2513 18.1725 36.5433 L 11.2090 46.2248 C 10.9844 46.5393 10.5351 46.7415 10.0634 46.7415 Z"></path></g></svg>
                                             </button> :
                                             <button className={styles.deleteMember}>
