@@ -5,6 +5,7 @@
 .gridBlock{
     background-color: var(--surface-04);
     border-radius: 15px;
+    overflow: hidden;
 }
 .header{
     display: flex;

@@ -1,9 +1,23 @@
 .ck.ck-editor{
     height: 100% !important;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
-.ck.ck-toolbar__items *{
+.ck-editor__top{
+    /* flex: 1; */
+    /* max-height: min-content; */
 }
-.ck.ck-editor__main{
-    /* height: 40%; */
+.ck.ck-toolbar{
+    zoom: .8;
 }
+.ck-editor__main{
+    flex: 1;
+    overflow: auto !important;
+}
+.ck-editor__editable {
+    min-height: 100%;
+    max-height: 100%;
+}
+.ck-editor__editable::-webkit-scrollbar-track{
+    background-color: white;
+} 

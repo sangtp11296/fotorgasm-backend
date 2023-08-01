@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import styles from './PostSum.module.css'
+import { useSession } from 'next-auth/react'
 
 // Define props
 interface Props {
@@ -66,6 +67,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
   const [desc,setDesc] = useState<string>('');
   const [tag, setTag] = useState<string[]>([]);
   const [error, setError] = useState<boolean>(false);
+  const session = useSession();
 
   // Trigger Add Mode
   useEffect(() => {

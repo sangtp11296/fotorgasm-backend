@@ -15,7 +15,7 @@
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",
     "@types/react-slick": "^0.23.10",
-    "ckeditor5-custom-build": "file:components/ckeditor5",
+    "ckeditor5-custom-build": "file:ckeditor",
     "file-type": "^18.5.0",
     "next": "13.4.5",
     "next-auth": "^4.22.1",

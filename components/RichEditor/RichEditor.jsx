@@ -1,14 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import styles from './RichEditor.module.css'
 import './CKEditor.css'
 
-const RichEditor = () => {
-    const [content, setContent] = useState('')
+const RichEditor = ({ onChange }) => {
+    const [content, setContent] = useState('');
+    
     const editorConfiguration = {
-        removePlugins: ['Title','Markdown', 'Watchdog'],
         language:{
             textPartLanguage: [
                 { title: 'English', languageCode: 'en' },
@@ -19,55 +19,20 @@ const RichEditor = () => {
         },
         toolbar: {
             items: [
-                'textPartLanguage', 'heading', '|',
-                'fontfamily', 'fontsize', '|',
-                'alignment', '|',
-                'fontColor', 'fontBackgroundColor', '|',
+                'heading', 'style', '|',
                 'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-                'link', '|',
-                'outdent', 'indent', '|',
-                'bulletedList', 'numberedList', 'todoList', 'horizontalLine', '|',
-                'code', 'codeBlock', 'sourceEditing', '|',
-                'insertTable', '|',
-                'insertImage', 'mediaEmbed', 'blockQuote', '|',
-                'undo', 'redo', 'findAndReplace', 'highlight', 'specialCharacters'
+                'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor', '|',
+                'alignment', 'outdent', 'indent', '|',
+                'code', 'codeBlock', 'sourceEditing', 'showBlocks', '|',
+                'bulletedList', 'numberedList', 'horizontalLine', '|',
+                'link', 'insertImage', 'mediaEmbed', 'blockQuote', '|',
+                'undo', 'redo', 'findAndReplace', 'specialCharacters'
             ],
             viewportTopOffset: 30,
             shouldNotGroupWhenFull: true
         },
         ckfinder: {
             uploadUrl: '/uploads'
-        },
-        highlight: {
-            options: [
-                {
-                    model: 'blueMarker',
-                    class: 'marker-blue',
-                    title: 'Blue marker',
-                    color: 'var(--main-brand-color-theme)',
-                    type: 'marker'
-                },
-                {
-                    model: 'greenMarker',
-                    class: 'marker-green',
-                    title: 'Green marker',
-                    color: 'var(--ck-highlight-marker-green)',
-                    type: 'marker'
-                },
-                {
-                    model: 'redPen',
-                    class: 'pen-red',
-                    title: 'Red pen',
-                    color: 'var(--ck-highlight-pen-red)',
-                    type: 'pen'
-                }
-            ]
-        },
-        table: {
-            contentToolbar: [
-                'tableColumn', 'tableRow', 'mergeTableCells',
-                'tableProperties', 'tableCellProperties', 'toggleTableCaption'
-            ],
         },
         image: {
             toolbar: [
@@ -91,7 +56,8 @@ const RichEditor = () => {
                 onChange={ ( event, editor ) => {
                     const data = editor.getData();
                     // console.log( { event, editor, data } );
-                    setContent(data)
+                    setContent(data);
+                    onChange(content);
                 } }
             />
     </div>

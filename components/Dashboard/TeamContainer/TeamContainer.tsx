@@ -1,8 +1,9 @@
 'use client'
 import React, { useState } from 'react'
 import styles from './TeamContainer.module.css'
+import { signOut, useSession } from 'next-auth/react'
+import dynamic from 'next/dynamic'
 import RichEditor from '@/components/RichEditor/RichEditor'
-import { signOut } from 'next-auth/react'
 
 type User = {
     id: string;
@@ -19,88 +20,14 @@ type User = {
     image?: string | null | undefined;
 }
 interface Props{
-    user: User,
     editorMode: boolean
 }
-const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
+const Editor = dynamic(() => import('@/components/RichEditor/RichEditor'), { ssr: false });
+const TeamContainer: React.FC<Props> = ({ editorMode }) => {
 
-
-    const editorConfiguration = {
-        removePlugins: ['Title','Markdown', 'Watchdog'],
-        language:{
-            textPartLanguage: [
-                { title: 'English', languageCode: 'en' },
-                { title: 'German', languageCode: 'de' },
-                { title: 'Vietnamese', languageCode: 'vi' },
-                { title: 'Chinese', languageCode: 'zh-cn'}
-            ]
-        },
-        toolbar: {
-            items: [
-                'textPartLanguage', 'heading', '|',
-                'fontfamily', 'fontsize', '|',
-                'alignment', '|',
-                'fontColor', 'fontBackgroundColor', '|',
-                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-                'link', '|',
-                'outdent', 'indent', '|',
-                'bulletedList', 'numberedList', 'todoList', 'horizontalLine', '|',
-                'code', 'codeBlock', 'sourceEditing', '|',
-                'insertTable', '|',
-                'insertImage', 'mediaEmbed', 'blockQuote', '|',
-                'undo', 'redo', 'findAndReplace', 'highlight', 'specialCharacters'
-            ],
-            viewportTopOffset: 30,
-            shouldNotGroupWhenFull: true
-        },
-        ckfinder: {
-            uploadUrl: '/uploads'
-        },
-        highlight: {
-            options: [
-                {
-                    model: 'blueMarker',
-                    class: 'marker-blue',
-                    title: 'Blue marker',
-                    color: 'var(--main-brand-color-theme)',
-                    type: 'marker'
-                },
-                {
-                    model: 'greenMarker',
-                    class: 'marker-green',
-                    title: 'Green marker',
-                    color: 'var(--ck-highlight-marker-green)',
-                    type: 'marker'
-                },
-                {
-                    model: 'redPen',
-                    class: 'pen-red',
-                    title: 'Red pen',
-                    color: 'var(--ck-highlight-pen-red)',
-                    type: 'pen'
-                }
-            ]
-        },
-        table: {
-            contentToolbar: [
-                'tableColumn', 'tableRow', 'mergeTableCells',
-                'tableProperties', 'tableCellProperties', 'toggleTableCaption'
-            ],
-        },
-        image: {
-            toolbar: [
-                'imageStyle:inline',
-                'imageStyle:block',
-                'imageStyle:side',
-                '|',
-                'toggleImageCaption',
-                'imageTextAlternative',
-                'linkImage'
-            ]},
-        mediaEmbed: {
-            removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
-        }
-    };
+    const session = useSession();
+    const user: User | undefined = session.data?.user;
+    
 
     // Update or detete existed team member info
     const [funcDot, setFuncdot] = useState<{[key: string]: boolean}>({});
@@ -120,7 +47,7 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
                 const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
                     method: 'PUT',
                     body: JSON.stringify({
-                        userID: user.id,
+                        userID: user?.id,
                         memberID: updateID,
                         name: updateName,
                         role: updateRole
@@ -158,6 +85,8 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
             console.log('Cannot upload team memmber info!', err)
         }
     }
+
+
     // Add new member section
     const [addNew, setAddNew] = useState<boolean>(false);
     const [newName, setNewName] = useState<string>('');
@@ -174,7 +103,7 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
             const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
                 method: 'POST',
                 body: JSON.stringify({
-                    userID: user.id,
+                    userID: user?.id,
                     name: newName,
                     role: newRole
                 })
@@ -224,12 +153,12 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
                         <svg height='20px' fill="var(--primary)" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 27.9999 51.9063 C 41.0546 51.9063 51.9063 41.0781 51.9063 28 C 51.9063 14.9453 41.0312 4.0937 27.9765 4.0937 C 14.8983 4.0937 4.0937 14.9453 4.0937 28 C 4.0937 41.0781 14.9218 51.9063 27.9999 51.9063 Z M 27.9999 14.5 C 32.4765 14.5 36.0390 18.4375 36.0390 23.1719 C 36.0390 28.2109 32.4999 32.0547 27.9999 32.0078 C 23.4765 31.9609 19.9609 28.2109 19.9609 23.1719 C 19.9140 18.4375 23.4999 14.5 27.9999 14.5 Z M 42.2499 41.8750 L 42.3202 42.1797 C 38.7109 46.0234 33.3671 48.2266 27.9999 48.2266 C 22.6093 48.2266 17.2655 46.0234 13.6562 42.1797 L 13.7265 41.8750 C 15.7655 39.0625 20.7812 35.9922 27.9999 35.9922 C 35.1952 35.9922 40.2343 39.0625 42.2499 41.8750 Z"></path></g></svg>
 
                     </div>
-                    <span>{user.team.length}</span>
+                    <span>{user?.team.length}</span>
                 </div>
             </div>
             <div className={styles.teamMembers}>
                 {
-                    user.team.map((member, ind) => {
+                    user?.team.map((member, ind) => {
                         return(
                             <div key={ind} className={styles.memberContainer}>
                                 <div className={styles.avatarContainer}>
@@ -360,12 +289,7 @@ const TeamContainer: React.FC<Props> = ({ user, editorMode }) => {
             </div>
         </>
         :
-        <>
-            <div className={styles.header}>
-                <h2>Main Content</h2>
-            </div>
-            {/* <RichEditor/> */}
-        </>
+        <Editor onChange={(v: any)=> console.log(v)}/>
         }
     </div>
   )
