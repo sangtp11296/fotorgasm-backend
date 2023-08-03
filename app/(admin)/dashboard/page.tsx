@@ -31,7 +31,7 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
   const router = useRouter();
   const [menuType, setMenuType] = useState<string>('')
   const [editor, setEditor] = useState<boolean>(false)
-  const [postInfo, setPostInfo] = useState<PostInfo | null>(null);
+  const [postMeta, setPostMeta] = useState<PostInfo | null>(null);
 
   if  (session.status === 'loading'){
     return <p style={{color: 'white'}}>Loading...</p>
@@ -49,7 +49,6 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
   function handleAddPost(value: boolean){
     setEditor(value)
   }
-  console.log(postInfo, 'postInfo')
   if (session.status === 'authenticated'){
     return (
       <div className={styles.dashboard}>
@@ -59,11 +58,11 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
               <PostSum 
               menuType={menuType} 
               addPost={handleAddPost} 
-              postInfo={(value) => setPostInfo((prev) => (
+              postMetaData={(value) => setPostMeta((prev) => (
                 prev ? { ...prev, ...value } : value
                 ))}/>
               <TeamContainer editorMode={editor}/>
-              <InteractiveComponent postInfo={postInfo} editorMode={editor}/>
+              <InteractiveComponent postMeta={postMeta} editorMode={editor}/>
           </div>
       </div>
     ) 

@@ -7,11 +7,11 @@ import { useSession } from 'next-auth/react'
 interface Props {
   menuType: string,
   addPost: (data: boolean) => void,
-  postInfo: (data: PostInfo) => void
+  postMetaData: (data: PostMetaData) => void
 }
 
-// Define Info Post type
-interface PostInfo {
+// Define Post Meta Data type
+interface PostMetaData {
   format: string,
   title: string,
   slug: string,
@@ -58,7 +58,7 @@ const icons: { [key: string]: React.JSX.Element } = {
   )
 }
 
-const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
+const PostSum: React.FC<Props> = ({ menuType, addPost, postMetaData }) => {
   const [addTrigger, setAddTrigger] = useState<boolean>(false)
   const [format, setFormat] = useState<string>('')
   const [title,setTitle] = useState<string>('');
@@ -68,7 +68,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
   const [tag, setTag] = useState<string[]>([]);
   const [error, setError] = useState<boolean>(false);
   const session = useSession();
-
+  const user = session.data?.user;
   // Trigger Add Mode
   useEffect(() => {
     addPost(addTrigger);
@@ -76,7 +76,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
   
   // Send post Info to Dashboard
   useEffect(() => {
-    const newPost: PostInfo = {
+    const newPost: PostMetaData = {
       format: format,
       title: title,
       slug: toSlug(title),
@@ -85,7 +85,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
       description: desc,
       tags: tag,
     }
-    postInfo(newPost);
+    postMetaData(newPost);
   },[format, title, author, category, desc, tag])
   
   // Convert title to slug
@@ -171,12 +171,19 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
               </div>
               <div className={styles.textField}>
                   <label>Author<span className={styles.textDanger}> *</span></label>
-                  <input name='author' type='text' maxLength={500} className={styles.textInput} placeholder='Author...' onChange={e=>{setAuthor(e.target.value)}}/>
+                  <select name='author' placeholder='Author...' className={styles.textInput}  onChange={e=>{setAuthor(e.target.value)}}>
+                    <option value='' defaultValue='' className={styles.items}>Author...</option>
+                    {
+                      user?.team.map((mem, ind) => {
+                        return <option value={mem.name} className={styles.items}>{mem.name}</option>
+                      })
+                    }
+                  </select>
               </div>
               <div className={styles.textField}>
                   <label>Category<span className={styles.textDanger}> *</span></label>
                   <select name='category' placeholder='Select category...' className={styles.textInput}  onChange={e=>{setCategory(e.target.value)}}>
-                      <option value='none' defaultValue='none' className={styles.items}>Select section...</option>
+                      <option value='' defaultValue='' className={styles.items}>Select section...</option>
                       <option value='Fotography' className={styles.items}>Fotography</option>
                       <option value='Films' className={styles.items}>Films</option>
                       <option value='Something' className={styles.items}>Something</option>
@@ -194,7 +201,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postInfo }) => {
               </div>
               <div className={styles.textField}>
                 <label>Description<span className={styles.textDanger}> *</span></label>
-                <textarea name='description' style={{maxHeight:'65px', maxWidth:'250px'}} className={styles.textInput} placeholder='Description' onChange={e=>{setDesc(e.target.value)}}></textarea>
+                <textarea name='description' style={{maxHeight:'65px', maxWidth:'250px',minWidth:'250px', minHeight:'28px'}} className={styles.textInput} placeholder='Description' onChange={e=>{setDesc(e.target.value)}}></textarea>
               </div>
               <div className={styles.submit}>
                   <button className={styles.button} type='submit'>Submit</button>

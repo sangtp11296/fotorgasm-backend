@@ -7,7 +7,7 @@ import Slider from 'react-slick';
 import './SlickMenu.css'
 
 
-interface PostInfo {
+interface PostMetaData {
   format: string,
   title: string,
   slug: string,
@@ -19,9 +19,9 @@ interface PostInfo {
 // Define props
 interface Props {
   editorMode: boolean,
-  postInfo: PostInfo | null
+  postMeta: PostMetaData | null
 }
-const InteractiveComponent: React.FC<Props> = ({ editorMode, postInfo }) => {
+const InteractiveComponent: React.FC<Props> = ({ editorMode, postMeta }) => {
   const [finalPost, setFinalPost] = useState<PreviewPost>({})
   const [cover, setCover] = useState<File | null>(null);
   const [coverURL,setCoverURL] = useState<string>('');
@@ -32,8 +32,8 @@ const InteractiveComponent: React.FC<Props> = ({ editorMode, postInfo }) => {
   
   // Update Final Post
   useEffect(() => {
-    setFinalPost((prev) => ({ ...prev, ...postInfo }))
-  }, [postInfo, cover, coverRes])
+    setFinalPost((prev) => ({ ...prev, ...postMeta }))
+  }, [postMeta, cover, coverRes])
   useEffect(() => {
     if(cover){
       setFinalPost((prev) => ({...prev, coverRes: coverRes, cover: URL.createObjectURL(cover)}))
