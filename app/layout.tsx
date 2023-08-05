@@ -1,4 +1,5 @@
 import AuthProvider from '@/components/AuthProvider/AuthProvider'
+import { Providers } from '@/redux/provider'
 import '@/styles/globals.css'
 
 export const metadata = {
@@ -14,7 +15,9 @@ const RootLayout = ({ children }: { children: React.ReactNode}) => {
       </head>
       <body suppressHydrationWarning={true} >
         <AuthProvider>
-          {children}
+          <Providers>
+            {children}
+          </Providers>
         </AuthProvider>
       </body>
     </html>

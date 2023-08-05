@@ -14,3 +14,19 @@ export type PreviewPost = {
     height: number
   }
 }
+export type DraftPost = {
+  id: string,
+  format: string,
+  title: string,
+  slug: string,
+  author: string,
+  category: string,
+  description: string,
+  tags: string[],
+  coverUrl: string,
+  content: string,
+  coverRes: {
+    width: number,
+    height: number
+  }
+}

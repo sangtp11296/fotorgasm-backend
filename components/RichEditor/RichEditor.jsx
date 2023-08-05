@@ -4,8 +4,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import styles from './RichEditor.module.css'
 import './CKEditor.css'
+import S3Uploader from './S3Uploader';
 
-const RichEditor = ({ onChange }) => {
+const RichEditor = ({ onChange, postMetaData }) => {
     const [content, setContent] = useState('');
     
     const editorConfiguration = {
@@ -46,8 +47,16 @@ const RichEditor = ({ onChange }) => {
             ]},
         mediaEmbed: {
             removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
-        }
+        },
+        // extraPlugins: [CustomUploadAdapterPlugin]
     };
+
+    // const CustomUploadAdapterPlugin = (editor) => {
+    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader, postMeta) => {
+    //         const postMeta = postMetaData;
+    //         return S3Uploader({ loader, postMeta });
+    //     };
+    //   };
   return (
     <div className={styles.richEditor}>
         <CKEditor

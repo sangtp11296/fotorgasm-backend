@@ -61,7 +61,7 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
               postMetaData={(value) => setPostMeta((prev) => (
                 prev ? { ...prev, ...value } : value
                 ))}/>
-              <TeamContainer editorMode={editor}/>
+              <TeamContainer postMeta={postMeta} editorMode={editor}/>
               <InteractiveComponent postMeta={postMeta} editorMode={editor}/>
           </div>
       </div>

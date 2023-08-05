@@ -20,10 +20,20 @@ type User = {
     image?: string | null | undefined;
 }
 interface Props{
-    editorMode: boolean
+    editorMode: boolean,
+    postMeta: {
+        format: string,
+        title: string,
+        slug: string,
+        author: string,
+        category: string,
+        description: string,
+        tags: string[],
+    } | null,
 }
 const Editor = dynamic(() => import('@/components/RichEditor/RichEditor'), { ssr: false });
-const TeamContainer: React.FC<Props> = ({ editorMode }) => {
+
+const TeamContainer: React.FC<Props> = ({ editorMode, postMeta }) => {
 
     const session = useSession();
     const user: User | undefined = session.data?.user;
@@ -289,7 +299,7 @@ const TeamContainer: React.FC<Props> = ({ editorMode }) => {
             </div>
         </>
         :
-        <Editor onChange={(v: any)=> console.log(v)}/>
+        <Editor onChange={(v: any)=> console.log(v)} postMetaData={postMeta}/>
         }
     </div>
   )
