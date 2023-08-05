@@ -122,7 +122,6 @@ functions:
           path: admin/{id}
           method: put
           cors: true
-
   # Team member api
   createMemberHandler:
     handler: lambdas/team/createMemberHandler.createMemberHandler
@@ -142,6 +141,26 @@ functions:
           path: team
           method: put
           cors: true
+  #Post API
+  uploadDraftImage:
+    handler: lambdas/post/getPresignedUrl.uploadDraftImage
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: upload-draft-image # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  getDraftImage:
+    handler: lambdas/post/getPresignedUrl.getDraftImage
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: get-draft-image # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+
 
 resources:
   Resources:   
