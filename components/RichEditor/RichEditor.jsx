@@ -5,19 +5,21 @@ import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import styles from './RichEditor.module.css'
 import './CKEditor.css'
 import S3Uploader from './S3Uploader';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateContent } from '@/redux/post/draft.slice';
-
-function CustomUploadAdapterPlugin(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-        return new S3Uploader(loader);
-    };
-};
 
 const RichEditor = ({ onChange }) => {
     const dispatch = useAppDispatch();
+    const draft = useAppSelector((state) => state.draft)
 
+    function CustomUploadAdapterPlugin(editor) {
+        console.log('FileRepository')
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new S3Uploader(loader, draft);
+        };
+    };
     const editorConfiguration = {
+        removePlugins: ['SimpleUploadAdapter', 'Base64UploadAdapter'],
         language:{
             textPartLanguage: [
                 { title: 'English', languageCode: 'en' },
@@ -39,9 +41,6 @@ const RichEditor = ({ onChange }) => {
             ],
             viewportTopOffset: 30,
             shouldNotGroupWhenFull: true
-        },
-        ckfinder: {
-            uploadUrl: '/uploads'
         },
         image: {
             toolbar: [

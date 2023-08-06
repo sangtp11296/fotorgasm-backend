@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: DraftPost = {
     toggle: false,
-    id: '',
+    id: 'draft',
     format: '',
     title: '',
     slug: '',
