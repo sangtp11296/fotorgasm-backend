@@ -14,7 +14,7 @@ const URL_EXPIRATION_SECONDS = 3600    // Specify how long the pre-signed URL wi
 export const uploadDraftImage = async (event) => {
     try{
         const { fileName, fileType, postSlug } = JSON.parse(event.body);
-        
+        console.log(postSlug)
         // Random uploaded avatar name
         const name = uuid();
         const key = `${name}-${fileName}`;

@@ -158,7 +158,7 @@ functions:
     events:
       - http:
           path: get-draft-image # path will be domain.name.com/dev/posts
-          method: get
+          method: post
           cors: true
 
 
