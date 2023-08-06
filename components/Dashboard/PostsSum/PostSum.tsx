@@ -2,24 +2,17 @@
 import React, { useEffect, useState } from 'react'
 import styles from './PostSum.module.css'
 import { useSession } from 'next-auth/react'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { clearDraft, openDraft, updateAuthor, updateCat, updateDesc, updateFormat, updateSlug, updateTag, updateTitle } from '@/redux/post/draft.slice'
 
 // Define props
 interface Props {
   menuType: string,
   addPost: (data: boolean) => void,
-  postMetaData: (data: PostMetaData) => void
 }
 
 // Define Post Meta Data type
-interface PostMetaData {
-  format: string,
-  title: string,
-  slug: string,
-  author: string,
-  category: string,
-  description: string,
-  tags: string[],
-}
+
 const icons: { [key: string]: React.JSX.Element } = {
   'home': (
       <svg style={{fill:'var(--primary)', stroke:'none'}} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -58,35 +51,21 @@ const icons: { [key: string]: React.JSX.Element } = {
   )
 }
 
-const PostSum: React.FC<Props> = ({ menuType, addPost, postMetaData }) => {
-  const [addTrigger, setAddTrigger] = useState<boolean>(false)
-  const [format, setFormat] = useState<string>('')
-  const [title,setTitle] = useState<string>('');
-  const [author,setAuthor] = useState<string>('');
-  const [category,setCategory] = useState<string>('');
-  const [desc,setDesc] = useState<string>('');
-  const [tag, setTag] = useState<string[]>([]);
+const PostSum: React.FC<Props> = ({ menuType }) => {
+  const addTrigger = useAppSelector((state) => state.draft.toggle);
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<boolean>(false);
+
   const session = useSession();
   const user = session.data?.user;
-  // Trigger Add Mode
-  useEffect(() => {
-    addPost(addTrigger);
-  }, [addTrigger])
-  
-  // Send post Info to Dashboard
-  useEffect(() => {
-    const newPost: PostMetaData = {
-      format: format,
-      title: title,
-      slug: toSlug(title),
-      author: author,
-      category: category,
-      description: desc,
-      tags: tag,
+
+  const handleTrigger = () => {
+    if (!addTrigger) {
+      dispatch(openDraft());
+    } else {
+      dispatch(clearDraft());
     }
-    postMetaData(newPost);
-  },[format, title, author, category, desc, tag])
+  }
   
   // Convert title to slug
   function toSlug(str: string)
@@ -124,9 +103,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postMetaData }) => {
       <div className={styles.sumHeader}>
         <div className={styles.leftHeader}>
           <h2>{menuType}</h2>
-          <div className={styles.button} onClick={() => {
-            setAddTrigger((prev) => !prev);
-            }}>
+          <div className={styles.button} onClick={handleTrigger}>
               {
                 !addTrigger ? 
                 <>
@@ -157,7 +134,7 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postMetaData }) => {
               <div className={styles.textField}>
                   <label>Post Format<span className={styles.textDanger}> *</span></label>
                   <select name='post_format' placeholder='Select Post Format...' className={styles.textInput}
-                  onChange={(e)=>{setFormat(e.target.value)}}>
+                  onChange={(e) => dispatch(updateFormat(e.target.value))}>
                       <option value='none' defaultValue='none' className={styles.items}>Select Post Format...</option>
                       <option value='blog' className={styles.items}>blog</option>
                       <option value='photo' className={styles.items}>gallery</option>
@@ -167,22 +144,25 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postMetaData }) => {
               </div>
               <div className={styles.textField}>
                   <label>Title of the Post<span className={styles.textDanger}> *</span></label>
-                  <input name='title' type='text' required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Title' onChange={e=>{setTitle(e.target.value)}}/>
+                  <input name='title' type='text' required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Title' onChange={(e) => {
+                    dispatch(updateTitle(e.target.value));
+                    dispatch(updateSlug(toSlug(e.target.value)));
+                    }}/>
               </div>
               <div className={styles.textField}>
                   <label>Author<span className={styles.textDanger}> *</span></label>
-                  <select name='author' placeholder='Author...' className={styles.textInput}  onChange={e=>{setAuthor(e.target.value)}}>
+                  <select name='author' placeholder='Author...' className={styles.textInput}  onChange={(e) => dispatch(updateAuthor(e.target.value))}>
                     <option value='' defaultValue='' className={styles.items}>Author...</option>
                     {
                       user?.team.map((mem, ind) => {
-                        return <option value={mem.name} className={styles.items}>{mem.name}</option>
+                        return <option key={ind} value={mem.name} className={styles.items}>{mem.name}</option>
                       })
                     }
                   </select>
               </div>
               <div className={styles.textField}>
                   <label>Category<span className={styles.textDanger}> *</span></label>
-                  <select name='category' placeholder='Select category...' className={styles.textInput}  onChange={e=>{setCategory(e.target.value)}}>
+                  <select name='category' placeholder='Select category...' className={styles.textInput}  onChange={(e) => dispatch(updateCat(e.target.value))}>
                       <option value='' defaultValue='' className={styles.items}>Select section...</option>
                       <option value='Fotography' className={styles.items}>Fotography</option>
                       <option value='Films' className={styles.items}>Films</option>
@@ -197,11 +177,11 @@ const PostSum: React.FC<Props> = ({ menuType, addPost, postMetaData }) => {
               </div>
               <div className={styles.textField}>
                   <label>Tags<span className={styles.textDanger}> *</span></label>
-                  <input name='tags' type='text' className={styles.textInput} onChange={e=>{setTag(e.target.value.split(' '))}}/>
+                  <input name='tags' type='text' className={styles.textInput} onChange={(e) => dispatch(updateTag(e.target.value.split(' ')))}/>
               </div>
               <div className={styles.textField}>
                 <label>Description<span className={styles.textDanger}> *</span></label>
-                <textarea name='description' style={{maxHeight:'65px', maxWidth:'250px',minWidth:'250px', minHeight:'28px'}} className={styles.textInput} placeholder='Description' onChange={e=>{setDesc(e.target.value)}}></textarea>
+                <textarea name='description' style={{maxHeight:'65px', maxWidth:'250px',minWidth:'250px', minHeight:'28px'}} className={styles.textInput} placeholder='Description' onChange={(e) => dispatch(updateDesc(e.target.value))}></textarea>
               </div>
               <div className={styles.submit}>
                   <button className={styles.button} type='submit'>Submit</button>

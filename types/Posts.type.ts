@@ -15,6 +15,7 @@ export type PreviewPost = {
   }
 }
 export type DraftPost = {
+  toggle: boolean,
   id: string,
   format: string,
   title: string,
@@ -23,6 +24,7 @@ export type DraftPost = {
   category: string,
   description: string,
   tags: string[],
+  cover: string | null,
   coverUrl: string,
   content: string,
   coverRes: {

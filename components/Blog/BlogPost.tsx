@@ -2,13 +2,12 @@
 import { Photo } from '@/types/Photos.type'
 import styles from './BlogPost.module.css'
 import Image from 'next/image'
-import { PreviewPost } from '@/types/Posts.type';
+import { DraftPost, PreviewPost } from '@/types/Posts.type';
 
 interface Props {
-  // photo: Photo,
-  photo: PreviewPost
+  data: DraftPost
 }
-const BlogPost: React.FC<Props> = ({ photo }) => {
+const BlogPost: React.FC<Props> = ({ data }) => {
   
   function randomNum(){
     // Generate a random number between min and max
@@ -34,7 +33,7 @@ const BlogPost: React.FC<Props> = ({ photo }) => {
   }
 
   return (
-    <div id={photo.id} className={`${styles.blogPost}`}>
+    <div id={data.id} className={`${styles.blogPost}`}>
       <div className={`${styles.postCover}`}>
         <button className={styles.fullScreen}>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +51,7 @@ const BlogPost: React.FC<Props> = ({ photo }) => {
         <div className={styles.coverImage}>
           {
             // Check if photo cover is available or not
-            photo.cover && <Image priority={true} fill  key={photo.id} src={photo.cover} alt={`${photo.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
+            data.cover && <Image priority={true} fill  key={data.id} src={data.cover} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
           }
           
         </div>
@@ -60,14 +59,14 @@ const BlogPost: React.FC<Props> = ({ photo }) => {
 
         <div className={styles.postInfo}>
             <div className={`${styles.postCat}`}>
-                <Image alt={`on ${photo.category}`} src={`/assets/images/on ${photo.category}.png`} height={25} width={25}/>
-                <span>on {photo.category}</span>
+                <Image alt={`on ${data.category}`} src={`/assets/images/on ${data.category}.png`} height={25} width={25}/>
+                <span>on {data.category}</span>
             </div>
             <div className={styles.titlePost}>
-                <h2>{photo.title}</h2>
+                <h2>{data.title}</h2>
             </div>
             <div className={styles.postDesc}>
-                {photo.description}
+                {data.description}
             </div>
         </div>
 

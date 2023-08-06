@@ -1,14 +1,22 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import styles from './RichEditor.module.css'
 import './CKEditor.css'
 import S3Uploader from './S3Uploader';
+import { useAppDispatch } from '@/redux/hooks';
+import { updateContent } from '@/redux/post/draft.slice';
 
-const RichEditor = ({ onChange, postMetaData }) => {
-    const [content, setContent] = useState('');
-    
+function CustomUploadAdapterPlugin(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        return new S3Uploader(loader);
+    };
+};
+
+const RichEditor = ({ onChange }) => {
+    const dispatch = useAppDispatch();
+
     const editorConfiguration = {
         language:{
             textPartLanguage: [
@@ -20,8 +28,8 @@ const RichEditor = ({ onChange, postMetaData }) => {
         },
         toolbar: {
             items: [
-                'heading', 'style', '|',
-                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                'textPartLanguage', 'heading', 'style', '|',
+                'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', '|',
                 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor', '|',
                 'alignment', 'outdent', 'indent', '|',
                 'code', 'codeBlock', 'sourceEditing', 'showBlocks', '|',
@@ -48,15 +56,9 @@ const RichEditor = ({ onChange, postMetaData }) => {
         mediaEmbed: {
             removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
         },
-        // extraPlugins: [CustomUploadAdapterPlugin]
+        extraPlugins: [CustomUploadAdapterPlugin]
     };
 
-    // const CustomUploadAdapterPlugin = (editor) => {
-    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader, postMeta) => {
-    //         const postMeta = postMetaData;
-    //         return S3Uploader({ loader, postMeta });
-    //     };
-    //   };
   return (
     <div className={styles.richEditor}>
         <CKEditor
@@ -65,8 +67,8 @@ const RichEditor = ({ onChange, postMetaData }) => {
                 onChange={ ( event, editor ) => {
                     const data = editor.getData();
                     // console.log( { event, editor, data } );
-                    setContent(data);
-                    onChange(content);
+                    dispatch(updateContent(data));
+                    onChange(data);
                 } }
             />
     </div>

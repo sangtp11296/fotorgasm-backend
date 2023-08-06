@@ -11,6 +11,7 @@ import InteractiveComponent from '@/components/Dashboard/InteractiveComponent/In
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import { PreviewPost } from '@/types/Posts.type'
+import { useAppSelector } from '@/redux/hooks'
 
 // Generate props for MenuContainer
 interface Props {
@@ -27,6 +28,7 @@ interface PostInfo {
   tags: string[],
 }
 const Dashboard: React.FC<Props> = ({ previewPost }) => {
+  const draft = useAppSelector((state) => state.draft)
   const session = useSession();
   const router = useRouter();
   const [menuType, setMenuType] = useState<string>('')
@@ -56,13 +58,10 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
               <MenuContainer postMenu={handlePostMenu}/>
               <HeaderContainer user={session.data.user}/>
               <PostSum 
-              menuType={menuType} 
-              addPost={handleAddPost} 
-              postMetaData={(value) => setPostMeta((prev) => (
-                prev ? { ...prev, ...value } : value
-                ))}/>
-              <TeamContainer postMeta={postMeta} editorMode={editor}/>
-              <InteractiveComponent postMeta={postMeta} editorMode={editor}/>
+                menuType={menuType} 
+                addPost={handleAddPost}/>
+              <TeamContainer/>
+              <InteractiveComponent />
           </div>
       </div>
     ) 

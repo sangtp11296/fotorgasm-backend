@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import styles from './TeamContainer.module.css'
 import { signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
-import RichEditor from '@/components/RichEditor/RichEditor'
+import { useAppSelector } from '@/redux/hooks'
 
 type User = {
     id: string;
@@ -19,22 +19,11 @@ type User = {
     email?: string | null | undefined;
     image?: string | null | undefined;
 }
-interface Props{
-    editorMode: boolean,
-    postMeta: {
-        format: string,
-        title: string,
-        slug: string,
-        author: string,
-        category: string,
-        description: string,
-        tags: string[],
-    } | null,
-}
+
 const Editor = dynamic(() => import('@/components/RichEditor/RichEditor'), { ssr: false });
 
-const TeamContainer: React.FC<Props> = ({ editorMode, postMeta }) => {
-
+const TeamContainer: React.FC = () => {
+    const editorMode = useAppSelector((state) => state.draft.toggle);
     const session = useSession();
     const user: User | undefined = session.data?.user;
     
@@ -45,6 +34,7 @@ const TeamContainer: React.FC<Props> = ({ editorMode, postMeta }) => {
     const [updateName, setUpdateName] = useState<string>('');
     const [updateRole, setUpdateRole] = useState<string>('');
     const [updateAvatar, setUpdateAvatar] = useState<File | null>(null);
+
     const handleUpdateAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
         const image = event.target.files?.[0] || null;
         setUpdateAvatar(image);
@@ -299,7 +289,7 @@ const TeamContainer: React.FC<Props> = ({ editorMode, postMeta }) => {
             </div>
         </>
         :
-        <Editor onChange={(v: any)=> console.log(v)} postMetaData={postMeta}/>
+        <Editor onChange={(v: any)=> console.log(v)}/>
         }
     </div>
   )

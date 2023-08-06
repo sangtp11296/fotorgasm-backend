@@ -1,14 +1,16 @@
+import { useAppSelector } from '@/redux/hooks';
 import React from 'react'
 
-const S3Uploader = ({ loader, postMetaData }) => {
+const S3Uploader = ({ loader }) => {
+    const draft = useAppSelector((state) => state.draft);
     const upload = async () => {
         const data = await loader.file;
 
         const reqUpPresignedUrl = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-image', {
             method: 'POST',
             body: JSON.stringify({
-                postSlug: postMetaData.slug,
-                fileName: postMetaData.slug + `.${data.type.split('/')[1]}`,
+                postSlug: draft.slug,
+                fileName: draft.slug + `.${data.type.split('/')[1]}`,
                 fileType: data.type,
             }),
         });
