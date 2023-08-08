@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import styles from './RichEditor.module.css'
@@ -8,16 +8,19 @@ import S3Uploader from './S3Uploader';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateContent } from '@/redux/post/draft.slice';
 
+
 const RichEditor = ({ onChange }) => {
     const dispatch = useAppDispatch();
     const draft = useAppSelector((state) => state.draft)
-
+    console.log(draft.slug)
     function CustomUploadAdapterPlugin(editor) {
-        console.log('FileRepository')
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            return new S3Uploader(loader, draft);
+            const slug = draft.slug;
+            console.log(slug)
+            return new S3Uploader(loader, slug);
         };
     };
+    
     const editorConfiguration = {
         removePlugins: ['SimpleUploadAdapter', 'Base64UploadAdapter'],
         language:{
@@ -34,7 +37,7 @@ const RichEditor = ({ onChange }) => {
                 'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', '|',
                 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor', '|',
                 'alignment', 'outdent', 'indent', '|',
-                'code', 'codeBlock', 'sourceEditing', 'showBlocks', '|',
+                'code', 'codeBlock', 'sourceEditing', '|',
                 'bulletedList', 'numberedList', 'horizontalLine', '|',
                 'link', 'insertImage', 'mediaEmbed', 'blockQuote', '|',
                 'undo', 'redo', 'findAndReplace', 'specialCharacters'
@@ -63,11 +66,12 @@ const RichEditor = ({ onChange }) => {
         <CKEditor
                 editor={ Editor }
                 config={ editorConfiguration }
+                // onReady={(editor) => CustomUploadAdapterPlugin(editor, slug)}
                 onChange={ ( event, editor ) => {
                     const data = editor.getData();
-                    // console.log( { event, editor, data } );
                     dispatch(updateContent(data));
-                    onChange(data);
+                    // console.log( { event, editor, data } );
+                    // onChange(data);
                 } }
             />
     </div>
