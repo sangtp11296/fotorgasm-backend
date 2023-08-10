@@ -160,6 +160,15 @@ functions:
           path: get-draft-image # path will be domain.name.com/dev/posts
           method: post
           cors: true
+  deleteDraft:
+    handler: lambdas/post/deleteDraft.deleteDraft
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: delete-draft # path will be domain.name.com/dev/posts
+          method: delete
+          cors: true
 
 
 resources:

@@ -14,14 +14,14 @@ const URL_EXPIRATION_SECONDS = 3600    // Specify how long the pre-signed URL wi
 export const uploadDraftImage = async (event) => {
     try{
         console.log(JSON.parse(event.body))
-        const { fileName, fileType, postSlug } = JSON.parse(event.body);
+        const { fileName, fileType } = JSON.parse(event.body);
         // Random uploaded avatar name
         const name = uuid();
         const key = `${name}-${fileName}`;
         //Get signed URL form S3
         const s3Params = {
             Bucket: uploadBucket,
-            Key: `draft/${postSlug}/${key}`,
+            Key: `draft/${key}`,
             ContentType: fileType,
             ACL: 'bucket-owner-full-control'
         }
@@ -30,7 +30,7 @@ export const uploadDraftImage = async (event) => {
         return Responses._200({
             body: JSON.stringify({ 
                 presignedUrl,
-                key: `draft/${postSlug}/${key}`,
+                key: `draft/${key}`,
             })
         })
     } catch (err) {

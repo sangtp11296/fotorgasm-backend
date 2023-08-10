@@ -26,9 +26,15 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    orientation:{
-        type: String,
-        required: true
+    coverRes: {
+        width: {
+            type: Number,
+            required: true
+        },
+        height: {
+            type: Number,
+            required: true
+        }
     },
     title:{
         type: String,
@@ -44,7 +50,11 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    cover:{
+    coverKey:{
+        type: String,
+        required: true
+    },
+    coverThumbnail:{
         type: String,
         required: true
     },
