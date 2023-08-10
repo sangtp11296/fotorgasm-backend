@@ -43,54 +43,45 @@
 
 
 class S3Uploader {
-    constructor(loader, draftData) {
+    constructor(loader) {
         this.loader = loader;
-        this.slug = draftData;
     }
     
     async upload() {
         const data = await this.loader.file;
-        const slug = await this.slug;
-        
-
         const reqUpPresignedUrl = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-image', {
             method: 'POST',
             body: JSON.stringify({
-                postSlug: slug,
-                fileName: slug + `.${data.type.split('/')[1]}`,
+                fileName: data.name,
                 fileType: data.type,
             }),
         });
         const reqData = await reqUpPresignedUrl.json();
         const { presignedUrl, key} = JSON.parse(reqData.body);
-        console.log(data)
-        console.log(slug)
-        console.log(presignedUrl);
-        console.log(key)
 
-        // // Upload draft image to presigned Url
-        // const uploadImage = await fetch(presignedUrl, {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': data.type,
-        //     },
-        //     body: data,
-        // });
+        // Upload draft image to presigned Url
+        const uploadImage = await fetch(presignedUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': data.type,
+            },
+            body: data,
+        });
 
-        // if (uploadImage.res.status === 200) {
-        //     // Getting draft image from presigned Url
-        //     const getDraftImage = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
-        //         method: 'POST',
-        //         body: JSON.stringify({
-        //             key: key,
-        //         }),
-        //     });
-        //     const getData = await getDraftImage.json();
-        //     const imageUrl = getData.presignedUrl;
-        //     return {
-        //         default: imageUrl,
-        //     };
-        // }
+        if (uploadImage.status === 200) {
+            // Getting draft image from presigned Url
+            const getDraftImage = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+                method: 'POST',
+                body: JSON.stringify({
+                    key: key,
+                }),
+            });
+            const getData = await getDraftImage.json();
+            const imageUrl = getData.presignedUrl;
+            return {
+                default: imageUrl,
+            };
+        }
     }
 }
 export default S3Uploader

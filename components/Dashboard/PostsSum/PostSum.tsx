@@ -54,19 +54,50 @@ const icons: { [key: string]: React.JSX.Element } = {
 const PostSum: React.FC<Props> = ({ menuType }) => {
   const addTrigger = useAppSelector((state) => state.draft.toggle);
   const dispatch = useAppDispatch();
+  const draft = useAppSelector((state) => state.draft); 
   const [error, setError] = useState<boolean>(false);
 
   const session = useSession();
   const user = session.data?.user;
 
-  const handleTrigger = () => {
+  const handleTrigger = async () => {
     if (!addTrigger) {
       dispatch(openDraft());
     } else {
       dispatch(clearDraft());
+
+      // Fetch api to delete everthing in draft folder
+      const reqDeleteDraft = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/delete-draft',{
+        method: 'DELETE'
+      })
+      if (reqDeleteDraft.ok) {
+        const data = await reqDeleteDraft.json();
+        console.log(data.message); // Success message from Lambda API
+      } else {
+          console.error('API request failed:', reqDeleteDraft.statusText);
+      }
     }
   }
   
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+    console.log(draft);
+
+    // Update cover photo first to get the thumbnail url and cover key
+    
+    const formData = {
+      author: draft.author,
+      categories: draft.category,
+      content: draft.content,
+      coverThumbnail: draft.coverUrl,
+      coverRes: draft.coverRes,
+      description: draft.description,
+      format: draft.format,
+      tilte: draft.title,
+      slug: draft.slug,
+      tags: draft.tags,
+    }
+  }
   // Convert title to slug
   function toSlug(str: string)
     {
@@ -130,7 +161,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
       {
         addTrigger ? 
         <div className={styles.editField}>
-          <form className={styles.textForm}>
+          <form className={styles.textForm} onSubmit={(e) => handleSubmit(e)}>
               <div className={styles.textField}>
                   <label>Post Format<span className={styles.textDanger}> *</span></label>
                   <select name='post_format' placeholder='Select Post Format...' className={styles.textInput}
