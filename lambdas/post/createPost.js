@@ -14,15 +14,14 @@ export const createPost = async (event, context, callback) => {
             author: data.author,
             category: data.category,
             content: data.content,
-            cover: data.cover,
+            coverKey: data.coverKey,
+            coverThumbnail: data.coverThumbnail,
             coverRes: {
                 width: data.coverRes.width,
                 height: data.coverRes.height
             },
-            coverUrl: data.coverUrl,
-            description: data.description,
+            desc: data.description,
             format: data.format,
-            id: data.id,
             slug: data.slug,
             tags: data.tags,
             title: data.title

@@ -62,3 +62,31 @@ export const getDraftImage = async (event) => {
         })
     };
 }
+
+export const uploadPostThumbnail = async (event) => {
+    try{
+        const { fileName, fileType } = JSON.parse(event.body);
+        // Random uploaded avatar name
+        const key = `${fileName}`;
+        //Get signed URL form S3
+        const s3Params = {
+            Bucket: uploadBucket,
+            Key: `thumbnail/${key}`,
+            ContentType: fileType,
+            ACL: 'bucket-owner-full-control'
+        }
+        const command = new PutObjectCommand(s3Params)
+        const presignedUrl = await getSignedUrl(s3, command, {expiresIn: URL_EXPIRATION_SECONDS});
+        return Responses._200({
+            body: JSON.stringify({ 
+                presignedUrl,
+                thumbnailUrl: `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/thumbnail/${key}`,
+                key: `thumbnail/${key}`
+            })
+        })
+    } catch (err) {
+        return Responses._500({
+            body: JSON.stringify({ error: 'Error generating presigned URL ' + err })
+        })
+    };
+};
