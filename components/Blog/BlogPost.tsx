@@ -2,7 +2,7 @@
 import { Photo } from '@/types/Photos.type'
 import styles from './BlogPost.module.css'
 import Image from 'next/image'
-import { DraftPost, PreviewPost } from '@/types/Posts.type';
+import { DraftPost } from '@/types/Posts.type';
 
 interface Props {
   data: DraftPost
@@ -51,7 +51,7 @@ const BlogPost: React.FC<Props> = ({ data }) => {
         <div className={styles.coverImage}>
           {
             // Check if photo cover is available or not
-            data.cover && <Image priority={true} fill  key={data.id} src={data.cover} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
+            data.coverUrl && <Image priority={true} fill  key={data.id} src={data.coverUrl} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
           }
           
         </div>

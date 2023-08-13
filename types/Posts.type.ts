@@ -1,21 +1,22 @@
-export type PreviewPost = {
-  id?: string,
-  format?: string,
-  title?: string,
-  slug?: string,
-  author?: string,
-  category?: string,
-  description?: string,
-  tags?: string[],
-  cover?: string | null,
-  content?: string,
-  coverRes?: {
+export type FinalPost = {
+  format: string,
+  title: string,
+  slug: string,
+  author: string,
+  category: string,
+  description: string,
+  tags: string[],
+  coverThumbnail: string,
+  coverKey: string,
+  content: string,
+  coverRes: {
     width: number,
     height: number
   }
 }
 export type DraftPost = {
   toggle: boolean,
+  submit: boolean,
   id: string,
   format: string,
   title: string,
@@ -24,8 +25,9 @@ export type DraftPost = {
   category: string,
   description: string,
   tags: string[],
-  cover: string | null,
+  coverThumbnail: string,
   coverUrl: string,
+  coverKey: string,
   content: string,
   coverRes: {
     width: number,

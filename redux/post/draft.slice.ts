@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: DraftPost = {
     toggle: false,
+    submit: false,
     id: 'draft',
     format: '',
     title: '',
@@ -11,8 +12,9 @@ const initialState: DraftPost = {
     category: '',
     description: '',
     tags: [],
-    cover: null,
+    coverThumbnail: '',
     coverUrl: '',
+    coverKey: '',
     content: '',
     coverRes: {
         width: 0,
@@ -45,11 +47,14 @@ const draftSlice = createSlice({
         updateTag: (state, action: PayloadAction<string[]>) => {
             state.tags = action.payload
         },
-        updateCover: (state, action: PayloadAction<string | null>) => {
-            state.cover = action.payload
+        updateCoverThumbnail: (state, action: PayloadAction<string>) => {
+            state.coverThumbnail = action.payload
         },
         updateCoverUrl: (state, action: PayloadAction<string>) => {
             state.coverUrl = action.payload
+        },
+        updateCoverKey: (state, action: PayloadAction<string>) => {
+            state.coverKey = action.payload
         },
         updateCoverRes: (state, action: PayloadAction<{width: number, height: number}>) => {
             state.coverRes = action.payload
@@ -60,11 +65,14 @@ const draftSlice = createSlice({
         clearDraft: () => initialState,
         openDraft: (state) => {
             state.toggle = true
+        },
+        submitDraft: (state) => {
+            state.submit = true
         }
     }
 })
 
-export const { updateTitle, updateFormat, updateSlug, updateAuthor, updateCat, updateDesc, updateTag, updateCover, updateCoverUrl, updateCoverRes, updateContent, clearDraft, openDraft } = draftSlice.actions;
+export const { updateTitle, updateFormat, updateSlug, updateAuthor, updateCat, updateDesc, updateTag, updateCoverThumbnail, updateCoverUrl, updateCoverKey, updateCoverRes, updateContent, clearDraft, openDraft, submitDraft } = draftSlice.actions;
 const draftReducer = draftSlice.reducer;
 
 export default draftReducer;

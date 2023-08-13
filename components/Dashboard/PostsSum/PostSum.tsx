@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import styles from './PostSum.module.css'
 import { useSession } from 'next-auth/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { clearDraft, openDraft, updateAuthor, updateCat, updateDesc, updateFormat, updateSlug, updateTag, updateTitle } from '@/redux/post/draft.slice'
+import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateDesc, updateFormat, updateSlug, updateTag, updateTitle } from '@/redux/post/draft.slice'
+import { FinalPost } from '@/types/Posts.type'
 
 // Define props
 interface Props {
@@ -81,22 +82,35 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
-    console.log(draft);
 
-    // Update cover photo first to get the thumbnail url and cover key
-    
-    const formData = {
-      author: draft.author,
-      categories: draft.category,
-      content: draft.content,
-      coverThumbnail: draft.coverUrl,
-      coverRes: draft.coverRes,
-      description: draft.description,
-      format: draft.format,
-      tilte: draft.title,
-      slug: draft.slug,
-      tags: draft.tags,
-    }
+    if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.description && draft.content && draft.coverUrl) {
+
+      dispatch(submitDraft());
+
+      // Update cover photo first to get the thumbnail url and cover key
+      const formData: FinalPost = {
+        author: draft.author,
+        category: draft.category,
+        content: draft.content,
+        coverKey: draft.coverKey,
+        coverThumbnail: draft.coverThumbnail,
+        coverRes: draft.coverRes,
+        description: draft.description,
+        format: draft.format,
+        title: draft.title,
+        slug: draft.slug,
+        tags: draft.tags,
+      }
+
+      const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json' // Set the Content-Type header
+        },
+        body: JSON.stringify(formData)
+      });
+      res.status === 200 && window.location.reload();
+    } 
   }
   // Convert title to slug
   function toSlug(str: string)
