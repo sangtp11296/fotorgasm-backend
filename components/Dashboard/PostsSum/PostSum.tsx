@@ -92,8 +92,8 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         author: draft.author,
         category: draft.category,
         content: draft.content,
-        coverKey: draft.coverKey,
-        coverThumbnail: draft.coverThumbnail,
+        coverKey: '',
+        coverThumbnail: '',
         coverRes: draft.coverRes,
         description: draft.description,
         format: draft.format,
@@ -102,7 +102,16 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         tags: draft.tags,
       }
 
-      const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
+      // Move all draft images to posts folder in s3 bucket
+      await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json' // Set the Content-Type header
+        },
+        body: JSON.stringify(draft.slug),
+      });
+
+      const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' // Set the Content-Type header
