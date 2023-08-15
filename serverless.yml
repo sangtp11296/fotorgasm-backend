@@ -191,6 +191,15 @@ functions:
           path: post # path will be domain.name.com/dev/posts
           method: post
           cors: true
+  moveDraft:
+    handler: lambdas/post/deleteDraft.moveDraft
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: move-draft # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
 
 
 resources:

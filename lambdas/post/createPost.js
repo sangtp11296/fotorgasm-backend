@@ -2,6 +2,7 @@ import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import {Post} from '/opt/nodejs/database/models/Post.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
+import { Responses } from '/opt/nodejs/functions/common/API_Responses.js'
 
 export const createPost = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -14,8 +15,6 @@ export const createPost = async (event, context, callback) => {
             author: data.author,
             category: data.category,
             content: data.content,
-            coverKey: data.coverKey,
-            coverThumbnail: data.coverThumbnail,
             coverRes: {
                 width: data.coverRes.width,
                 height: data.coverRes.height
@@ -30,15 +29,15 @@ export const createPost = async (event, context, callback) => {
         // Save the new post to the database
         const savedPost = await newPost.save();
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'New post created successfully', post: savedPost })
-        };
+        return Responses._200 ({
+            message: 'New post created successfully',
+            post: savedPost
+        })
     } catch (error) {
         console.error('Error creating post', error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: 'Error creating post', error: error.message })
-        };
+        return Responses._500 ({
+            message: 'Error creating post', 
+            error: error.message 
+        })
     }
 };

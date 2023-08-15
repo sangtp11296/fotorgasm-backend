@@ -1,4 +1,4 @@
-import { User } from '/opt/nodejs/database/models/User.js';
+import { Post } from '/opt/nodejs/database/models/Post.js';
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
@@ -77,5 +77,34 @@ export async function createThumbnail (event, context, callback) {
     } catch (error) {
         console.log("Cannot upload the avatar to the public bucket", error);
         return Responses._400({ message: error.message || 'Failed to upload avatar!' });
+    }
+
+    // Update the thumbnail url to Post model schema
+    try{
+        await connectToDatabase();
+        // Extract the post slug from source key
+        const match = srcKey.match(/\/([^/]+)-cover\.\w+$/);
+        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/${destKey}`;
+        if (match) {
+            const postSlug = match[1];
+            console.log(postSlug)
+            const updatedPost = await Post.findOneAndUpdate(
+                { slug: postSlug },
+                { $set: { 
+                    coverKey: srcKey,
+                    coverThumbnail: url
+                 } },
+                { new: true }
+            );
+            if (updatedPost) {
+                console.log('Avatar URL updated successfully:', updatedPost);
+            } else {
+                console.log('Post not found.');
+            }
+        } else {
+            console.log('Post slug invalid!');
+        }
+    } catch (error) {
+        console.log('Cannot update post cover thumbnail and key!', error)
     }
 }

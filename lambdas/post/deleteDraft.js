@@ -1,4 +1,4 @@
-import { S3Client, ListObjectsV2Command, DeleteObjectsCommand  } from '@aws-sdk/client-s3';
+import { S3Client, ListObjectsV2Command, DeleteObjectCommand,  DeleteObjectsCommand, CopyObjectCommand } from '@aws-sdk/client-s3';
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
 
 
@@ -44,3 +44,58 @@ export const deleteDraft = async (event) => {
         })
     };
 };
+
+export const moveDraft = async (event, context) => {
+    try {
+
+        const slug = JSON.parse(event.body);
+        const destinationFolder = `posts/${slug}/`;
+
+        // List the objects in the source folder
+        const listObjectsResponse = await s3.send(new ListObjectsV2Command({ 
+            Bucket: uploadBucket, 
+            Prefix: folderKey 
+        }));
+
+        // Sort the objects by LastModified time (ascending)
+        const sortedObjects = listObjectsResponse.Contents.sort((a, b) => a.LastModified - b.LastModified);
+
+        // Move and rename each object in the destination folder
+        const movePromises = sortedObjects.map(async (object, index) => {
+            const sourceKey = object.Key;
+            const destinationKey = `${destinationFolder}${getNewFileName(slug, index + 1, sourceKey)}`;
+
+            const copyCommand = new CopyObjectCommand({
+                CopySource: `${folderKey}/${sourceKey}`,
+                Bucket: uploadBucket,
+                Key: destinationKey
+            });
+            await s3.send(copyCommand);
+
+            const deleteCommand = new DeleteObjectCommand({
+                Bucket: sourceBucket,
+                Key: sourceKey
+            });
+            await s3.send(deleteCommand);
+        });
+
+        await Promise.all(movePromises);
+
+        return Responses._200({
+            message: 'Files moved and renamed successfully!'
+        });
+    } catch (error) {
+        console.error('Error moving files:', error);
+        return Responses._500({
+            error: 'Error moving files ' + error
+        });
+    }
+}
+
+// Helper function to generate the new file name
+function getNewFileName(baseName, index, originalFileName) {
+    const parts = originalFileName.split('.');
+    const extension = parts.pop();
+
+    return `${baseName} (${index}).${extension}`;
+}

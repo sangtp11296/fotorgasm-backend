@@ -79,9 +79,7 @@ export const uploadPostThumbnail = async (event) => {
         const presignedUrl = await getSignedUrl(s3, command, {expiresIn: URL_EXPIRATION_SECONDS});
         return Responses._200({
             body: JSON.stringify({ 
-                presignedUrl,
-                thumbnailUrl: `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/thumbnail/${key}`,
-                key: `thumbnail/${key}`
+                presignedUrl
             })
         })
     } catch (err) {
