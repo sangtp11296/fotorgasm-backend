@@ -77,9 +77,10 @@ class S3Uploader {
                 }),
             });
             const getData = await getDraftImage.json();
-            const imageUrl = getData.presignedUrl;
+            const parsedData = JSON.parse(getData.body)
+            const presignedUrl = parsedData.presignedUrl;
             return {
-                default: imageUrl,
+                default: presignedUrl,
             };
         }
     }

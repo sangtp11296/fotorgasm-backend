@@ -9,7 +9,6 @@ import { FinalPost } from '@/types/Posts.type'
 // Define props
 interface Props {
   menuType: string,
-  addPost: (data: boolean) => void,
 }
 
 // Define Post Meta Data type
@@ -79,7 +78,8 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
       }
     }
   }
-  
+  console.log(draft.content)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
@@ -101,15 +101,16 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         slug: draft.slug,
         tags: draft.tags,
       }
-
       // Move all draft images to posts folder in s3 bucket
-      await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json' // Set the Content-Type header
-        },
-        body: JSON.stringify(draft.slug),
-      });
+      if(draft.content.includes('<img')){
+        await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header
+          },
+          body: JSON.stringify(draft.slug),
+        });
+      }
 
       const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
         method: 'POST',
@@ -231,7 +232,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
               </div>
               <div className={styles.textField}>
                   <label>Tags<span className={styles.textDanger}> *</span></label>
-                  <input name='tags' type='text' className={styles.textInput} onChange={(e) => dispatch(updateTag(e.target.value.split(' ')))}/>
+                  <input name='tags' type='text' className={styles.textInput} onChange={(e) => dispatch(updateTag(e.target.value.split(', ')))}/>
               </div>
               <div className={styles.textField}>
                 <label>Description<span className={styles.textDanger}> *</span></label>

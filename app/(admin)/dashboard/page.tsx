@@ -9,14 +9,8 @@ import PostSum from '@/components/Dashboard/PostsSum/PostSum'
 import InteractiveComponent from '@/components/Dashboard/InteractiveComponent/InteractiveComponent'
 
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation'
-import { PreviewPost } from '@/types/Posts.type'
-import { useAppSelector } from '@/redux/hooks'
+import { useRouter } from 'next/navigation';
 
-// Generate props for MenuContainer
-interface Props {
-  previewPost: PreviewPost
-}
 // Define Info Post type
 interface PostInfo {
   format: string,
@@ -27,13 +21,10 @@ interface PostInfo {
   description: string,
   tags: string[],
 }
-const Dashboard: React.FC<Props> = ({ previewPost }) => {
-  const draft = useAppSelector((state) => state.draft)
+const Dashboard: React.FC = () => {
   const session = useSession();
   const router = useRouter();
   const [menuType, setMenuType] = useState<string>('')
-  const [editor, setEditor] = useState<boolean>(false)
-  const [postMeta, setPostMeta] = useState<PostInfo | null>(null);
 
   if  (session.status === 'loading'){
     return <p style={{color: 'white'}}>Loading...</p>
@@ -47,19 +38,13 @@ const Dashboard: React.FC<Props> = ({ previewPost }) => {
   function handlePostMenu(data: string) {
     setMenuType(data);
   }
-  // Switch to editorMode
-  function handleAddPost(value: boolean){
-    setEditor(value)
-  }
   if (session.status === 'authenticated'){
     return (
       <div className={styles.dashboard}>
           <div className={styles.dashboardWrapper}>
               <MenuContainer postMenu={handlePostMenu}/>
               <HeaderContainer user={session.data.user}/>
-              <PostSum 
-                menuType={menuType} 
-                addPost={handleAddPost}/>
+              <PostSum menuType={menuType}/>
               <TeamContainer/>
               <InteractiveComponent />
           </div>

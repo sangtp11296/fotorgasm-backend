@@ -73,7 +73,7 @@ const PostFeed: React.FC<Props> = ({ data }) => {
               if (post.type === 'photo'){
                 const photo = post as Photo; // Type assertion
                 return(
-                  <Link key={photo.id} onClick={(e) => handleClick(e, photo.id)} href={''} className={`${styles.postWrapper} ${photo.width < photo.height ? styles.portrait : (photo.width > photo.height ? styles.landscape : styles.square)}`}>
+                  <Link key={photo.id} onClick={(e) => handleClick(e, photo.id)} href='/posts/abc' className={`${styles.postWrapper} ${photo.width < photo.height ? styles.portrait : (photo.width > photo.height ? styles.landscape : styles.square)}`}>
                     <BlogPost data={photo}/>
                   </Link>
                 )
