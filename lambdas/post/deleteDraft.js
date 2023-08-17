@@ -66,14 +66,14 @@ export const moveDraft = async (event, context) => {
             const destinationKey = `${destinationFolder}${getNewFileName(slug, index + 1, sourceKey)}`;
 
             const copyCommand = new CopyObjectCommand({
-                CopySource: `${folderKey}/${sourceKey}`,
+                CopySource: `/${uploadBucket}/${sourceKey}`,
                 Bucket: uploadBucket,
                 Key: destinationKey
             });
             await s3.send(copyCommand);
 
             const deleteCommand = new DeleteObjectCommand({
-                Bucket: sourceBucket,
+                Bucket: uploadBucket,
                 Key: sourceKey
             });
             await s3.send(deleteCommand);

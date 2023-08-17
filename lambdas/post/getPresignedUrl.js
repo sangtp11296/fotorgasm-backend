@@ -71,7 +71,7 @@ export const uploadPostThumbnail = async (event) => {
         //Get signed URL form S3
         const s3Params = {
             Bucket: uploadBucket,
-            Key: `thumbnail/${key}`,
+            Key: `cover/${key}`,
             ContentType: fileType,
             ACL: 'bucket-owner-full-control'
         }
@@ -83,6 +83,7 @@ export const uploadPostThumbnail = async (event) => {
             })
         })
     } catch (err) {
+        console.log('Error generating presigned URL ' + err);
         return Responses._500({
             body: JSON.stringify({ error: 'Error generating presigned URL ' + err })
         })

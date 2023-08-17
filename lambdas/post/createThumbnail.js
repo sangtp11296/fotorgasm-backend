@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
 
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import sharp from 'sharp';
 import util from 'util';
@@ -18,8 +18,9 @@ export async function createThumbnail (event, context, callback) {
     const srcBucket = event.Records[0].s3.bucket.name;
     // Object key may have spaces or unicode non-ASCII characters
     const srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
+    const fileName = srcKey.split('/').pop();
     const destBucket = process.env.fotorgasmPublicDataBucket;
-    const destKey = srcKey;
+    const destKey = `thumbnail/${fileName}`;
 
     // Infer the image type from the file suffix
     const typeMatch = srcKey.match(/\.([^.]*)$/);
@@ -53,7 +54,7 @@ export async function createThumbnail (event, context, callback) {
     }
 
     // Set thumbnail width. Resize will set the height automatically to maintain aspect ratio.
-    const width  = 200;
+    const width  = 300;
 
     // Use the sharp module to resize the image and save in a buffer.
     try {    
@@ -87,7 +88,6 @@ export async function createThumbnail (event, context, callback) {
         const url = `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/${destKey}`;
         if (match) {
             const postSlug = match[1];
-            console.log(postSlug)
             const updatedPost = await Post.findOneAndUpdate(
                 { slug: postSlug },
                 { $set: { 
