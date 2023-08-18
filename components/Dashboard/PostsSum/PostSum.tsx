@@ -192,7 +192,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
                   onChange={(e) => dispatch(updateFormat(e.target.value))}>
                       <option value='none' defaultValue='none' className={styles.items}>Select Post Format...</option>
                       <option value='blog' className={styles.items}>blog</option>
-                      <option value='photo' className={styles.items}>gallery</option>
+                      <option value='photo' className={styles.items}>photo</option>
                       <option value='video' className={styles.items}>video</option>
                       <option value='audio' className={styles.items}>audio</option>
                   </select>
