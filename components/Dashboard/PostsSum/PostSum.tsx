@@ -78,7 +78,6 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
       }
     }
   }
-  console.log(draft.content)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();

@@ -379,12 +379,14 @@
 }
 
 /* Upload Video Part */
+.uploadContainer{
+}
 .uploadPart{
     margin: auto;
     height: 150px;
+    width: 60%;
     border: 2px dashed var(--on-background-matte);
     border-radius: 10px;
-    width: 60%;
 }
 .uploadArea{
     cursor: pointer;
