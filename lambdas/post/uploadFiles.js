@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, CreateMultipartUploadCommand, PutObjectCommand, GetObjectCommand, CompleteMultipartUploadCommand, UploadPartCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuid } from 'uuid';
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
@@ -89,3 +89,79 @@ export const uploadPostThumbnail = async (event) => {
         })
     };
 };
+
+// Start Multipart Upload
+export const startMultiPartUpload = async (event) => {
+    try{
+        const data = JSON.parse(event.body);
+        const numberOfFiles = data.numberOfFiles;
+        const createMultipartUploadParams = {
+            Bucket: uploadBucket,
+            Key: `draft/${data.fileName}`
+        }
+
+        const createMultipartUploadCommand = new CreateMultipartUploadCommand(createMultipartUploadParams);
+        const res = await s3.send(createMultipartUploadCommand);
+
+        const uploadId = res.UploadId;
+        const presignedUrls = [];
+
+        // Generate presignedUrl for each part
+        for (let partNumber = 1; partNumber <= numberOfFiles; partNumber++){
+            const getSignedUrlParams = {
+                Bucket: uploadBucket,
+                Key: `draft/${data.fileName}`,
+                PartNumber: partNumber,
+                UploadId: uploadId,
+            }
+            const command = new UploadPartCommand(getSignedUrlParams)
+            const presignedUrl = await getSignedUrl(s3, command, {expiresIn: URL_EXPIRATION_SECONDS});
+
+            presignedUrls.push({ 
+                partNumber, 
+                url: presignedUrl
+            });
+        }
+        return Responses._200({
+            body: JSON.stringify({ 
+                presignedUrls,
+                uploadId
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return Responses._500({
+            body: JSON.stringify({ error: 'Error generating presigned URL ' + error })
+        })
+    }
+}
+
+// Complete Multipart Upload
+export const completeMultiPartUpload = async (event) => {
+    try{
+        const data = JSON.parse(event.body);
+        const { uploadId, fileName, parts } = data;
+        console.log(data)
+        const completeParams = {
+            Bucket: uploadBucket, // Update with your bucket name
+            Key: `draft/${fileName}`,  // Update with your object key
+            MultipartUpload: {
+                Parts: parts
+            },
+            UploadId: uploadId
+        };
+        const completeCommand = new CompleteMultipartUploadCommand(completeParams);
+        const completeResponse = await s3.send(completeCommand);
+
+        return Responses._200({
+            message: 'Multipart upload completed successfully',
+            result: completeResponse
+        })
+    } catch (error) {
+        console.log(error);
+        return Responses._500({
+            message: 'Error completing multipart upload',
+                error: error.message
+        })
+    }
+}

@@ -143,7 +143,7 @@ functions:
           cors: true
   #Post API
   uploadDraftImage:
-    handler: lambdas/post/getPresignedUrl.uploadDraftImage
+    handler: lambdas/post/uploadFiles.uploadDraftImage
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -152,7 +152,7 @@ functions:
           method: post
           cors: true
   getDraftImage:
-    handler: lambdas/post/getPresignedUrl.getDraftImage
+    handler: lambdas/post/uploadFiles.getDraftImage
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -170,7 +170,7 @@ functions:
           method: delete
           cors: true
   uploadPostThumbnail:
-    handler: lambdas/post/getPresignedUrl.uploadPostThumbnail
+    handler: lambdas/post/uploadFiles.uploadPostThumbnail
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
@@ -179,7 +179,7 @@ functions:
           method: post
           cors: true
   createThumbnail:
-    handler: lambdas/post/createThumbnail.createThumbnail
+    handler: lambdas/post/uploadFiles.createThumbnail
     layers:
       - !Ref FotorgasmLayerLambdaLayer
   createPost:
@@ -198,6 +198,24 @@ functions:
     events:
       - http:
           path: move-draft # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  startMultiPartUpload:
+    handler: lambdas/post/uploadFiles.startMultiPartUpload
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: start-multipart-upload # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  completeMultiPartUpload:
+    handler: lambdas/post/uploadFiles.completeMultiPartUpload
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: complete-multipart-upload # path will be domain.name.com/dev/posts
           method: post
           cors: true
 
@@ -244,5 +262,7 @@ resources:
                 - DELETE
               AllowedOrigins:
                 - "*"
+              
+              
 
 
