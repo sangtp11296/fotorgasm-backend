@@ -85,23 +85,61 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
     if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.description && draft.content && draft.coverUrl) {
 
       dispatch(submitDraft());
-
-      // Update cover photo first to get the thumbnail url and cover key
-      const formData: FinalPost = {
-        author: draft.author,
-        category: draft.category,
-        content: draft.content,
-        coverKey: '',
-        coverThumbnail: '',
-        coverRes: draft.coverRes,
-        description: draft.description,
-        format: draft.format,
-        title: draft.title,
-        slug: draft.slug,
-        tags: draft.tags,
-      }
-      // Move all draft images to posts folder in s3 bucket
-      if(draft.content.includes('<img')){
+      if (draft.format === 'blog'){
+        // Update cover photo first to get the thumbnail url and cover key
+        const formData: FinalPost = {
+          author: draft.author,
+          category: draft.category,
+          content: draft.content,
+          coverKey: '',
+          coverThumbnail: '',
+          coverRes: draft.coverRes,
+          description: draft.description,
+          format: draft.format,
+          title: draft.title,
+          slug: draft.slug,
+          tags: draft.tags,
+        }
+        // Move all draft images to posts folder in s3 bucket
+        if(draft.content.includes('<img')){
+          await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify(draft.slug),
+          });
+        }
+  
+        const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header
+          },
+          body: JSON.stringify(formData)
+        });
+        res.status === 200 && window.location.reload();
+      } else if (draft.format === 'video') {
+        // Update cover photo first to get the thumbnail url and cover key
+        const formData: FinalPost = {
+          author: draft.author,
+          category: draft.category,
+          content: '',
+          coverKey: '',
+          coverThumbnail: '',
+          coverRes: draft.coverRes,
+          description: draft.description,
+          format: draft.format,
+          title: draft.title,
+          slug: draft.slug,
+          tags: draft.tags,
+          videoSrc: {
+            high: '',
+            medium: '',
+            low: '',
+          }
+        }
+        // Move all draft videos to posts folder in s3 bucket
         await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
           method: "POST",
           headers: {
@@ -109,16 +147,16 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           },
           body: JSON.stringify(draft.slug),
         });
+  
+        const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header
+          },
+          body: JSON.stringify(formData)
+        });
+        res.status === 200 && window.location.reload();
       }
-
-      const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json' // Set the Content-Type header
-        },
-        body: JSON.stringify(formData)
-      });
-      res.status === 200 && window.location.reload();
     } 
   }
   // Convert title to slug

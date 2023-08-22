@@ -4,6 +4,8 @@ import styles from './TeamContainer.module.css'
 import { signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '@/redux/hooks'
+import axios from 'axios'
+import { ProgressBar } from '@/components/ProgressBar/ProgressBar'
 
 type User = {
     id: string;
@@ -28,13 +30,6 @@ const TeamContainer: React.FC = () => {
     const slug = useAppSelector((state) => state.draft.slug);
     const session = useSession();
     const user: User | undefined = session.data?.user;
-    const [files, setFiles] = useState<File[]>([]);
-    
-    useEffect(() => {
-        if(!editorMode){
-            setFiles([]);
-        }
-    }, [editorMode])
     
     // Update or detete existed team member info
     const [funcDot, setFuncdot] = useState<{[key: string]: boolean}>({});
@@ -151,6 +146,14 @@ const TeamContainer: React.FC = () => {
     }
 
     // Handle Upload File
+    const [files, setFiles] = useState<File[]>([]);
+    const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+    
+    useEffect(() => {
+        if(!editorMode){
+            setFiles([]);
+        }
+    }, [editorMode])
     const handleAddFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const fileList = e.target.files;
@@ -160,7 +163,7 @@ const TeamContainer: React.FC = () => {
                 return file
             });
             setFiles(prevSelectedFiles => [...prevSelectedFiles, ...fileArray]);
-        }
+        }   
     }
     const handleUploadFile = async (file: File) => {
         // Split File into parts
@@ -190,12 +193,22 @@ const TeamContainer: React.FC = () => {
                 const partNumber = fileParts.indexOf(filePart) + 1;
                 const presignedUrl = presignedUrls.find((url) => url.partNumber === partNumber);
                 if (presignedUrl){
-                    const uploadPart = await fetch(presignedUrl.url, {
-                        method: "PUT",
-                        body: filePart.data
+                    const uploadPart = await axios.put(presignedUrl.url, filePart.data, {
+                        onUploadProgress: (progressEvent: any) => {
+                            if (progressEvent) {
+                                const progressPercentage = (progressEvent.loaded / progressEvent.total) * 100;
+                                const cumulativeProgress = ((partNumber - 1) / fileParts.length) * 100 + (progressPercentage / fileParts.length);
+                                // console.log(`Total Progress: ${cumulativeProgress.toFixed(2)}%`);
+                                setUploadProgress((prev) => ({
+                                    ...prev,
+                                    [file.name]: Math.floor(cumulativeProgress)
+                                }))
+                            }
+
+                        }
                     });
                     if (uploadPart.status === 200) {
-                        const uploadedETag = uploadPart.headers.get('ETag');
+                        const uploadedETag = uploadPart.headers.etag;
                         uploadedPartETags.push({ PartNumber: partNumber, ETag: uploadedETag });
                         console.log(`File part ${partNumber} uploaded successfully`);
                     } else {
@@ -203,7 +216,6 @@ const TeamContainer: React.FC = () => {
                     }
                 }
             }
-            console.log(uploadedPartETags)
             if (uploadedPartETags.length === fileParts.length){
                 // Complete the multipart upload
                 const completeUploadResponse = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/complete-multipart-upload', {
@@ -227,7 +239,6 @@ const TeamContainer: React.FC = () => {
             console.log(error)
         }
     }
-
     async function splitFileIntoParts(file: File) {
         const fileParts = [];
         let offset = 0;
@@ -409,11 +420,27 @@ const TeamContainer: React.FC = () => {
                         <span>Maximum file is 1TB</span>
                     </label>
                 </div>
+                <h3>Uploaded</h3>
                 {files ? 
                 <div className={styles.filesUpload}>
                     {files.map((file, ind) => (
                         <div key={ind} className={styles.uploadSection}>
-                            {file.name} {/* Assuming you want to display the file name */}
+                            <div className={styles.fileIcon}>
+                                <svg height={40} width={40} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M15.3276 7.54199H8.67239C5.29758 7.54199 3.61017 7.54199 2.66232 8.52882C1.71447 9.51565 1.93748 11.0403 2.38351 14.0895L2.80648 16.9811C3.15626 19.3723 3.33115 20.5679 4.22834 21.2839C5.12553 21.9999 6.4488 21.9999 9.09534 21.9999H14.9046C17.5512 21.9999 18.8745 21.9999 19.7717 21.2839C20.6689 20.5679 20.8437 19.3723 21.1935 16.9811L21.6165 14.0895C22.0625 11.0403 22.2855 9.51564 21.3377 8.52882C20.3898 7.54199 18.7024 7.54199 15.3276 7.54199ZM14.5812 15.7942C15.1396 15.448 15.1396 14.5519 14.5812 14.2057L11.2096 12.1156C10.6669 11.7792 10 12.2171 10 12.9098V17.0901C10 17.7828 10.6669 18.2207 11.2096 17.8843L14.5812 15.7942Z" fill="#ffffff"></path> <path opacity="0.4" d="M8.50956 2.00001H15.4897C15.7221 1.99995 15.9004 1.99991 16.0562 2.01515C17.164 2.12352 18.0708 2.78958 18.4553 3.68678H5.54395C5.92846 2.78958 6.83521 2.12352 7.94303 2.01515C8.09884 1.99991 8.27708 1.99995 8.50956 2.00001Z" fill="#ffffff"></path> <path opacity="0.7" d="M6.3102 4.72266C4.91958 4.72266 3.77931 5.56241 3.39878 6.67645C3.39085 6.69967 3.38325 6.72302 3.37598 6.74647C3.77413 6.6259 4.18849 6.54713 4.60796 6.49336C5.68833 6.35485 7.05367 6.35492 8.6397 6.35501H15.5318C17.1178 6.35492 18.4832 6.35485 19.5635 6.49336C19.983 6.54713 20.3974 6.6259 20.7955 6.74647C20.7883 6.72302 20.7806 6.69967 20.7727 6.67645C20.3922 5.56241 19.2519 4.72266 17.8613 4.72266H6.3102Z" fill="#ffffff"></path> </g>
+                                </svg>
+                            </div>
+                            <div className={styles.fileInfo}>
+                                <h4 className={styles.fileName}>{file.name}</h4>
+                                <h5 className={styles.fileType}>{file.type}</h5>
+                            </div>
+                            <div className={styles.progressStatus}>
+                                <ProgressBar progress={uploadProgress[file.name]}/>
+                                <span>{uploadProgress[file.name]}%</span>
+                            </div>
+                            <button style={{display: 'flex', backgroundColor: 'var(--surface-04)'}} >
+                                <svg height={18} width={18} viewBox="0 0 24 24" stroke="#ffffff" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Menu / Close_MD"> <path id="Vector" d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18"  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g> </g></svg>
+                            </button>
                         </div>
                     ))}
                 </div>

@@ -12,7 +12,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    padding-top: 20px;
     margin-bottom: 20px;
     width: 85%;
     margin-left: auto;
@@ -380,9 +380,20 @@
 
 /* Upload Video Part */
 .uploadContainer{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 10px;
+}
+.uploadContainer h3{
+    padding-top: 10px;
+    padding-left: 8%;
+    color: var(--on-background);
 }
 .uploadPart{
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
     height: 150px;
     width: 60%;
     border: 2px dashed var(--on-background-matte);
@@ -416,8 +427,59 @@
     font-size: 11px;
     font-weight: 400;
 }
+.filesUpload{
+    width: 90%;
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+}
 
-
+.uploadSection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: 1.5px solid #ffffff06;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.fileIcon{
+    padding-right: 10px;
+}
+.fileInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+.fileInfo h4{
+    font-size: 14px;
+    color: var(--on-background);
+}
+.fileInfo h5{
+    font-size: 12px;
+    color: var(--on-background-matte);
+}
+.progressStatus{
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    /* flex-grow: 1; */
+    width: 50%;
+    padding-right: 10px;
+}
+.progressStatus span{
+    width: 33px;
+    color: #007bff;
+    font-size: 12px;
+    font-weight: 500;
+}
+.filesUpload::-webkit-scrollbar{
+    display: none;
+}
 
 @media screen and (max-width: 1355px) {
     .teamContainer{
