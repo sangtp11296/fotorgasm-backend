@@ -1,4 +1,4 @@
-import { S3Client, CreateMultipartUploadCommand, PutObjectCommand, GetObjectCommand, CompleteMultipartUploadCommand, UploadPartCommand } from '@aws-sdk/client-s3';
+import { S3Client, CreateMultipartUploadCommand, PutObjectCommand, GetObjectCommand, CompleteMultipartUploadCommand, UploadPartCommand, AbortMultipartUploadCommand  } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuid } from 'uuid';
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
@@ -123,15 +123,13 @@ export const startMultiPartUpload = async (event) => {
             });
         }
         return Responses._200({
-            body: JSON.stringify({ 
-                presignedUrls,
-                uploadId
-            })
+            presignedUrls,
+            uploadId
         })
     } catch (error) {
         console.log(error)
         return Responses._500({
-            body: JSON.stringify({ error: 'Error generating presigned URL ' + error })
+            error: 'Error generating presigned URL ' + error
         })
     }
 }
@@ -162,6 +160,32 @@ export const completeMultiPartUpload = async (event) => {
         return Responses._500({
             message: 'Error completing multipart upload',
                 error: error.message
+        })
+    }
+}
+
+// Abort Multipart Upload
+export const abortMultiPartUpload = async (event) => {
+    try{
+        const data = JSON.parse(event.body);
+        const fileName = data.fileName;
+        const uploadId = data.uploadId;
+        const abortMultipartUploadParams = {
+            Bucket: uploadBucket,
+            Key: `draft/${fileName}`,
+            UploadId: uploadId
+        }
+
+        const abortMultipartUploadCommand = new AbortMultipartUploadCommand(abortMultipartUploadParams);
+        const res = await s3.send(abortMultipartUploadCommand);
+        console.log('Multipart upload aborted successfully.');
+        return Responses._200({
+            message: 'Multipart upload aborted successfully.'
+        })
+    } catch (error) {
+        console.log(error);
+        return Responses._500({
+            error: 'Cannot abort uploading process ' + error
         })
     }
 }

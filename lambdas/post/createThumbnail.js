@@ -36,6 +36,7 @@ export async function createThumbnail (event, context, callback) {
     }
     // Get the image from the source bucket. GetObjectCommand returns a stream.
     try {
+        console.log('Get the image from the source bucket. GetObjectCommand returns a stream.');
         const params = {
             Bucket: srcBucket,
             Key: srcKey
@@ -58,6 +59,7 @@ export async function createThumbnail (event, context, callback) {
 
     // Use the sharp module to resize the image and save in a buffer.
     try {    
+        console.log('Use the sharp module to resize the image and save in a buffer');
         var outputBuffer = await sharp(contentBuffer).resize(width).toBuffer();
     } catch (error) {
         console.log('Cannot resize the image and save in a buffer', error);
@@ -66,6 +68,8 @@ export async function createThumbnail (event, context, callback) {
     
     // Upload the thumbnail image to the public bucket
     try {
+        console.log('Upload the thumbnail image to the public bucket');
+
         const destParams = {
             Bucket: destBucket,
             Key: destKey,
@@ -82,6 +86,8 @@ export async function createThumbnail (event, context, callback) {
 
     // Update the thumbnail url to Post model schema
     try{
+        console.log('Update the thumbnail url to Post model schema');
+        
         await connectToDatabase();
         // Extract the post slug from source key
         const match = srcKey.match(/\/([^/]+)-cover\.\w+$/);

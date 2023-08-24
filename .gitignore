@@ -2,6 +2,7 @@
 node_modules
 jspm_packages
 variables.env
+layers/nodejs/node_modules
 
 # Serverless directories
 .serverless

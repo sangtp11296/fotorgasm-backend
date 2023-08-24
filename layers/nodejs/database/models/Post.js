@@ -52,27 +52,41 @@ const PostSchema = new mongoose.Schema({
     },
     coverKey:{
         type: String,
-        required: true
+        required: false
     },
     coverThumbnail:{
         type: String,
-        required: true
+        required: false
     },
     author:{
         type: String,
         required: true
     },
-    categories:{
-        type: Array,
+    category:{
+        type: String,
         required: true
     },
-    tag:{
-        type: String,
+    tags:{
+        type: Array,
         required: false
     },
     content:{
         type: String,
-        required: true
+        required: false
+    },
+    videoSrc:{
+        high: {
+            type: String,
+            required: false
+        },
+        medium: {
+            type: String,
+            required: false
+        },
+        low: {
+            type: String,
+            required: false
+        },
     },
     likes:{
         type: Number,
