@@ -5,6 +5,9 @@
 .postSumContainer{
     grid-column: 3 / 6;
     grid-row: 2 / 6;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 .sumHeader{
     display: flex;
@@ -80,9 +83,14 @@
     /* fill: var(--primary); */
 }
 .editField{
-    padding: 10px 35px;
+    padding-left: 35px;
+    padding-right: 35px;
     color: var(--on-background-matte);
-    height: 85%;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+.editField::-webkit-scrollbar{
+    display: none;
 }
 .textField{
     margin-bottom: 10px;

@@ -82,7 +82,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
-    if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.description && draft.content && draft.coverUrl) {
+    if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.description && draft.coverUrl) {
 
       dispatch(submitDraft());
       if (draft.format === 'blog'){
@@ -107,7 +107,10 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header
             },
-            body: JSON.stringify(draft.slug),
+            body: JSON.stringify({
+              slug: draft.slug,
+              format: 'image'
+            }),
           });
         }
   
@@ -124,7 +127,6 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         const formData: FinalPost = {
           author: draft.author,
           category: draft.category,
-          content: '',
           coverKey: '',
           coverThumbnail: '',
           coverRes: draft.coverRes,
@@ -134,20 +136,12 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           slug: draft.slug,
           tags: draft.tags,
           videoSrc: {
-            high: '',
+            high: ``,
             medium: '',
             low: '',
           }
         }
-        // Move all draft videos to posts folder in s3 bucket
-        await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json' // Set the Content-Type header
-          },
-          body: JSON.stringify(draft.slug),
-        });
-  
+
         const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
           method: 'POST',
           headers: {
@@ -155,6 +149,19 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           },
           body: JSON.stringify(formData)
         });
+
+        // Move all draft videos to posts folder in s3 bucket
+        await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header
+          },
+          body: JSON.stringify({
+            slug: draft.slug,
+            format: 'video'
+          }),
+        });
+
         res.status === 200 && window.location.reload();
       }
     } 
