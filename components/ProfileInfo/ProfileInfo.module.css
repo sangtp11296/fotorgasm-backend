@@ -35,7 +35,7 @@
     color: var(--on-background);
     font-family: 'Neue Helvetica';
     font-weight: 500;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .profileName h1{
     display: inline;
@@ -45,6 +45,13 @@
     font-weight: 300;
     font-size: 18px;
     margin-right: 2px;
+}
+.profileDesc h2{
+    font-family: 'Neue Helvetica';
+    font-weight: 400;
+    font-style: normal ;
+    font-size: 14px;
+    margin-bottom: 8px;
 }
 .profileDesc h3{
     font-family: 'Neue Helvetica';
@@ -125,10 +132,14 @@
         height: 87px;
     }
     .profileName{
-        margin-bottom: 5px;
+        margin-bottom: 0px;
     }
     .profileName h1{
         font-size: 16px;
+    }
+    .profileDesc h2{
+        font-size: 10px;
+        margin-bottom: 4px;
     }
     .profileName span{
         font-size: 15px;
@@ -172,11 +183,12 @@
         width: 70px;
         height: 70px;
     }
-    .profileName{
-        margin-bottom: 5px;
-    }
     .profileName h1{
         font-size: 12px;
+    }
+    .profileDesc h2{
+        font-size: 9px;
+        margin-bottom: 4px;
     }
     .profileName span{
         font-size: 11px;
