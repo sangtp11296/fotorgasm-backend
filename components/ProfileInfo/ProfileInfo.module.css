@@ -165,7 +165,7 @@
 @media screen and (max-width: 400px) {
     .profileInfo{
         margin-bottom: 20px;
-        width: 320px;
+        width: 330px;
     }
     .profileMain{
         line-height: unset;
@@ -204,7 +204,7 @@
         margin-top: 2px;
     }
     .socialMenu a{
-        margin-right: 5px;
+        margin-right: 8px;
     }
     .socialMenu svg{
         height: 12px;

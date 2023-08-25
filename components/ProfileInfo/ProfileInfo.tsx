@@ -37,7 +37,7 @@ const ProfileInfo = () => {
             <div className={styles.profileDesc}>
                 <h2>/fəˈtɔːɡæzəm/</h2>
                 <h3>Trần Phúc Sang • Trà • Yuki • 陈福创</h3>
-                A part-time <b>D</b>reamer <span>•</span> <b>P</b>hotographer <span>•</span> <b>M</b>usician <span>•</span> <b>L</b>istener<br/>↳ finds orgaSm in the world of madness<br/>
+                A part-time <b>D</b>reamer <span>•</span> <b>P</b>hotographer <span>•</span> <b>M</b>usician <span>•</span> <b>L</b>istener  <span>•</span> <b>S</b>toryteller<br/>↳ finds orgaSm in the world of madness<br/>
                 <Link className={styles.hashTag} href=''>#fotorgasm</Link>
             </div>
             <div className={styles.socialMenu}>
