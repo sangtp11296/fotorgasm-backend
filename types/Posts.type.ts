@@ -8,10 +8,15 @@ export type FinalPost = {
   tags: string[],
   coverThumbnail: string,
   coverKey: string,
-  content: string,
+  content?: string,
   coverRes: {
     width: number,
     height: number
+  },
+  videoSrc?: {
+    high: string,
+    medium: string,
+    low: string,
   }
 }
 export type DraftPost = {

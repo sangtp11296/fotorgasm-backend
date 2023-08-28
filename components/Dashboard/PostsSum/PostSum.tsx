@@ -79,6 +79,15 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
     }
   }
 
+  // Handle get posts
+  const handleGetPosts = async (params: string) => {
+    const res = await fetch('', {
+      method: "GET",
+    })
+  }
+  useEffect(() => {
+
+  })
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
