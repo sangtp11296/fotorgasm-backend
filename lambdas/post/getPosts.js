@@ -4,39 +4,29 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js'
 
-export const createPost = async (event, context, callback) => {
+export const getPosts = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     await connectToDatabase();
     try {
-        const data = JSON.parse(event.body);
-        console.log(data);
-        // Create a new Post document
-        const newPost = new Post({
-            author: data.author,
-            category: data.category,
-            content: data.content,
-            coverRes: {
-                width: data.coverRes.width,
-                height: data.coverRes.height
-            },
-            desc: data.description,
-            format: data.format,
-            slug: data.slug,
-            tags: data.tags,
-            title: data.title
-        });
-        console.log(newPost)
-        // Save the new post to the database
-        const savedPost = await newPost.save();
+        const page = parseInt(event.queryStringParameters.page) || 1;
+        const limit = parseInt(event.queryStringParameters.limit) || 5;
+        
+        const skip = (page - 1) * limit;
+
+        // Count total posts before applying skip and limit
+        const totalPosts = await Post.find().count(); 
+
+        const posts = await Post.find().skip(skip).limit(limit).toArray();
 
         return Responses._200 ({
-            message: 'New post created successfully',
-            post: savedPost
+            message: 'Posts gotten successfully',
+            post: posts,
+            totalPosts: totalPosts
         })
     } catch (error) {
-        console.error('Error creating post', error);
+        console.error('Error getting posts', error);
         return Responses._500 ({
-            message: 'Error creating post', 
+            message: 'Error getting posts', 
             error: error.message 
         })
     }
