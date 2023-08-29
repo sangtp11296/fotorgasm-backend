@@ -81,7 +81,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
 
   // Handle get posts
   const handleGetPosts = async (params: string) => {
-    const res = await fetch('', {
+    const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
       method: "GET",
     })
   }
