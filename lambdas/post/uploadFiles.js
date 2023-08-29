@@ -8,7 +8,7 @@ import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
 const REGION = process.env.region; //e.g. "us-east-1"
 // Create an Amazon S3 service client object.
 const s3 = new S3Client({ region: REGION });
-const uploadBucket = process.env.fotorgasmImagesUploadBucket;
+const uploadBucket = process.env.fotorgasmDataUpload;
 const URL_EXPIRATION_SECONDS = 3600    // Specify how long the pre-signed URL will be valid for
 
 export const uploadDraftImage = async (event) => {

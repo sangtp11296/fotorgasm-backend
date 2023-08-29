@@ -13,8 +13,8 @@ provider:
   stage: dev # setting the env stage to dev, this will be visible in the routes
   region: ap-southeast-1
   environment:
-    fotorgasmImagesUploadBucket: ${self:custom.fotorgasmImagesUploadBucket}
-    fotorgasmPublicDataBucket: ${self:custom.fotorgasmPublicDataBucket}
+    fotorgasmDataUpload: ${self:custom.fotorgasmDataUpload}
+    fotorgasmPublicData: ${self:custom.fotorgasmPublicData}
     region: ${self:provider.region}
   iamRoleStatements:
     - Effect: Allow
@@ -33,8 +33,8 @@ layers:
     path: layers
   
 custom:
-  fotorgasmImagesUploadBucket: fotorgasm-images-upload-bucket
-  fotorgasmPublicDataBucket: fotorgasm-public-data-bucket
+  fotorgasmDataUpload: fotorgasm-data-upload
+  fotorgasmPublicData: fotorgasm-public-data
 
 functions:
   register:
@@ -186,10 +186,10 @@ functions:
 
 resources:
   Resources:   
-    FotorgasmPublicDataBucket:
+    fotorgasmPublicData:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.fotorgasmPublicDataBucket}
+        BucketName: ${self:custom.fotorgasmPublicData}
         PublicAccessBlockConfiguration:
           BlockPublicAcls: false
         OwnershipControls:
@@ -203,10 +203,10 @@ resources:
                 - GET
               AllowedOrigins:
                 - "*"
-    FotorgasmImagesUploadBucket:
+    fotorgasmDataUpload:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.fotorgasmImagesUploadBucket}
+        BucketName: ${self:custom.fotorgasmDataUpload}
         PublicAccessBlockConfiguration:
           BlockPublicAcls: true
           BlockPublicPolicy: true

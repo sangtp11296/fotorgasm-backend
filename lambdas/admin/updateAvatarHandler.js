@@ -18,7 +18,7 @@ export async function updateAvatarHandler(event, context, callback) {
     const srcBucket = event.Records[0].s3.bucket.name;
     // Object key may have spaces or unicode non-ASCII characters
     const srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
-    const destBucket = process.env.fotorgasmPublicDataBucket;
+    const destBucket = process.env.fotorgasmPublicData;
     const destKey = srcKey;
 
     // Infer the image type from the file suffix
@@ -85,7 +85,7 @@ export async function updateAvatarHandler(event, context, callback) {
         // Extract the user Id from source key
         const startIndex = srcKey.lastIndexOf('/') + 1;
         const endIndex = srcKey.indexOf('-');
-        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/${destKey}`;
+        const url = `https://${process.env.fotorgasmPublicData}.s3.${process.env.region}.amazonaws.com/${destKey}`;
         if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
             const userID = srcKey.substring(startIndex, endIndex);
             const updatedUser = await User.findByIdAndUpdate(

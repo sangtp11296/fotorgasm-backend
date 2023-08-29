@@ -19,7 +19,7 @@ export async function createThumbnail (event, context, callback) {
     // Object key may have spaces or unicode non-ASCII characters
     const srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
     const fileName = srcKey.split('/').pop();
-    const destBucket = process.env.fotorgasmPublicDataBucket;
+    const destBucket = process.env.fotorgasmPublicData;
     const destKey = `thumbnail/${fileName}`;
 
     // Infer the image type from the file suffix
@@ -91,7 +91,7 @@ export async function createThumbnail (event, context, callback) {
         await connectToDatabase();
         // Extract the post slug from source key
         const match = srcKey.match(/\/([^/]+)-cover\.\w+$/);
-        const url = `https://${process.env.fotorgasmPublicDataBucket}.s3.${process.env.region}.amazonaws.com/${destKey}`;
+        const url = `https://${process.env.fotorgasmPublicData}.s3.${process.env.region}.amazonaws.com/${destKey}`;
         if (match) {
             const postSlug = match[1];
             const updatedPost = await Post.findOneAndUpdate(

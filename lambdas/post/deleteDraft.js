@@ -11,7 +11,7 @@ import { Post } from '/opt/nodejs/database/models/Post.js';
 const REGION = process.env.region; //e.g. "us-east-1"
 // Create an Amazon S3 service client object.
 const s3 = new S3Client({ region: REGION });
-const uploadBucket = process.env.fotorgasmImagesUploadBucket;
+const uploadBucket = process.env.fotorgasmDataUpload;
 const folderKey = `draft/`;
 
 export const deleteDraft = async (event) => {
