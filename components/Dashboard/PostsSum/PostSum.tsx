@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateDesc, updateFormat, updateSlug, updateTag, updateTitle } from '@/redux/post/draft.slice'
 import { FinalPost } from '@/types/Posts.type'
+import { getPosts } from '@/utils/getPosts'
 
 // Define props
 interface Props {
@@ -67,7 +68,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
       dispatch(clearDraft());
 
       // Fetch api to delete everthing in draft folder
-      const reqDeleteDraft = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/delete-draft',{
+      const reqDeleteDraft = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/delete-draft',{
         method: 'DELETE'
       })
       if (reqDeleteDraft.ok) {
@@ -80,14 +81,14 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   }
 
   // Handle get posts
-  const handleGetPosts = async (params: string) => {
-    const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
-      method: "GET",
-    })
+  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const handleGetPosts = async (page: number) => {
+    const data = getPosts(page, 5);
   }
   useEffect(() => {
-
-  })
+    handleGetPosts(page);
+  }, [])
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
@@ -111,7 +112,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         }
         // Move all draft images to posts folder in s3 bucket
         if(draft.content.includes('<img')){
-          await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+          await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
             method: "POST",
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header
@@ -123,7 +124,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           });
         }
   
-        const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
+        const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json' // Set the Content-Type header
@@ -151,7 +152,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           }
         }
 
-        const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
+        const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json' // Set the Content-Type header
@@ -160,7 +161,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         });
 
         // Move all draft videos to posts folder in s3 bucket
-        await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+        await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
           method: "POST",
           headers: {
             'Content-Type': 'application/json' // Set the Content-Type header

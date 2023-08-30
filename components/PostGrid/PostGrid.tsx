@@ -9,8 +9,8 @@ import { getPosts } from '@/utils/getPosts';
 async function PostGrid() {
 
   // Get mixed data from API
-  const mixedData: Promise<(Photo | Video)[]> = getPosts('rock', 1, 5);
-  const data: (Photo | Video)[] = await mixedData;
+  // const mixedData: Promise<(Photo | Video)[]> = getPosts('rock', 1, 5);
+  // const data: (Photo | Video)[] = await mixedData;
 
   return (
     <>

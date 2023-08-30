@@ -47,7 +47,7 @@ const TeamContainer: React.FC = () => {
         // Upload team member info first
         try{
             if (name !== updateName || role.join(', ') !== updateRole){
-                const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
+                const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
                     method: 'PUT',
                     body: JSON.stringify({
                         userID: user?.id,
@@ -63,7 +63,7 @@ const TeamContainer: React.FC = () => {
             };
             if (updateAvatar) {
                 console.log(updateAvatar)
-                const req = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                const req = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: updateID,
@@ -103,7 +103,7 @@ const TeamContainer: React.FC = () => {
         e.preventDefault();
         // Upload team member info first
         try{
-            const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
+            const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
                 method: 'POST',
                 body: JSON.stringify({
                     userID: user?.id,
@@ -118,7 +118,7 @@ const TeamContainer: React.FC = () => {
             const data = await res.json();
             const newMemberData = JSON.parse(data.newMember);
             if (selectedAva) {
-                const req = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                const req = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: newMemberData._id,
@@ -170,7 +170,7 @@ const TeamContainer: React.FC = () => {
         // Split File into parts
         const fileParts = await splitFileIntoParts(file);
         // Request Multipart Upload
-        const reqMultiPart = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/start-multipart-upload', {
+        const reqMultiPart = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/start-multipart-upload', {
             method: "POST",
             body: JSON.stringify({ 
                 numberOfFiles: fileParts.length,
@@ -222,7 +222,7 @@ const TeamContainer: React.FC = () => {
             }
             if (uploadedPartETags.length === fileParts.length){
                 // Complete the multipart upload
-                const completeUploadResponse = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/complete-multipart-upload', {
+                const completeUploadResponse = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/complete-multipart-upload', {
                     method: 'POST',
                     body: JSON.stringify({
                         uploadId: uploadId,
@@ -262,7 +262,7 @@ const TeamContainer: React.FC = () => {
 
     // Handle Abort Uploading Files
     const handleAbortUpload =  async (fileToAbort: File) => {
-        const abort = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/abort-multipart-upload', {
+        const abort = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/abort-multipart-upload', {
             method: "POST",
             body: JSON.stringify({
                 fileName: fileToAbort.name,
@@ -285,7 +285,7 @@ const TeamContainer: React.FC = () => {
     }
     // Handle Delete File 
     const handleDeleteFile = async (fileToDelete: File) => {
-        const deleteReq = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
+        const deleteReq = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
             method: "DELETE",
             body: JSON.stringify({
                 fileName: fileToDelete.name,

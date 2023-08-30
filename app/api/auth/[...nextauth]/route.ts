@@ -22,7 +22,7 @@ const handler = NextAuth({
             },
             async authorize(credentials, req){
               // Add logic here to look up the user from the credentials supplied
-              const res = await fetch('https://ypbx8fswz1.execute-api.ap-southeast-1.amazonaws.com/dev/login',{
+              const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/login',{
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
