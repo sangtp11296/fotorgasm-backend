@@ -9,18 +9,19 @@ export const getPosts = async (event, context, callback) => {
     await connectToDatabase();
     try {
         const page = parseInt(event.queryStringParameters.page) || 1;
-        const limit = parseInt(event.queryStringParameters.limit) || 5;
-        
-        const skip = (page - 1) * limit;
+        console.log(page);
+        const perPage = parseInt(event.queryStringParameters.perPage) || 5;
+        console.log(perPage);
+        const skip = (page - 1) * perPage;
 
         // Count total posts before applying skip and limit
-        const totalPosts = await Post.find().count(); 
+        const totalPosts = await Post.countDocuments(); 
 
-        const posts = await Post.find().skip(skip).limit(limit).toArray();
+        const posts = await Post.find().skip(skip).limit(perPage);
 
         return Responses._200 ({
             message: 'Posts gotten successfully',
-            post: posts,
+            posts: posts,
             totalPosts: totalPosts
         })
     } catch (error) {
