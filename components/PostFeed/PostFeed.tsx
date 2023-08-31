@@ -1,37 +1,35 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './PostFeed.module.css'
-import { Photo } from '@/types/Photos.type'
 import BlogPost from '../Blog/BlogPost'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Video } from '@/types/Videos.type'
-import VideoPost from '../Video/VideoPost'
 import { getPosts } from '@/utils/getPosts'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
+import { FetchedPost } from '@/types/Posts.type'
 
-interface Props {
-  data: Array<Photo|Video>
-}
+const PostFeed: React.FC = () => {
 
-const PostFeed: React.FC<Props> = ({ data }) => {
-
-  const [posts, setPosts] = useState<(Photo | Video)[]>([]);
+  const [posts, setPosts] = useState<FetchedPost[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(2)
-  const session = useSession()
-  console.log(session)
+
+  // Get first time loading posts
+  const handleGetPosts = async (page: number) => {
+    const res = getPosts(page, 5);
+    setPosts((await res).posts);
+  }
+
   useEffect(() => {
-    setPosts(data);
+    handleGetPosts(1);
   }, [])
 
-  // Get more photos
+  // Get more posts
   const getMorePhotos = async () => {
     try{
-      const res: Promise<(Photo | Video)[]> = getPosts('rock', page, 5);
-      const data: (Photo | Video)[] = await res;
-      if (data.length > 0){
-        setPosts((prevPhotos) => [...prevPhotos, ...data]);
+      const res = getPosts(page, 5);
+      const posts = (await res).posts;
+      if (posts.length > 0){
+        setPosts((prevPhotos) => [...prevPhotos, ...posts]);
         setPage((prevPage) => prevPage + 1)
       } else {
         setHasMore(false);
@@ -55,7 +53,7 @@ const PostFeed: React.FC<Props> = ({ data }) => {
       });
     }
   }, []);
-  
+  console.log(posts)
   return (
     <div className={styles.postFeed}>
       <InfiniteScroll 
@@ -70,20 +68,20 @@ const PostFeed: React.FC<Props> = ({ data }) => {
         <div className={styles.masonryContainer}>
           {
             posts.map((post) => {
-              if (post.type === 'photo'){
-                const photo = post as Photo; // Type assertion
+              if (post.format === 'blog'){
+                // const photo = post as Photo; // Type assertion
                 return(
-                  <Link key={photo.id} onClick={(e) => handleClick(e, photo.id)} href='/posts/abc' className={`${styles.postWrapper} ${photo.width < photo.height ? styles.portrait : (photo.width > photo.height ? styles.landscape : styles.square)}`}>
-                    <BlogPost data={photo}/>
+                  <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href='/posts/abc' className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                    <BlogPost data={post}/>
                   </Link>
                 )
               } else {
-                const video = post as Video; // Type assertion
-                return (
-                  <Link key={video.id} onClick={(e) => handleClick(e, `${video.id}`)} href={``} className={`${styles.postWrapper} ${video.width < video.height ? styles.portrait : (video.width > video.height ? styles.landscape : styles.square)}`}>
-                    <VideoPost video={video}/>
-                  </Link>
-                )
+                // const video = post as Video; // Type assertion
+                // return (
+                //   <Link key={post._id} onClick={(e) => handleClick(e, `${post._id}`)} href={``} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                //     {/* <VideoPost video={post}/> */}
+                //   </Link>
+                // )
               }
             })
           }

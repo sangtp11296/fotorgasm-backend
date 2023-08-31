@@ -141,7 +141,6 @@ export const getPosts = async (page: number | string, perPage: number | string) 
     const getData = await res.json();
     const posts = getData.posts;
     const totalPosts = getData.totalPosts;
-    console.log(posts, totalPosts)
     // if (mixedData) {
     //     for (let i = mixedData.length - 1; i > 0; i--) {
     //         const j = Math.floor(Math.random() * (i + 1)); // Generate a random index
@@ -152,6 +151,6 @@ export const getPosts = async (page: number | string, perPage: number | string) 
     //         mixedData[j] = temp;
     //     }
     // }
-    return { posts, totalPosts}
+    return { posts, totalPosts }
 
 };

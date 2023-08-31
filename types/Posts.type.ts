@@ -18,7 +18,8 @@ export type FinalPost = {
     medium: string,
     low: string,
   }
-}
+};
+export type FetchedPost = FinalPost & { _id: string };
 export type DraftPost = {
   toggle: boolean,
   submit: boolean,
@@ -38,4 +39,4 @@ export type DraftPost = {
     width: number,
     height: number
   }
-}
+};

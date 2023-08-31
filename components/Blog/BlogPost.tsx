@@ -2,10 +2,11 @@
 import { Photo } from '@/types/Photos.type'
 import styles from './BlogPost.module.css'
 import Image from 'next/image'
-import { DraftPost } from '@/types/Posts.type';
+import { DraftPost, FetchedPost } from '@/types/Posts.type';
 
 interface Props {
-  data: DraftPost
+  data: FetchedPost
+  // data: DraftPost
 }
 const BlogPost: React.FC<Props> = ({ data }) => {
   
@@ -33,7 +34,7 @@ const BlogPost: React.FC<Props> = ({ data }) => {
   }
 
   return (
-    <div id={data.id} className={`${styles.blogPost}`}>
+    <div id={data._id} className={`${styles.blogPost}`}>
       <div className={`${styles.postCover}`}>
         <button className={styles.fullScreen}>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +52,10 @@ const BlogPost: React.FC<Props> = ({ data }) => {
         <div className={styles.coverImage}>
           {
             // Check if photo cover is available or not
-            data.coverUrl && <Image priority={true} fill  key={data.id} src={data.coverUrl} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image>
+            data.coverUrl ? 
+            <Image priority={true} fill key={data._id} src={data.coverUrl} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
+            :
+            <Image priority={true} fill key={data._id} src={data.coverThumbnail} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
           }
           
         </div>

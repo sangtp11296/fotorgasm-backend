@@ -83,12 +83,17 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   // Handle get posts
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPosts, setTotalPosts] = useState()
   const handleGetPosts = async (page: number) => {
     const data = getPosts(page, 5);
+    console.log((await data).posts);
+    console.log((await data).totalPosts);
+    setTotalPosts((await data).totalPosts);
+    setPosts((await data).posts);
   }
   useEffect(() => {
     handleGetPosts(page);
-  }, [])
+  }, [page])
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
@@ -212,20 +217,23 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
       <div className={styles.sumHeader}>
         <div className={styles.leftHeader}>
           <h2>{menuType}</h2>
-          <div className={styles.button} onClick={handleTrigger}>
-              {
-                !addTrigger ? 
-                <>
-                  <svg height={16} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" ><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g data-name="add" id="add-2"> <g> <line fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="12" x2="12" y1="19" y2="5"></line> <line fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="5" x2="19" y1="12" y2="12"></line> </g> </g> </g> </g></svg>
-                  <h3>Add</h3>
-                </>
-                :
-                <>
-                  <svg height={13} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke='var(--primary)' strokeWidth="7"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><line x1="8.06" y1="8.06" x2="55.41" y2="55.94"></line><line x1="55.94" y1="8.06" x2="8.59" y2="55.94"></line></g></svg>
-                  <h3>Close</h3>
-                </>
-              }
-          </div>
+          {
+            menuType === 'home' ? '' :
+            <div className={styles.button} onClick={handleTrigger}>
+                {
+                  !addTrigger ? 
+                  <>
+                    <svg height={16} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" ><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g data-name="add" id="add-2"> <g> <line fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="12" x2="12" y1="19" y2="5"></line> <line fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="5" x2="19" y1="12" y2="12"></line> </g> </g> </g> </g></svg>
+                    <h3>Add</h3>
+                  </>
+                  :
+                  <>
+                    <svg height={13} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke='var(--primary)' strokeWidth="7"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><line x1="8.06" y1="8.06" x2="55.41" y2="55.94"></line><line x1="55.94" y1="8.06" x2="8.59" y2="55.94"></line></g></svg>
+                    <h3>Close</h3>
+                  </>
+                }
+            </div>
+          }
         </div>
         <div className={styles.listCount}>
             <div className={styles.iconContainer}>
@@ -233,7 +241,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
                   icons.hasOwnProperty(menuType) && icons[menuType]
                 }
             </div>
-            <span>4</span>
+            <span>{totalPosts}</span>
         </div>
       </div>
       {
