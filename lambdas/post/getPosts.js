@@ -17,7 +17,10 @@ export const getPosts = async (event, context, callback) => {
         // Count total posts before applying skip and limit
         const totalPosts = await Post.countDocuments(); 
 
-        const posts = await Post.find().skip(skip).limit(perPage);
+        const posts = await Post.find()
+            .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
+            .skip(skip)
+            .limit(perPage);
 
         return Responses._200 ({
             message: 'Posts gotten successfully',
