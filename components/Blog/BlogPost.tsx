@@ -1,12 +1,9 @@
-
-import { Photo } from '@/types/Photos.type'
 import styles from './BlogPost.module.css'
 import Image from 'next/image'
-import { DraftPost, FetchedPost } from '@/types/Posts.type';
+import { FetchedPost } from '@/types/Posts.type';
 
 interface Props {
-  data: FetchedPost
-  // data: DraftPost
+  data: FetchedPost & { coverUrl: string };
 }
 const BlogPost: React.FC<Props> = ({ data }) => {
   
@@ -70,7 +67,7 @@ const BlogPost: React.FC<Props> = ({ data }) => {
                 <h2>{data.title}</h2>
             </div>
             <div className={styles.postDesc}>
-                {data.description}
+                {data.desc}
             </div>
         </div>
 

@@ -4,7 +4,7 @@ export type FinalPost = {
   slug: string,
   author: string,
   category: string,
-  description: string,
+  desc: string,
   tags: string[],
   coverThumbnail: string,
   coverKey: string,
@@ -19,17 +19,17 @@ export type FinalPost = {
     low: string,
   }
 };
-export type FetchedPost = FinalPost & { _id: string };
+export type FetchedPost = FinalPost & { _id: string, coverUrl: string };
 export type DraftPost = {
   toggle: boolean,
   submit: boolean,
-  id: string,
+  _id: string,
   format: string,
   title: string,
   slug: string,
   author: string,
   category: string,
-  description: string,
+  desc: string,
   tags: string[],
   coverThumbnail: string,
   coverUrl: string,

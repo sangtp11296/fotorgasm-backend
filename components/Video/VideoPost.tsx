@@ -1,13 +1,13 @@
 'use client'
 import React, { useCallback, useRef, useState } from 'react'
 import styles from './VideoPost.module.css'
-import { Video } from '@/types/Videos.type'
 import Image from 'next/image'
+import { FetchedPost } from '@/types/Posts.type'
 
 interface Props {
-  video: Video
+  data: FetchedPost
 }
-const VideoPost: React.FC<Props> = ({ video }) => {
+const VideoPost: React.FC<Props> = ({ data }) => {
   const [isAudio, setAudio] = useState<boolean>();
   const [sound, setSound] = useState<boolean>()
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -87,7 +87,7 @@ const VideoPost: React.FC<Props> = ({ video }) => {
   }
 
   return (
-    <div id={`${video.id}`} className={`${styles.videoPost}`} onMouseEnter={handleHoverPlay} onMouseLeave={handleHoverStop}>
+    <div id={`${data._id}`} className={`${styles.videoPost}`} onMouseEnter={handleHoverPlay} onMouseLeave={handleHoverStop}>
       <div className={styles.videoAudio}>
         {/* no sound */}
         <button style={{display: !isAudio ? '' : 'none', scale:'none', opacity:'.5'}} disabled>
@@ -103,14 +103,15 @@ const VideoPost: React.FC<Props> = ({ video }) => {
         </button>
       </div>
       <div className={styles.postCover} >
-        <video controls ref={videoRef} className={styles.videoSrc} poster={video.image} muted>
-          {video.video_files.map((video) => {
+        <Image priority={true} fill key={data._id} src={data.coverThumbnail} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
+        {/* <video controls ref={videoRef} className={styles.videoSrc} poster={data.coverThumbnail} muted>
+          {data.videoSrc.map((video) => {
             return(
               <source src={`${video.link}`} type={`${video.file_type}`} key={video.id}/>
             )
           })}
-        </video>
-        {/* <div className={styles.postOverlay}></div>
+        </video> */}
+        <div className={styles.postOverlay}></div>
         <button className={styles.fullScreen}>
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -123,14 +124,14 @@ const VideoPost: React.FC<Props> = ({ video }) => {
         </button>
         <div className={styles.postInfo}>
           <div className={`${styles.postCat}`}>
-              <Image alt={`on ${video.cat}`} src={`/assets/images/on ${video.cat}.png`} height={25} width={25}/>
-              <span>on {video.cat}</span>
+              <Image alt={`on ${data.category}`} src={`/assets/images/on ${data.category}.png`} height={25} width={25}/>
+              <span>on {data.category}</span>
           </div>
           <div className={styles.titlePost}>
-              <h2>{video.title}</h2>
+              <h2>{data.title}</h2>
           </div>
           <div className={styles.postDesc}>
-              {video.desc}
+              {data.desc}
           </div>
         </div>
         <div className={styles.postSocial}>
@@ -151,9 +152,12 @@ const VideoPost: React.FC<Props> = ({ video }) => {
           </button>
           {randomNum()}
           <div className={styles.iconContainer}>
+            {
+              data.format
+            }
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke='var(--on-background-matte)'><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.0799 8.58003V15.42C21.0799 16.54 20.4799 17.58 19.5099 18.15L13.5699 21.58C12.5999 22.14 11.3999 22.14 10.4199 21.58L4.47992 18.15C3.50992 17.59 2.90991 16.55 2.90991 15.42V8.58003C2.90991 7.46003 3.50992 6.41999 4.47992 5.84999L10.4199 2.42C11.3899 1.86 12.5899 1.86 13.5699 2.42L19.5099 5.84999C20.4799 6.41999 21.0799 7.45003 21.0799 8.58003Z" stroke="inherrit" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M9.75 11.9999V10.7999C9.75 9.25989 10.84 8.62993 12.17 9.39993L13.21 9.9999L14.25 10.5999C15.58 11.3699 15.58 12.6299 14.25 13.3999L13.21 13.9999L12.17 14.5999C10.84 15.3699 9.75 14.7399 9.75 13.1999V11.9999Z" stroke="inherrit" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   )

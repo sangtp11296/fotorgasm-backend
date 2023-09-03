@@ -1,11 +1,12 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './PostFeed.module.css'
-import BlogPost from '../Blog/BlogPost'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { getPosts } from '@/utils/getPosts'
 import Link from 'next/link'
 import { FetchedPost } from '@/types/Posts.type'
+import VideoPost from '../Video/VideoPost'
+import PostThumbnail from '../PostThumbnail/PostThumbnail'
 
 const PostFeed: React.FC = () => {
 
@@ -69,19 +70,17 @@ const PostFeed: React.FC = () => {
           {
             posts.map((post) => {
               if (post.format === 'blog'){
-                // const photo = post as Photo; // Type assertion
                 return(
                   <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href='/posts/abc' className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
-                    <BlogPost data={post}/>
+                    <PostThumbnail data={post}/>
                   </Link>
                 )
               } else {
-                // const video = post as Video; // Type assertion
-                // return (
-                //   <Link key={post._id} onClick={(e) => handleClick(e, `${post._id}`)} href={``} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
-                //     {/* <VideoPost video={post}/> */}
-                //   </Link>
-                // )
+                return (
+                  <Link key={post._id} onClick={(e) => handleClick(e, `${post._id}`)} href={``} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                    <PostThumbnail data={post}/>
+                  </Link>
+                )
               }
             })
           }
