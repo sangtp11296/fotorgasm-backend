@@ -19,7 +19,7 @@ export const createPost = async (event, context, callback) => {
                 width: data.coverRes.width,
                 height: data.coverRes.height
             },
-            desc: data.description,
+            desc: data.desc,
             format: data.format,
             slug: data.slug,
             tags: data.tags,
