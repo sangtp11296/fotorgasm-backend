@@ -2,7 +2,7 @@
 import styles from './PostThumbnail.module.css'
 import Image from 'next/image'
 import { FetchedPost } from '@/types/Posts.type';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   data: FetchedPost & { coverUrl: string };
@@ -13,6 +13,25 @@ interface iconsObj {
     icon: JSX.Element;
 }
 const PostThumbnail: React.FC<Props> = ({ data }) => {
+
+    // Fetch video thumbnail
+    const [thumbnailVideoSrc, setThumbnailVideoSrc] = useState();
+    async function handleFetchThumbnailVideo (){
+        if (data.format === 'video') {
+            const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+                method: 'POST',
+                body: JSON.stringify({
+                    key: data.videoSrc?.low,
+                })
+            })
+    
+            const fetchedData = await res.json();
+            setThumbnailVideoSrc(fetchedData.presignedUrl);
+        }
+    }
+    useEffect(() => {
+        handleFetchThumbnailVideo();
+    }, [])
 
     // Video format
     const [isAudio, setAudio] = useState<boolean>();
@@ -136,6 +155,7 @@ const PostThumbnail: React.FC<Props> = ({ data }) => {
     ];
     // Find the corresponding icon based on data.format
     const matchingIcon = icons.find((icon) => icon.format === data.format);
+    
   return (
     <div id={data._id} className={`${styles.postThumbnail}`} onMouseEnter={data.format==='video' ? handleHoverPlay : undefined} onMouseLeave={data.format==='video' ? handleHoverStop : undefined}>
         {
@@ -167,13 +187,18 @@ const PostThumbnail: React.FC<Props> = ({ data }) => {
           </svg>
         </button>
         <div className={styles.coverImage}>
-          {
-            // Check if photo cover is available or not
-            data.coverUrl ? 
-            <Image priority={true} fill key={data._id} src={data.coverUrl} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
-            :
-            <Image priority={true} fill key={data._id} src={data.coverThumbnail} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
-          }
+            {
+                data.format === 'video' && 
+                <video src={`${thumbnailVideoSrc}`} ref={videoRef} className={styles.videoSrc} poster={data.coverThumbnail} muted>
+                </video>
+            }
+            {
+                // Check if photo cover is available or not
+                (data.coverUrl) ? 
+                <Image priority={true} fill key={data._id} src={data.coverUrl} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
+                : (data.format === "video") ? '' :
+                <Image priority={true} fill key={data._id} src={data.coverThumbnail} alt={`${data.title}`} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"></Image> 
+            }
           
         </div>
         <div className={`${styles.postOverlay}`}/>
@@ -215,4 +240,4 @@ const PostThumbnail: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default PostThumbnail
+export default PostThumbnail;
