@@ -52,13 +52,11 @@ export const getDraftImage = async (event) => {
         const command = new GetObjectCommand(s3Params)
         const presignedUrl = await getSignedUrl(s3, command, {expiresIn: URL_EXPIRATION_SECONDS});
         return Responses._200({
-            body: JSON.stringify({ 
-                presignedUrl
-            })
+            presignedUrl
         })
     } catch (err) {
         return Responses._500({
-            body: JSON.stringify({ error: 'Error getting presigned URL ' + err })
+            error: 'Error getting presigned URL ' + err 
         })
     };
 }
