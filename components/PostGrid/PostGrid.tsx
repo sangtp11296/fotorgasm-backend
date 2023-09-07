@@ -4,6 +4,7 @@ import SubMenu from '../SubMenu/SubMenu'
 import PostFeed from '../PostFeed/PostFeed'
 
 async function PostGrid() {
+
   return (
     <>
         <SubMenu/>

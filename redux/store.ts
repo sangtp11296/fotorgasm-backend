@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import draftReducer from "./post/draft.slice";
+import clickReducer from "./clickMenu/click.slice";
 
 export const store = configureStore({
   reducer: {
-    draft: draftReducer
+    draft: draftReducer,
+    click: clickReducer
   },
 });
 

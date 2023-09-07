@@ -4,13 +4,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialState: DraftPost = {
     toggle: false,
     submit: false,
-    id: 'draft',
+    _id: 'draft',
     format: '',
     title: '',
     slug: '',
     author: '',
     category: '',
-    description: '',
+    desc: '',
     tags: [],
     coverThumbnail: '',
     coverUrl: '',
@@ -42,7 +42,7 @@ const draftSlice = createSlice({
             state.category = action.payload
         },
         updateDesc: (state, action: PayloadAction<string>) => {
-            state.description = action.payload
+            state.desc = action.payload
         },
         updateTag: (state, action: PayloadAction<string[]>) => {
             state.tags = action.payload

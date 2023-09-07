@@ -42,6 +42,12 @@
 .videoAudio button:hover{
     scale: 1.1;
 }
+.videoSrc{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: 2s ease-out;
+}
 .postCover{
     display: flex;
     justify-content: center;

@@ -57,7 +57,8 @@ class S3Uploader {
             }),
         });
         const reqData = await reqUpPresignedUrl.json();
-        const { presignedUrl, key} = JSON.parse(reqData.body);
+        const presignedUrl = reqData.presignedUrl;
+        const key = reqData.key;
 
         // Upload draft image to presigned Url
         const uploadImage = await fetch(presignedUrl, {
@@ -77,8 +78,7 @@ class S3Uploader {
                 }),
             });
             const getData = await getDraftImage.json();
-            const parsedData = JSON.parse(getData.body)
-            const presignedUrl = parsedData.presignedUrl;
+            const presignedUrl = getData.presignedUrl;
             return {
                 default: presignedUrl,
             };

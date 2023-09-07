@@ -68,6 +68,7 @@ const PostThumbnail: React.FC<Props> = ({ data }) => {
         videoRef.current.pause();
         videoRef.current.currentTime = 0;
         videoRef.current.muted = true;
+        videoRef.current.load(); /* parks the video back to its poster */
         setAudio(false);
         setSound(false);
         }

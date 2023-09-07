@@ -97,7 +97,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
-    if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.description && draft.coverUrl) {
+    if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.desc && draft.coverUrl) {
 
       dispatch(submitDraft());
       if (draft.format === 'blog'){
@@ -109,7 +109,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           coverKey: '',
           coverThumbnail: '',
           coverRes: draft.coverRes,
-          desc: draft.description,
+          desc: draft.desc,
           format: draft.format,
           title: draft.title,
           slug: draft.slug,
@@ -145,7 +145,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           coverKey: '',
           coverThumbnail: '',
           coverRes: draft.coverRes,
-          desc: draft.description,
+          desc: draft.desc,
           format: draft.format,
           title: draft.title,
           slug: draft.slug,

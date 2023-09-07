@@ -5,14 +5,16 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { getPosts } from '@/utils/getPosts'
 import Link from 'next/link'
 import { FetchedPost } from '@/types/Posts.type'
-import VideoPost from '../Video/VideoPost'
 import PostThumbnail from '../PostThumbnail/PostThumbnail'
+import { useAppSelector } from '@/redux/hooks'
 
 const PostFeed: React.FC = () => {
 
   const [posts, setPosts] = useState<FetchedPost[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(2)
+
+  const menu = useAppSelector(state => state.click.mainMenu);
 
   // Get first time loading posts
   const handleGetPosts = async (page: number) => {
@@ -54,7 +56,6 @@ const PostFeed: React.FC = () => {
       });
     }
   }, []);
-  console.log(posts)
   return (
     <div className={styles.postFeed}>
       <InfiniteScroll 
@@ -68,16 +69,18 @@ const PostFeed: React.FC = () => {
       >
         <div className={styles.masonryContainer}>
           {
+            menu === 'all' ?
             posts.map((post) => {
-              if (post.format === 'blog'){
+              return(
+                <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                  <PostThumbnail data={post}/>
+                </Link>
+              )
+            }) :
+            posts.map((post) => {
+              if (post.format === menu){
                 return(
-                  <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href='/posts/abc' className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
-                    <PostThumbnail data={post}/>
-                  </Link>
-                )
-              } else {
-                return (
-                  <Link key={post._id} onClick={(e) => handleClick(e, `${post._id}`)} href={``} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                  <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
                     <PostThumbnail data={post}/>
                   </Link>
                 )
