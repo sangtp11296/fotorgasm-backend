@@ -28,14 +28,12 @@ export const uploadDraftImage = async (event) => {
         const command = new PutObjectCommand(s3Params)
         const presignedUrl = await getSignedUrl(s3, command, {expiresIn: URL_EXPIRATION_SECONDS});
         return Responses._200({
-            body: JSON.stringify({ 
-                presignedUrl,
-                key: `draft/${key}`,
-            })
+            presignedUrl,
+            key: `draft/${key}`,
         })
     } catch (err) {
         return Responses._500({
-            body: JSON.stringify({ error: 'Error generating presigned URL ' + err })
+            error: 'Error generating presigned URL ' + err
         })
     };
 };
