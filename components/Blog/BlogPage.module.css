@@ -1,0 +1,525 @@
+/* Standard Post Page Formart*/
+.standardPost{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.standardPost .postCover{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    flex: 0 0 400px;
+    background-color: var(--surface-02);
+}
+.standardPost .coverImage{
+    width: 100%;
+    object-fit: cover;
+    height: 900px;
+    border-radius: 0%;
+}
+.postCover.horizontal{
+    margin-left: 70px;
+}
+.coverImage.horizontal{
+    width: auto;
+    /* object-fit: cover; */
+    height: 100%;
+    border-radius: 0%;
+}
+.standardPost .fullTextContainer{
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--surface-02);
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.standardPost .postArticle{
+    display: block;
+    box-shadow: none;
+    background-color: inherit;
+    margin-bottom: 25px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+.standardPost .postContent{
+    padding: 34px 55px 12px;
+}
+.standardPost .postCat{
+    margin-top: 150px;
+    margin-bottom: 20px;
+    /* text-transform: uppercase; */
+    letter-spacing: 2px;
+    width: fit-content;
+}
+.standardPost .postCat a{
+    color: var(--primary);
+    font-family: 'Neue Helvetica';
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.firstIntro{
+    width: 379.5px;
+    font-family: 'Neue Helvetica';
+    font-size: 15px;
+    word-spacing: 1px;
+    text-align: justify;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    margin-top: 100px;
+    /* height: 100%; */
+    color: var(--on-surface);
+}
+.standardPost .postTitle{
+    margin-bottom: 60px;
+}
+.postTitle a{
+    display: block;
+    line-height: 120%;
+    text-transform: uppercase;
+    font-family: 'Neue Helvetica';
+    font-weight: 500;
+    font-size: 60px;
+    text-decoration: none;
+    color: var(--on-surface);
+    width: 85%;
+}
+.standardPost .postTextContainer{
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+.standardPost .postText{
+    font-family: 'Neue Helvetica';
+    font-size: 15px;
+    word-spacing: 1px;
+    text-align: justify;
+    color: var(--on-surface);
+    width: 55%;
+}
+.postText h1{
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.5rem;
+}
+.postText h2{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1.5rem;
+}
+.postText p{
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 1.4rem;
+}
+.horizontalPost h1{
+    margin-bottom: 15px;
+}
+.horizontalPost .postText p:last-child{
+    margin-bottom: 0;
+}
+.standardPost .postImage{
+    width: 690px;
+    position: relative;
+    left: -310px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 20px;
+}
+.standardPost .childImage{
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+}
+.standardPost .postImage img{
+    max-height: 500px;
+    height: 100%;
+    max-width: 690px;
+    width: auto;
+    /* margin-bottom: 5px;
+    margin-top: 20px; */
+}
+.standardPost .postImage figcaption{
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--on-surface)
+}
+.standardPost .postImage span{
+    position: absolute;
+    bottom: 20px;
+    transform: rotate(-90deg) translateX(53px) translateY(-50px);
+    letter-spacing: 1px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--on-surface)
+}
+.postInfoContainer{
+    position: relative;
+    display: flex;
+    table-layout: fixed;
+    height: 100%;
+    width: 100%;
+}
+.postInfo:first-child{
+    text-align: left;
+    padding: 30px 0 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.postInfo:last-child{
+    padding: 30px 0 0;
+    position: relative;
+    justify-content: flex-end;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font: 200 12px 'Noto Sans SC', sans-serif;
+}
+.postDate{
+    display: inline-block;
+    padding-right: 12px;
+    text-transform: uppercase;
+    font-family: 'Neue Helvetica';
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--on-surface);
+    word-spacing: 1px;
+    opacity: .8;
+}
+.postSocial{
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.postSocial button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    vertical-align: middle;
+    margin-right: 12px;
+    background-color: inherit;
+    color: var(--on-surface);
+    font-size: 13px;
+    font-family: 'Neue Helvetica';
+    font-weight: 400;
+    opacity: .8;
+}
+.postInfo:last-child button{
+    display: inline-block;
+    padding-bottom: 3px;
+    padding-right: 0px;
+    padding-left: 5px;
+}
+.postSocial svg{
+    stroke: var(--on-surface);
+    stroke-width: 2px;
+    height: 14px;
+    width: 14px;
+    margin-right: 5px;
+}
+.fbBtn svg {
+    stroke: var(--on-surface);
+    fill: var(--on-surface);
+}
+.insBtn svg {
+    stroke: var(--on-surface);
+    fill: var(--on-surface);
+}
+.twiBtn svg {
+    stroke: var(--on-surface);
+    fill: var(--on-surface);
+    margin-right: 0;
+}
+.tagHolder{
+    position: relative;
+    text-align: left;
+    padding: 0px 44px;
+}
+.tagHolder span{
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: var(--on-surface);
+    box-sizing: border-box;
+    font: 500 14px 'Baloo 2', cursive;
+    color: var(--on-surface);
+    opacity: .6;
+}
+
+/* Horizontal Post Page Formart */
+.horizontalPost{
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    overflow-x: auto;
+    position: fixed;
+    top: 5vh;
+    left: 0;
+    width: 100vw;
+    height: 90vh;
+}
+.horizontalPost .fullTextContainer{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--surface-02);
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.horizontalPost .postArticle{
+    display: flex;
+    flex-direction: row;
+    background-color: inherit;
+    height: 100%;
+}
+.horizontalPost .postContent{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 15vh 70px 8vh;
+}
+.horizontalPost .catAndTitle{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 150px;
+}
+.horizontalPost .postCat{
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    /* margin-top: 300px; */
+}
+.horizontalPost .postCat a{
+    color: var(--primary);
+    font-family: 'Neue Helvetica';
+    font-weight: 500;
+    font-size: 16px;
+}
+.horizontalPost .postTitle a{
+    font-size: 70px;
+    width: 600px;
+}
+.horizontalPost .postTextContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.horizontalPost .postText{
+    display: flex;
+    flex-direction: row;
+    margin-left: 70px;
+    height: 100%;
+    /* overflow: hidden; */
+}
+.horizontalPost .postText .postSection{
+    width: 379.5px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Neue Helvetica';
+    font-size: 15px;
+    word-spacing: 1px;
+    text-align: justify;
+    color: var(--on-surface);
+    margin-right: 70px;
+    /* overflow: hidden; */
+}
+.horizontalPost .postImage{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 70px;
+    gap: 50px;
+}
+.horizontalPost .childImage{
+    position: relative;
+    margin-bottom: 20px;
+    max-height: 64vh;
+}
+.horizontalPost .postImage img{
+    max-width: 600px;
+    height: auto;
+    margin-bottom: 5px;
+    max-height: 63vh;
+}
+.horizontalPost .postImage figcaption{
+    font-size: 13px;
+    font-style: italic;
+    color: var(--on-surface);
+    text-align: left;
+}
+.horizontalPost .postImage span{
+    letter-spacing: 1px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--on-surface);
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    transform: rotate(-90deg) translateX(55px) translateY(-50px);
+}
+/* Square Post Page Formart */
+.squarePost{
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    overflow-x: auto;
+    position: fixed;
+    top: 5vh;
+    left: 0;
+    width: 100vw;
+    height: 90vh;
+}
+.squarePost .fullTextContainer{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--surface-02);
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.squarePost .postArticle{
+    display: flex;
+    flex-direction: row;
+    background-color: inherit;
+    height: 100%;
+}
+.squarePost .postCover{
+    display: flex;
+    align-items: flex-end;
+}
+.squarePost .coverImage{
+    height: 75vh;
+    width: 75vh;
+    object-fit: cover;
+}
+.squarePost .postContent{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 15vh 70px 8vh;
+}
+.squarePost .catAndTitle{
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 40vw;
+}
+.squarePost .postCat{
+    width: 100%;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    /* margin-top: 300px; */
+}
+.squarePost .postCat a{
+    color: var(--primary);
+    font-family: 'Neue Helvetica';
+    font-weight: 500;
+    font-size: 16px;
+}
+.squarePost .postTitle{
+    width: 100%;
+}
+.squarePost .postTitle a{
+    width: 100%;
+}
+.squarePost .firstIntro{
+    width: 75%;
+    justify-content: flex-end;
+    align-self: flex-start;
+    margin-top: 0;
+    height: 45%;
+}
+.squarePost .postTextContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.squarePost .postText{
+    display: flex;
+    flex-direction: row;
+    margin-left: 70px;
+    height: 100%;
+    /* overflow: hidden; */
+}
+.squarePost .postText .postSection{
+    width: 379.5px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Neue Helvetica';
+    font-size: 15px;
+    word-spacing: 1px;
+    text-align: justify;
+    color: var(--on-surface);
+    margin-right: 70px;
+    /* overflow: hidden; */
+}
+.squarePost h1{
+    margin-bottom: 15px;
+}
+.squarePost .postText p:last-child{
+    margin-bottom: 0;
+}
+.squarePost .postImage{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 70px;
+    gap: 50px;
+}
+.squarePost .childImage{
+    position: relative;
+    margin-bottom: 20px;
+    max-height: 64vh;
+}
+.squarePost .postImage img{
+    max-width: 600px;
+    height: auto;
+    margin-bottom: 5px;
+    max-height: 63vh;
+}
+.squarePost .postImage figcaption{
+    font-size: 13px;
+    font-style: italic;
+    color: var(--on-surface);
+    text-align: left;
+}
+.squarePost .postImage span{
+    letter-spacing: 1px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--on-surface);
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    transform: rotate(-90deg) translateX(55px) translateY(-50px);
+}

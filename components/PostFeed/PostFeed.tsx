@@ -43,8 +43,7 @@ const PostFeed: React.FC = () => {
   }
 
   // Focus to chosen post
-  const handleClick = useCallback((e: React.MouseEvent, id: string) => {
-    e.preventDefault();
+  const handleClick = useCallback((id: string) => {
     const element = document.getElementById(id);
     if (element) {
       const { top, height } = element.getBoundingClientRect();
@@ -72,7 +71,7 @@ const PostFeed: React.FC = () => {
             menu === 'all' ?
             posts.map((post) => {
               return(
-                <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                <Link key={post._id} onClick={(e) => handleClick(post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
                   <PostThumbnail data={post}/>
                 </Link>
               )
@@ -80,7 +79,7 @@ const PostFeed: React.FC = () => {
             posts.map((post) => {
               if (post.format === menu){
                 return(
-                  <Link key={post._id} onClick={(e) => handleClick(e, post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
+                  <Link key={post._id} onClick={(e) => handleClick(post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`}>
                     <PostThumbnail data={post}/>
                   </Link>
                 )
