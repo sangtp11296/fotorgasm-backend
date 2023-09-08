@@ -35,3 +35,22 @@ export const getPosts = async (event, context, callback) => {
         })
     }
 };
+export const getPost = async (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    await connectToDatabase();
+    try{
+        const slug = event.pathParameters.slug
+
+        const post = await Post.findOne({ slug });
+
+        return Responses._200({
+            message: 'Post is gotten successfully',
+            post: post
+        })
+    } catch (err) {
+        return Responses._500 ({
+            message: 'Error getting post', 
+            error: err.message 
+        })
+    }
+}
