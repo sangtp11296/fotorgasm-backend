@@ -27,6 +27,16 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
         return () => document.removeEventListener('keydown', onKeyDown)
     }, [onKeyDown])
 
+    useEffect(() => {
+      // Add the CSS class to disable scrolling when the modal is open
+      document.body.classList.add('no-scroll');
+
+      // Remove the CSS class and enable scrolling when the modal is closed
+      return () => {
+          document.body.classList.remove('no-scroll');
+      }
+  }, []);
+
   return (
     <div
       ref={overlay}

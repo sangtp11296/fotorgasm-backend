@@ -4,7 +4,7 @@ import { Modal } from '@/components/Modal/Modal'
 import { FetchedPost } from '@/types/Posts.type';
 import { BlogPage } from '@/components/Blog/BlogPage';
 
-const PostModal = async ({ params }: { params: { slug: string } }) => {
+export default async function PostModal ({ params }: { params: { slug: string } }){
   const [post, setPost] = useState<FetchedPost>();
   const [coverUrl, setCoverUrl] = useState()
   // Get Post and Cover
@@ -28,6 +28,7 @@ const PostModal = async ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     handleGetPost(params.slug);
   }, [])
+  
   return (
     <Modal>
         {
@@ -36,5 +37,3 @@ const PostModal = async ({ params }: { params: { slug: string } }) => {
     </Modal>
   )
 }
-
-export default PostModal;

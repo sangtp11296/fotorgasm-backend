@@ -268,7 +268,7 @@
 /* Horizontal Post Page Formart */
 .horizontalPost{
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch; /* For iOS devices */
     overflow-y: hidden;
     overflow-x: auto;
     position: fixed;

@@ -7,7 +7,10 @@ export const metadata = {
     description: 'Orgasm Through My Lens'
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode}) => {
+const RootLayout = ( props: {
+                      children: React.ReactNode
+                      modal: React.ReactNode
+                    }) => {
   return (
     <html lang='en'>
       <head>
@@ -16,7 +19,8 @@ const RootLayout = ({ children }: { children: React.ReactNode}) => {
       <body suppressHydrationWarning={true} >
         <AuthProvider>
           <Providers>
-            {children}
+            {props.children}
+            {props.modal}
           </Providers>
         </AuthProvider>
       </body>

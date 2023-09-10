@@ -1,6 +1,7 @@
+'use client'
 import { FetchedPost } from '@/types/Posts.type'
 import styles from './BlogPage.module.css'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 
 interface Props {
@@ -8,6 +9,22 @@ interface Props {
   cover: string,
 }
 export const BlogPage: React.FC<Props> = ({ post, cover }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const container = containerRef.current;
+    if(container){
+      const handleScroll = (event: WheelEvent) => {
+        const delta = Math.sign(event.deltaY);
+        container.scrollLeft += delta * 600;
+      };
+    
+      container.addEventListener('wheel', handleScroll);
+      return () => {
+        container.addEventListener('wheel', handleScroll)
+      }
+    }
+  }, [])
+
   return (
     <div>
       {
@@ -118,7 +135,7 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
       }
       {
         (post.coverRes.height < post.coverRes.width) ?
-        <div className={styles.horizontalPost}>
+        <div className={styles.horizontalPost} ref={containerRef}>
           <div className={`${styles.fullTextContainer} ${styles.horizontal}`}>
             <article className={`${styles.postArticle} ${styles.horizontal}`}>
               <div className={`${styles.postContent} ${styles.horizontal}`}>
