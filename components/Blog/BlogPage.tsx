@@ -10,20 +10,52 @@ interface Props {
 }
 export const BlogPage: React.FC<Props> = ({ post, cover }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const container = containerRef.current;
-    if(container){
-      const handleScroll = (event: WheelEvent) => {
-        const delta = Math.sign(event.deltaY);
-        container.scrollLeft += delta * 600;
-      };
-    
-      container.addEventListener('wheel', handleScroll);
+    let scrollWidth: number | undefined;
+    let targetLeft: number | undefined;
+
+    const getScrollStep = () => (scrollWidth ?? 0) / 50; /* ADJUST TO YOUR WISH */
+
+    const scrollLeft = () => {
+      const container = containerRef.current;
+      if (!container || typeof scrollWidth === 'undefined' || typeof targetLeft === 'undefined') return;
+
+      let beforeLeft = container.scrollLeft;
+      let wantDx = getScrollStep();
+      let diff = targetLeft - container.scrollLeft;
+      let dX = wantDx >= Math.abs(diff) ? diff : Math.sign(diff) * wantDx;
+
+      // Performing horizontal scroll
+      container.scrollBy(dX, 0);
+
+      // Break if smaller `diff` instead of `wantDx` was used
+      if (dX === diff) return;
+
+      // Break if can't scroll anymore or target reached
+      if (beforeLeft === container.scrollLeft || container.scrollLeft === targetLeft) return;
+
+      requestAnimationFrame(scrollLeft);
+    };
+    if (container) {
+      container.addEventListener('wheel', (e: WheelEvent) => {
+        e.preventDefault();
+        scrollWidth = container.scrollWidth - container.clientWidth;
+        targetLeft = Math.min(scrollWidth, Math.max(0, container.scrollLeft + e.deltaY));
+        requestAnimationFrame(scrollLeft);
+      });
+
       return () => {
-        container.addEventListener('wheel', handleScroll)
-      }
+        container.removeEventListener('wheel', (e: WheelEvent) => {
+          e.preventDefault();
+          scrollWidth = container.scrollWidth - container.clientWidth;
+          targetLeft = Math.min(scrollWidth, Math.max(0, container.scrollLeft + e.deltaY));
+          requestAnimationFrame(scrollLeft);
+        });
+      };
     }
-  }, [])
+  }, []);
 
   return (
     <div>
