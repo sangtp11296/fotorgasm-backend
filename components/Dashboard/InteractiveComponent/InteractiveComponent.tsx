@@ -1,12 +1,12 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import styles from './InteractiveComponent.module.css'
-import BlogPost from '@/components/Blog/BlogPost';
 import Slider from 'react-slick';
 import './SlickMenu.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { updateCoverKey, updateCoverRes, updateCoverThumbnail, updateCoverUrl } from '@/redux/post/draft.slice';
+import { updateCoverRes, updateCoverUrl } from '@/redux/post/draft.slice';
 import PostThumbnail from '@/components/PostThumbnail/PostThumbnail';
+import { FinalPost } from '@/types/Posts.type';
 
 const InteractiveComponent: React.FC = () => {
   const [cover, setCover] = useState<File>();

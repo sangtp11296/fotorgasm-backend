@@ -19,7 +19,7 @@ export type FinalPost = {
     low: string,
   }
 };
-export type FetchedPost = FinalPost & { _id: string, coverUrl: string };
+export type FetchedPost = FinalPost & { _id: string, coverUrl: string, createdAt: string, views: string, likes: string, comments: [] };
 export type DraftPost = {
   toggle: boolean,
   submit: boolean,
@@ -38,5 +38,9 @@ export type DraftPost = {
   coverRes: {
     width: number,
     height: number
-  }
+  },
+  createdAt: string, // Add createdAt
+  views: string,     // Add views
+  likes: string,     // Add likes
+  comments: []
 };

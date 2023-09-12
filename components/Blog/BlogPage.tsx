@@ -56,9 +56,9 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
       };
     }
   }, []);
-
+console.log(post.content)
   return (
-    <div>
+    <>
       {
         (post.coverRes.height > post.coverRes.width) ?
         <div className={styles.standardPost}>
@@ -72,55 +72,58 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
                   <Link href='/cat'>on {post?.category}</Link>
                 </div>
                 <div className={`${styles.postTitle} ${styles.standard}`}>
-                    <Link href='/post:id'>{post?.title}</Link>
+                    <h1>{post?.title}</h1>
                 </div>
                 <div className={`${styles.postTextContainer} ${styles.standard}`}>
-                  <div className={`${styles.postText} ${styles.standard}`}>
-                    <h1>My Beach Adventure</h1>
-                    <p>Welcome to my blog post! Today, I'm going to take you on a journey with me to the beach. I love the beach because it's a place where I can relax and escape from the stresses of everyday life. </p>
-                    <p>As soon as I arrived at the beach, I was struck by how beautiful it was. The sand was so soft and the water was crystal clear. It was a perfect day to spend at the beach.</p>
-                    <div className={`${styles.postImage} ${styles.standard}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://plus.unsplash.com/premium_photo-1673970474453-7c49815647ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Beach"/>
-                        <figcaption className="figcaption">Photo by Oliver Sjöström on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                  {
+                    post.content && 
+                    <div className={`${styles.postText} ${styles.standard}`} dangerouslySetInnerHTML={{__html:post.content}}>
+                      {/* <h1>My Beach Adventure</h1>
+                      <p>Welcome to my blog post! Today, I'm going to take you on a journey with me to the beach. I love the beach because it's a place where I can relax and escape from the stresses of everyday life. </p>
+                      <p>As soon as I arrived at the beach, I was struck by how beautiful it was. The sand was so soft and the water was crystal clear. It was a perfect day to spend at the beach.</p>
+                      <div className={`${styles.postImage} ${styles.standard}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://plus.unsplash.com/premium_photo-1673970474453-7c49815647ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Beach"/>
+                          <figcaption className="figcaption">Photo by Oliver Sjöström on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
                       </div>
-                    </div>
-                    <h2>Beach Activities</h2>
-                    <p>One of my favorite things to do at the beach is to go swimming in the ocean. As I waded into the ocean, I felt a sense of excitement wash over me. The water was a little chilly at first, but as I dove deeper, I felt the coolness become refreshing against my skin. The waves were gentle, lapping against me as I floated on my back, staring up at the blue sky above. It was peaceful, and I felt as though I was in my own little world, surrounded by the vastness of the ocean.</p>
-                    <div className={`${styles.postImage} ${styles.standard}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://images.unsplash.com/photo-1680676960765-f18115aa7390?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=764&q=80" alt="Swimming"/>
-                        <figcaption className="figcaption">Photo by Jakob Owens on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <h2>Beach Activities</h2>
+                      <p>One of my favorite things to do at the beach is to go swimming in the ocean. As I waded into the ocean, I felt a sense of excitement wash over me. The water was a little chilly at first, but as I dove deeper, I felt the coolness become refreshing against my skin. The waves were gentle, lapping against me as I floated on my back, staring up at the blue sky above. It was peaceful, and I felt as though I was in my own little world, surrounded by the vastness of the ocean.</p>
+                      <div className={`${styles.postImage} ${styles.standard}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://images.unsplash.com/photo-1680676960765-f18115aa7390?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=764&q=80" alt="Swimming"/>
+                          <figcaption className="figcaption">Photo by Jakob Owens on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
+                        <div className={styles.childImage}>
+                          <img src="https://images.unsplash.com/photo-1680676960765-f18115aa7390?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=764&q=80" alt="Swimming"/>
+                          <figcaption className="figcaption">Photo by Jakob Owens on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
                       </div>
-                      <div className={styles.childImage}>
-                        <img src="https://images.unsplash.com/photo-1680676960765-f18115aa7390?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=764&q=80" alt="Swimming"/>
-                        <figcaption className="figcaption">Photo by Jakob Owens on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <p>I also love to build sandcastles on the beach. It's a fun way to unleash my creativity and create something beautiful out of sand.</p>
+                      <div className={`${styles.postImage} ${styles.standard}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://images.unsplash.com/photo-1680484006397-64f3fcd8fc14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=687&q=80" alt="Sandcastle"/>
+                          <figcaption className="figcaption">Photo by Stephanie LeBlanc on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
                       </div>
-                    </div>
-                    <p>I also love to build sandcastles on the beach. It's a fun way to unleash my creativity and create something beautiful out of sand.</p>
-                    <div className={`${styles.postImage} ${styles.standard}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://images.unsplash.com/photo-1680484006397-64f3fcd8fc14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=687&q=80" alt="Sandcastle"/>
-                        <figcaption className="figcaption">Photo by Stephanie LeBlanc on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <p>Finally, I always make sure to take a long walk on the beach at sunset. There's nothing quite like watching the sun go down over the ocean.</p>
+                      <div className={`${styles.postImage} ${styles.standard}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://plus.unsplash.com/premium_photo-1673971700988-346588461fa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Sunset"/>
+                          <figcaption className="figcaption">Photo by Jeremy Bishop on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
+                        
                       </div>
-                    </div>
-                    <p>Finally, I always make sure to take a long walk on the beach at sunset. There's nothing quite like watching the sun go down over the ocean.</p>
-                    <div className={`${styles.postImage} ${styles.standard}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://plus.unsplash.com/premium_photo-1673971700988-346588461fa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Sunset"/>
-                        <figcaption className="figcaption">Photo by Jeremy Bishop on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
-                      </div>
-                      
-                    </div>
-                    <h2>Conclusion</h2>
-                    <p>Overall, my day at the beach was amazing. It's a place where I can go to escape from the world and just enjoy the beauty of nature. I hope you enjoyed reading about my adventure!</p>
+                      <h2>Conclusion</h2>
+                      <p>Overall, my day at the beach was amazing. It's a place where I can go to escape from the world and just enjoy the beauty of nature. I hope you enjoyed reading about my adventure!</p> */}
 
-                  </div>
+                    </div>
+                  }
                   <div className={styles.postInfoContainer}>
                     <div className={styles.postInfo}>
                       <div className={styles.postDate}>24. Dec 2022</div>
@@ -173,78 +176,81 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
               <div className={`${styles.postContent} ${styles.horizontal}`}>
                 <div className={styles.catAndTitle}>
                   <div className={`${styles.postCat} ${styles.horizontal}`}>
-                    <Link href='/cat'>on {post?.category}</Link>
+                    <Link href='/cat'>on {post.category}</Link>
                   </div>
                   <div className={`${styles.postTitle} ${styles.horizontal}`}>
-                      <Link href='/post:id'>{post?.title}</Link>
+                      <h1>{post.title}</h1>
                   </div>
                   <div className={styles.firstIntro}>
-                    <h1>The Importance of Artificial Intelligence in the Modern World</h1>
-                    <p>Artificial Intelligence (AI) has been a topic of discussion for several decades. With the rise of technological advancements, AI has gained much prominence and has become a crucial aspect of our daily lives. In this essay, we will explore the importance of AI in the modern world.</p>
+                    <p>{post.desc}</p>
                   </div>
                 </div>
                 <div className={`${styles.postCover} ${styles.horizontal}`}>
                     <img className={`${styles.coverImage} ${styles.horizontal}`} src={cover} alt={post.title} />
                 </div>
                 <div className={`${styles.postTextContainer} ${styles.horizontal}`}>
-                  <div className={`${styles.postText} ${styles.horizontal}`}>
-                    <div className={styles.postSection}>
-                      <h1>My Beach Adventure</h1>
-                      <p>Travel outside one’s native country is a good opportunity to observe the beauty of natural places with beautiful mountains or colorful beaches. Each person has a variety of place where they want to travel; some like beaches, some like mountains, and some rivers. However, everyone will enjoy travel to places with a historical background such as Egypt for its pyramids or the Coliseum in Rome.</p>
-                      <p>Nevertheless, the study does not incorporate mountain bikers’ willingness to pay for additional recreational facilities in PCP. In estimating the expenditure for recreational activity and its local economic impacts, there might be difference in value between local and foreign mountain biker. This is due to longer length of stay of foreigner compared to local mountain bikers since they have to travel further from home.</p>
-                    </div>
-                    <div className={`${styles.postImage} ${styles.horizontal}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://plus.unsplash.com/premium_photo-1673970474453-7c49815647ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Beach"/>
-                        <figcaption className="figcaption">Photo by Oliver Sjöström on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                  {
+                    post.content && 
+                    <div className={`${styles.postText} ${styles.horizontal}`} dangerouslySetInnerHTML={{__html:post.content}}>
+                      
+                      {/* <div className={styles.postSection}>
+                        <h1>My Beach Adventure</h1>
+                        <p>Travel outside one’s native country is a good opportunity to observe the beauty of natural places with beautiful mountains or colorful beaches. Each person has a variety of place where they want to travel; some like beaches, some like mountains, and some rivers. However, everyone will enjoy travel to places with a historical background such as Egypt for its pyramids or the Coliseum in Rome.</p>
+                        <p>Nevertheless, the study does not incorporate mountain bikers’ willingness to pay for additional recreational facilities in PCP. In estimating the expenditure for recreational activity and its local economic impacts, there might be difference in value between local and foreign mountain biker. This is due to longer length of stay of foreigner compared to local mountain bikers since they have to travel further from home.</p>
                       </div>
-                      <div className={styles.childImage}>
-                        <img src="https://plus.unsplash.com/premium_photo-1680184592656-3aaf363a6a00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=2370&q=80" alt="Beach"/>
-                        <figcaption className="figcaption">Photo by Oliver Sjöström on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <div className={`${styles.postImage} ${styles.horizontal}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://plus.unsplash.com/premium_photo-1673970474453-7c49815647ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Beach"/>
+                          <figcaption className="figcaption">Photo by Oliver Sjöström on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
+                        <div className={styles.childImage}>
+                          <img src="https://plus.unsplash.com/premium_photo-1680184592656-3aaf363a6a00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=2370&q=80" alt="Beach"/>
+                          <figcaption className="figcaption">Photo by Oliver Sjöström on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className={styles.postSection}>
-                      <h2>Beach Activities</h2>
-                      <p>One of my favorite things to do at the beach is to go swimming in the ocean. As I waded into the ocean, I felt a sense of excitement wash over me. The water was a little chilly at first, but as I dove deeper, I felt the coolness become refreshing against my skin. The waves were gentle, lapping against me as I floated on my back, staring up at the blue sky above. It was peaceful, and I felt as though I was in my own little world, surrounded by the vastness of the ocean.</p>
-                    </div>
-                    <div className={`${styles.postImage} ${styles.horizontal}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://images.unsplash.com/photo-1680676960765-f18115aa7390?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=764&q=80" alt="Swimming"/>
-                        <figcaption className="figcaption">Photo by Jakob Owens on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <div className={styles.postSection}>
+                        <h2>Beach Activities</h2>
+                        <p>One of my favorite things to do at the beach is to go swimming in the ocean. As I waded into the ocean, I felt a sense of excitement wash over me. The water was a little chilly at first, but as I dove deeper, I felt the coolness become refreshing against my skin. The waves were gentle, lapping against me as I floated on my back, staring up at the blue sky above. It was peaceful, and I felt as though I was in my own little world, surrounded by the vastness of the ocean.</p>
                       </div>
-                    </div>
-                    <div className={styles.postSection}>
-                      <p>In the article, “The Mountain Man and American Anguish” in the Journal of Popular Film & Television, Patrick McCarthy reflects on movie production and the image of mountain men. Contrary to how mountain men are shown in contemporary American pop culture media, McCarthy claims that there is a greater connection between that period of time and the different cultural challenges we face today. Staying consistent to the tune of his article, McCarthy claims modern media has skewed the reality of the life of the mountain man.</p>
-                    </div>
-                    <div className={`${styles.postImage} ${styles.horizontal}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://images.unsplash.com/photo-1680484006397-64f3fcd8fc14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=687&q=80" alt="Sandcastle"/>
-                        <figcaption className="figcaption">Photo by Stephanie LeBlanc on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <div className={`${styles.postImage} ${styles.horizontal}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://images.unsplash.com/photo-1680676960765-f18115aa7390?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=764&q=80" alt="Swimming"/>
+                          <figcaption className="figcaption">Photo by Jakob Owens on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className={styles.postSection}>
-                      <p>It is because the majority of the mountain bikers came from Selangor and need not pay for toll charges. White and Stynes (2008) found that spending for any services and goods are mostly influenced by the type of recreational activity and the distance travelled. Other factors influencing the level of expenditure of mountain bikers include the size of the recreation group which means the number of persons in the group, the time spent at the recreation area, local prices and the opportunity to make expenditure on site.</p>
-                      <p>It specialises in offering adventure holidays, activities and experiences. It offers walking, trekking and cycling as part of the adventure tours. The latest brochure has a choice of 450 adventures to choose from KE Adventure travel (http://www. keadventure.com/ ) KE adventure is an independent adventure travel operator; it’s a big company which specialises in providing trekking, walking, climbing, mountain biking, winter sports etc.
-                      </p>
-                      <p>He seeks to escape it. Gilgamesh decides to seek out Utnapishtim, the one being granted immortality by the gods. He travels to Mount Mashu, a twin-peaked mountain that marks an entrance to a world in which mortals cannot venture. He convinces the guards of the mountain, two Scorpion-man beings, to allow him to enter a long passage under the mountain. [Original source: https://studycrumb.com/essay-maker]</p>
-                    </div>
-                    <div className={`${styles.postImage} ${styles.horizontal}`}>
-                      <div className={styles.childImage}>
-                        <img src="https://plus.unsplash.com/premium_photo-1673971700988-346588461fa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Sunset"/>
-                        <figcaption className="figcaption">Photo by Jeremy Bishop on Unsplash</figcaption>
-                        <span>@fotorgasm</span>
+                      <div className={styles.postSection}>
+                        <p>In the article, “The Mountain Man and American Anguish” in the Journal of Popular Film & Television, Patrick McCarthy reflects on movie production and the image of mountain men. Contrary to how mountain men are shown in contemporary American pop culture media, McCarthy claims that there is a greater connection between that period of time and the different cultural challenges we face today. Staying consistent to the tune of his article, McCarthy claims modern media has skewed the reality of the life of the mountain man.</p>
                       </div>
-                    </div>
-                    <div className={styles.postSection}>
-                      <h2>Conclusion</h2>
-                      <p>Overall, my day at the beach was amazing. It's a place where I can go to escape from the world and just enjoy the beauty of nature. I hope you enjoyed reading about my adventure!</p>
-                    </div>
+                      <div className={`${styles.postImage} ${styles.horizontal}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://images.unsplash.com/photo-1680484006397-64f3fcd8fc14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=687&q=80" alt="Sandcastle"/>
+                          <figcaption className="figcaption">Photo by Stephanie LeBlanc on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
+                      </div>
+                      <div className={styles.postSection}>
+                        <p>It is because the majority of the mountain bikers came from Selangor and need not pay for toll charges. White and Stynes (2008) found that spending for any services and goods are mostly influenced by the type of recreational activity and the distance travelled. Other factors influencing the level of expenditure of mountain bikers include the size of the recreation group which means the number of persons in the group, the time spent at the recreation area, local prices and the opportunity to make expenditure on site.</p>
+                        <p>It specialises in offering adventure holidays, activities and experiences. It offers walking, trekking and cycling as part of the adventure tours. The latest brochure has a choice of 450 adventures to choose from KE Adventure travel (http://www. keadventure.com/ ) KE adventure is an independent adventure travel operator; it’s a big company which specialises in providing trekking, walking, climbing, mountain biking, winter sports etc.
+                        </p>
+                        <p>He seeks to escape it. Gilgamesh decides to seek out Utnapishtim, the one being granted immortality by the gods. He travels to Mount Mashu, a twin-peaked mountain that marks an entrance to a world in which mortals cannot venture. He convinces the guards of the mountain, two Scorpion-man beings, to allow him to enter a long passage under the mountain. [Original source: https://studycrumb.com/essay-maker]</p>
+                      </div>
+                      <div className={`${styles.postImage} ${styles.horizontal}`}>
+                        <div className={styles.childImage}>
+                          <img src="https://plus.unsplash.com/premium_photo-1673971700988-346588461fa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auhref=format&fit=crop&w=1171&q=80" alt="Sunset"/>
+                          <figcaption className="figcaption">Photo by Jeremy Bishop on Unsplash</figcaption>
+                          <span>@fotorgasm</span>
+                        </div>
+                      </div>
+                      <div className={styles.postSection}>
+                        <h2>Conclusion</h2>
+                        <p>Overall, my day at the beach was amazing. It's a place where I can go to escape from the world and just enjoy the beauty of nature. I hope you enjoyed reading about my adventure!</p>
+                      </div> */}
 
-                  </div>
+                    </div>
+                  }
                   <div className={styles.postInfoContainer}>
                     <div className={styles.postInfo}>
                       <div className={styles.postDate}>24. Dec 2022</div>
@@ -291,7 +297,7 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
       }
       {
         (post.coverRes.height === post.coverRes.width) ?
-        <div className={styles.squarePost}>
+        <div className={styles.squarePost} ref={containerRef}>
           <div className={`${styles.fullTextContainer}`}>
             <article className={`${styles.postArticle}`}>
               <div className={`${styles.postCover}`}>
@@ -414,6 +420,6 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
         :
         ''
       }
-    </div>
+    </>
   )
 }

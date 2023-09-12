@@ -82,6 +82,29 @@
     stroke: var(--primary);
     /* fill: var(--primary); */
 }
+
+/* Posts list part */
+.postList{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.listLabel{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.labelItem{
+    list-style: none;
+    font-family: 'Neue Helvetica';
+    color: var(--on-background-matte);
+    font-size: 13px;
+}
+
+
+/* Editor Part */
 .editField{
     padding-left: 35px;
     padding-right: 35px;

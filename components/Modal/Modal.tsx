@@ -28,14 +28,14 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
     }, [onKeyDown])
 
     useEffect(() => {
-      // Add the CSS class to disable scrolling when the modal is open
-      document.body.classList.add('no-scroll');
+        // Add the CSS class to disable scrolling when the modal is open
+        document.body.classList.add('no-scroll');
 
-      // Remove the CSS class and enable scrolling when the modal is closed
-      return () => {
-          document.body.classList.remove('no-scroll');
-      }
-  }, []);
+        // Remove the CSS class and enable scrolling when the modal is closed
+        return () => {
+            document.body.classList.remove('no-scroll');
+        }
+    }, []);
 
   return (
     <div
@@ -43,12 +43,12 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       className={styles.overlay}
       onClick={onClick}
     >
-      <div
+      {/* <div
         ref={wrapper}
-        className={styles.wrapper}
+        className={styles.overlayWrapper}
       >
+      </div> */}
         {children}
-      </div>
     </div>
   )
 }

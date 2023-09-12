@@ -19,7 +19,11 @@ const initialState: DraftPost = {
     coverRes: {
         width: 0,
         height: 0
-    }
+    },
+    createdAt: '', // Add createdAt
+    views: '',     // Add views
+    likes: '',     // Add likes
+    comments: []
 }
 
 const draftSlice = createSlice({

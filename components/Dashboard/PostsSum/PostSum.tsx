@@ -4,8 +4,9 @@ import styles from './PostSum.module.css'
 import { useSession } from 'next-auth/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateDesc, updateFormat, updateSlug, updateTag, updateTitle } from '@/redux/post/draft.slice'
-import { FinalPost } from '@/types/Posts.type'
+import { FetchedPost, FinalPost } from '@/types/Posts.type'
 import { getPosts } from '@/utils/getPosts'
+import Slider from 'react-slick'
 
 // Define props
 interface Props {
@@ -94,6 +95,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   useEffect(() => {
     handleGetPosts(page);
   }, [page])
+  // Submit Post
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
@@ -212,6 +214,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         // return
         return str;
     }
+
   return (
     <div className={`${styles.postSumContainer} ${styles.gridBlock}`}>
       <div className={styles.sumHeader}>
@@ -307,9 +310,30 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           </form>
         </div> 
         :
-        <div className={styles.postList}>
-            
-        </div>
+        <table id='postList' className={styles.postList}>
+          <tr className={styles.listLabel}>
+            <th className={styles.labelItem}>Title</th>
+            <th className={styles.labelItem}>Author</th>
+            <th className={styles.labelItem}>Created Date</th>
+            <th className={styles.labelItem}>Views</th>
+            <th className={styles.labelItem}>Likes</th>
+            <th className={styles.labelItem}>Comments</th>
+          </tr>
+          {
+            posts.map((post: FetchedPost, ind) => {
+              return(
+                <tr key={ind}>
+                  <th>{post.title}</th>
+                  <th>{post.author}</th>
+                  <th>{post.createdAt}</th>
+                  <th>{post.views}</th>
+                  <th>{post.likes}</th>
+                  <th>{post.comments.length}</th>
+                </tr>
+              )
+            })
+          }
+        </table>
       }
     </div>
   )

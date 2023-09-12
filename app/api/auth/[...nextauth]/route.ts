@@ -56,8 +56,11 @@ const handler = NextAuth({
             }
           }),
     ],
+    session:{
+      maxAge: 2 * 60 * 60 // 2 hours
+    },
     callbacks: {
-      jwt: ({ token, user}) => {
+      jwt: ({ token, user }) => {
         if(user) {
           const u = user as unknown as any;
           return {
