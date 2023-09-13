@@ -8,6 +8,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 .sumHeader{
     display: flex;
@@ -41,26 +42,16 @@
 } 
 .button{
     display: flex;
-    background-color: var(--surface-08);
-    padding: 5px 10px;
-    border-radius: 15px;
-    justify-content: center;
+    background-color: transparent;
     cursor: pointer;
-    align-items: center;
+    opacity: .6;
 }
-.button:hover h3{
-    color: var(--blue);
-}
-.button:hover svg{
-    fill: var(--blue);
-    stroke: var(--blue);
+.button:hover{
+    opacity: 1;
 }
 .button svg{
-    transition: all .2s;
-    fill: var(--primary);
-    stroke: var(--primary);
-    
-    padding-right: 5px;
+    width: 25px;
+    height: 25px;
 }
 .listCount{
     background-color: var(--surface-08);
@@ -78,32 +69,78 @@
     align-items: center;
 }
 .iconContainer svg{
-    height: 20px;
+    height: 23px;
     stroke: var(--primary);
     /* fill: var(--primary); */
 }
 
 /* Posts list part */
 .postList{
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+}
+.listLabel .labelItem{
+    color: var(--on-background-matte);
+    font-size: 14px;
+    letter-spacing: .5px;
+    font-weight: 600;
+    text-align: center;
+}
+.postList tr, .postList td{
+    font-family: 'Neue Helvetica';
+}
+.postList tbody td{
+    padding: 10px 10px;
+    color: var(--on-background);
+    font-weight: 300;
+    font-size: 13px;
+    text-align: center;
+    
+}
+.postList tbody tr{
+    background-color: var(--surface-06);
+}
+.postList tbody tr:hover{
+    background-color: var(--surface-08);
+}
+.postList td:first-child{
+    text-align: left;
+    white-space: normal;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.postList td:nth-child(2){
+    white-space: nowrap;
+}
+.postList td:nth-child(3){
+    white-space: nowrap;
+}
+.postList td:last-child{
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.pagination{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
-.listLabel{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.pagination button{
+    background-color: var(--on-background-matte);
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    padding: 5px;
+    margin:2px;
 }
-.labelItem{
-    list-style: none;
-    font-family: 'Neue Helvetica';
-    color: var(--on-background-matte);
-    font-size: 13px;
-}
-
-
 /* Editor Part */
 .editField{
     padding-left: 35px;

@@ -1,3 +1,4 @@
+import { openDraft } from '@/redux/post/draft.slice';
 export type FinalPost = {
   format: string,
   title: string,
@@ -42,5 +43,5 @@ export type DraftPost = {
   createdAt: string, // Add createdAt
   views: string,     // Add views
   likes: string,     // Add likes
-  comments: []
+  comments: [],
 };
