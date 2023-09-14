@@ -96,6 +96,10 @@ const PostSchema = new mongoose.Schema({
     views: {
         type: Number,
         default: 0
+    },
+    status:{
+        type: String,
+        required: false
     }
 },{timestamps: true});
 

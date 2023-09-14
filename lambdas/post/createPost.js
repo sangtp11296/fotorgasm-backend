@@ -23,7 +23,8 @@ export const createPost = async (event, context, callback) => {
             format: data.format,
             slug: data.slug,
             tags: data.tags,
-            title: data.title
+            title: data.title,
+            status: data.status
         });
         console.log(newPost)
         // Save the new post to the database
