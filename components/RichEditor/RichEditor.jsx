@@ -5,12 +5,13 @@ import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import styles from './RichEditor.module.css'
 import './CKEditor.css'
 import S3Uploader from './S3Uploader';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateContent } from '@/redux/post/draft.slice';
 
 
 const RichEditor = ({ onChange }) => {
     const dispatch = useAppDispatch();
+    const draft = useAppSelector(state => state.draft);
     function CustomUploadAdapterPlugin(editor) {
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
             return new S3Uploader(loader);
@@ -54,21 +55,22 @@ const RichEditor = ({ onChange }) => {
         mediaEmbed: {
             removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
         },
-        extraPlugins: [CustomUploadAdapterPlugin]
+        extraPlugins: [CustomUploadAdapterPlugin],
+        initialData: draft.content
     };
 
   return (
     <div className={styles.richEditor}>
         <CKEditor
-                editor={ Editor }
-                config={ editorConfiguration }
-                onChange={ ( event, editor ) => {
-                    const data = editor.getData();
-                    dispatch(updateContent(data));
-                    // console.log( { event, editor, data } );
-                    // onChange(data);
-                } }
-            />
+            editor={ Editor }
+            config={ editorConfiguration }
+            onChange={ ( event, editor ) => {
+                const data = editor.getData();
+                dispatch(updateContent(data));
+                // console.log( { event, editor, data } );
+                // onChange(data);
+            } }
+        />
     </div>
   )
 }

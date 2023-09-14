@@ -9,13 +9,14 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .sumHeader{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
     margin-bottom: 10px;
     width: 85%;
     margin-left: auto;
@@ -39,7 +40,12 @@
     color: var(--primary);
     text-transform: uppercase;
     transition: all .2s;
-} 
+}
+.submit .button{
+    background-color: var(--surface-02);
+    opacity: 1;
+    border-radius: 8px;
+}
 .button{
     display: flex;
     background-color: transparent;
@@ -81,7 +87,7 @@
     padding-right: 20px;
     border-collapse: separate;
     border-spacing: 0 10px;
-
+    flex-grow: 1;
 }
 .listLabel .labelItem{
     color: var(--on-background-matte);
@@ -116,12 +122,19 @@
 .postList td:nth-child(2){
     white-space: nowrap;
 }
-.postList td:nth-child(3){
+.postList td:nth-child(4){
     white-space: nowrap;
 }
 .postList td:last-child{
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+.postList td svg{
+    height: 18px;
+    width: 18px;
+}
+.postList td svg path{
+    fill: var(--on-background-matte);
 }
 .pagination{
     position: absolute;
@@ -201,13 +214,74 @@
 }
 
 @media screen and (max-width: 1920px) {
+    .postSumContainer{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        min-width: 544px;
+    }
     .textField label{
         font-size: 12px;
     }
-    /* .textInput{
-        width: 150px;
-        margin-left: 5px;
-    } */
+    .postList{
+        padding-left: 15px;
+        padding-right: 15px;
+        border-spacing: 0 15px;
+    }
+    .listLabel .labelItem{
+        font-size: 13px;
+    }
+    .labelItem svg{
+        height: 18px;
+        width: 18px;
+    }
+    .postList tbody td{
+        padding: 5px 10px;
+        color: var(--on-background);
+        font-weight: 300;
+        font-size: 12px;
+        text-align: center;
+    }
+    .postList tbody tr{
+        background-color: var(--surface-06);
+    }
+    .postList tbody tr:hover{
+        background-color: var(--surface-08);
+    }
+    .postList td:first-child{
+        text-align: left;
+        white-space: normal;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    .postList td:nth-child(2){
+        white-space: nowrap;
+    }
+    .postList td:nth-child(4){
+        white-space: nowrap;
+    }
+    .postList td:last-child{
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    .pagination{
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pagination button{
+        background-color: var(--on-background-matte);
+        cursor: pointer;
+        width: 8px;
+        height: 8px;
+        padding: 0;
+        border-radius: 100%;
+        margin: 4px;
+    }
+
 }
 @media screen and (max-width: 1355px) {
     .postSumContainer{

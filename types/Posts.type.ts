@@ -18,9 +18,10 @@ export type FinalPost = {
     high: string,
     medium: string,
     low: string,
-  }
+  },
+  status: string
 };
-export type FetchedPost = FinalPost & { _id: string, coverUrl: string, createdAt: string, views: string, likes: string, comments: [] };
+export type FetchedPost = FinalPost & { _id: string, coverUrl: string, createdAt: string, views: string, likes: string, comments: [], status: string };
 export type DraftPost = {
   toggle: boolean,
   submit: boolean,
@@ -44,4 +45,5 @@ export type DraftPost = {
   views: string,     // Add views
   likes: string,     // Add likes
   comments: [],
+  status: string,
 };

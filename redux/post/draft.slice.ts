@@ -23,7 +23,8 @@ const initialState: DraftPost = {
     createdAt: '', // Add createdAt
     views: '',     // Add views
     likes: '',     // Add likes
-    comments: []
+    comments: [],
+    status: 'draft'
 }
 
 const draftSlice = createSlice({
@@ -66,6 +67,9 @@ const draftSlice = createSlice({
         updateContent: (state, action: PayloadAction<string>) => {
             state.content = action.payload
         },
+        updateStatus: (state, action: PayloadAction<string>) => {
+            state.status = action.payload
+        },
         clearDraft: () => initialState,
         openDraft: (state) => {
             state.toggle = true
@@ -76,7 +80,7 @@ const draftSlice = createSlice({
     }
 })
 
-export const { updateTitle, updateFormat, updateSlug, updateAuthor, updateCat, updateDesc, updateTag, updateCoverThumbnail, updateCoverUrl, updateCoverKey, updateCoverRes, updateContent, clearDraft, openDraft, submitDraft } = draftSlice.actions;
+export const { updateTitle, updateFormat, updateSlug, updateAuthor, updateCat, updateDesc, updateTag, updateCoverThumbnail, updateCoverUrl, updateCoverKey, updateCoverRes, updateContent, updateStatus, clearDraft, openDraft, submitDraft } = draftSlice.actions;
 const draftReducer = draftSlice.reducer;
 
 export default draftReducer;

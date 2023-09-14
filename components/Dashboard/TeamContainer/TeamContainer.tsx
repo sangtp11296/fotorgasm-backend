@@ -27,7 +27,6 @@ const Editor = dynamic(() => import('@/components/RichEditor/RichEditor'), { ssr
 const TeamContainer: React.FC = () => {
     const editorMode = useAppSelector((state) => state.draft.toggle);
     const format = useAppSelector((state) => state.draft.format);
-    const slug = useAppSelector((state) => state.draft.slug);
     const session = useSession();
     const user: User | undefined = session.data?.user;
     
