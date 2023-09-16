@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './PostSum.module.css'
 import { useSession } from 'next-auth/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateContent, updateCoverKey, updateCoverRes, updateCoverThumbnail, updateDesc, updateFormat, updateSlug, updateStatus, updateTag, updateTitle } from '@/redux/post/draft.slice'
+import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateContent, updateCoverKey, updateCoverRes, updateCoverThumbnail, updateDesc, updateFormat, updateId, updateSlug, updateStatus, updateTag, updateTitle } from '@/redux/post/draft.slice'
 import { FetchedPost, FinalPost } from '@/types/Posts.type'
 import { getPosts } from '@/utils/getPosts'
 import Slider from 'react-slick'
@@ -76,28 +76,100 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   // Submit Post
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
-
-    if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.desc && draft.coverUrl) {
-
-      dispatch(submitDraft());
-      if (draft.format === 'blog'){
-        // Update cover photo first to get the thumbnail url and cover key
-        const formData: FinalPost = {
-          author: draft.author,
-          category: draft.category,
-          content: draft.content,
-          coverKey: '',
-          coverThumbnail: '',
-          coverRes: draft.coverRes,
-          desc: draft.desc,
-          format: draft.format,
-          title: draft.title,
-          slug: draft.slug,
-          tags: draft.tags,
-          status: 'published'
-        }
-        // Move all draft images to posts folder in s3 bucket
-        if(draft.content.includes('<img')){
+    if(draft.status === 'published'){
+      // Update published post
+      const formUpdate = {
+        id: draft._id,
+        author: draft.author,
+        category: draft.category,
+        content: draft.content,
+        desc: draft.desc,
+        format: draft.format,
+        title: draft.title,
+        slug: draft.slug,
+        tags: draft.tags,
+      }
+      const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify(formUpdate)
+          });
+          res.status === 200 && window.location.reload();
+    } else {
+      // Create new Post
+      if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.desc && draft.coverUrl) {
+  
+        dispatch(submitDraft());
+        if (draft.format === 'blog'){
+          // Update cover photo first to get the thumbnail url and cover key
+          const formData: FinalPost = {
+            author: draft.author,
+            category: draft.category,
+            content: draft.content,
+            coverKey: '',
+            coverThumbnail: '',
+            coverRes: draft.coverRes,
+            desc: draft.desc,
+            format: draft.format,
+            title: draft.title,
+            slug: draft.slug,
+            tags: draft.tags,
+            status: 'published'
+          }
+          // Move all draft images to posts folder in s3 bucket
+          if(draft.content.includes('<img')){
+            await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json' // Set the Content-Type header
+              },
+              body: JSON.stringify({
+                slug: draft.slug,
+                format: 'image'
+              }),
+            });
+          }
+    
+          const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify(formData)
+          });
+          res.status === 200 && window.location.reload();
+        } else if (draft.format === 'video') {
+          // Update cover photo first to get the thumbnail url and cover key
+          const formData: FinalPost = {
+            author: draft.author,
+            category: draft.category,
+            coverKey: '',
+            coverThumbnail: '',
+            coverRes: draft.coverRes,
+            desc: draft.desc,
+            format: draft.format,
+            title: draft.title,
+            slug: draft.slug,
+            tags: draft.tags,
+            videoSrc: {
+              high: ``,
+              medium: '',
+              low: '',
+            },
+            status: 'published'
+          }
+  
+          const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify(formData)
+          });
+  
+          // Move all draft videos to posts folder in s3 bucket
           await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
             method: "POST",
             headers: {
@@ -105,63 +177,14 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
             },
             body: JSON.stringify({
               slug: draft.slug,
-              format: 'image'
+              format: 'video'
             }),
           });
-        }
   
-        const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json' // Set the Content-Type header
-          },
-          body: JSON.stringify(formData)
-        });
-        res.status === 200 && window.location.reload();
-      } else if (draft.format === 'video') {
-        // Update cover photo first to get the thumbnail url and cover key
-        const formData: FinalPost = {
-          author: draft.author,
-          category: draft.category,
-          coverKey: '',
-          coverThumbnail: '',
-          coverRes: draft.coverRes,
-          desc: draft.desc,
-          format: draft.format,
-          title: draft.title,
-          slug: draft.slug,
-          tags: draft.tags,
-          videoSrc: {
-            high: ``,
-            medium: '',
-            low: '',
-          },
-          status: 'published'
+          res.status === 200 && window.location.reload();
         }
-
-        const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json' // Set the Content-Type header
-          },
-          body: JSON.stringify(formData)
-        });
-
-        // Move all draft videos to posts folder in s3 bucket
-        await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json' // Set the Content-Type header
-          },
-          body: JSON.stringify({
-            slug: draft.slug,
-            format: 'video'
-          }),
-        });
-
-        res.status === 200 && window.location.reload();
-      }
-    } 
+      } 
+    }
   }
   // Convert title to slug
   function toSlug(str: string)
@@ -215,6 +238,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   const handleEditTrigger = (post: FetchedPost) => {
     if (!addTrigger) {
       dispatch(openDraft());
+      dispatch(updateId(post._id))
       dispatch(updateFormat(post.format));
       dispatch(updateTitle(post.title));
       dispatch(updateSlug(post.slug));

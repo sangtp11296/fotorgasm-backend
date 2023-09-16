@@ -1,0 +1,77 @@
+.h2{
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1rem;
+}
+.h3{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 1rem;
+}
+.p{
+    font-size: 7px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: .8rem;
+}
+
+.standard.postText{
+    font-family: 'Neue Helvetica';
+    text-align: justify;
+    color: var(--on-surface);
+    /* width: 55%; */
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+}
+.standard .p{
+    width: 55%;
+    margin-left: auto !important;
+}
+.standard .imageWrapper{
+    width: 70%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: flex-end;
+}
+.standard .imageWrapper.row{
+    gap: 13px;
+    width: 80%;
+    flex-direction: row;
+}
+.image{
+    position: relative;
+    height: fit-content;
+}
+.image img{
+    max-height: 500px;
+    height: 100%;
+    max-width: 100%;
+    width: auto;
+}
+.image figcaption{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 7px;
+    font-style: italic;
+    color: var(--on-surface)
+}
+.imageWrapper.row .photographer{
+    left: -12%;
+}
+.image .photographer{
+    position: absolute;
+    margin-bottom: 0;
+    bottom: 0;
+    left: -7%;
+    transform: rotate(-90deg) translateY(-100%) translateX(90%);
+    letter-spacing: 1px;
+}
+.photographer a:visited{
+    color: var(--on-surface);
+}
+

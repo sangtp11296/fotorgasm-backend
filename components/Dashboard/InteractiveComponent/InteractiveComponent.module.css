@@ -56,7 +56,11 @@
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    height: 100%;
     aspect-ratio: 1/1; /* Ensures the square shape */
+    top: 50%;
+    /* left: 50%; */
+    /* transform: translate(-50%,-50%); */
 }
 .iconContainer{
     position: absolute;
@@ -76,7 +80,11 @@
     grid-column: span 6;
     grid-row: 2 / 5;
 }
-
+.previewPage{
+    position: relative;
+    overflow: auto;
+    border-radius: 15px;
+}
 @media screen and (max-width: 1355px) {
     .interContainer{
         grid-column: 7 / 11;

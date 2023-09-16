@@ -1,6 +1,7 @@
 'use client'
 import { FetchedPost } from '@/types/Posts.type'
-import styles from './BlogPage.module.css'
+import styles from './BlogPagePreview.module.css'
+import './ContentPreview.css'
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 
@@ -8,7 +9,7 @@ interface Props {
   post: FetchedPost,
   cover: string,
 }
-export const BlogPage: React.FC<Props> = ({ post, cover }) => {
+export const BlogPagePreview: React.FC<Props> = ({ post, cover }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
                 <div className={`${styles.postTextContainer} ${styles.standard}`}>
                   {
                     post.content && 
-                    <div className={`${styles.postText} ${styles.standard}`} dangerouslySetInnerHTML={{__html:post.content}}>
+                    <div className='postText standard' dangerouslySetInnerHTML={{__html:post.content}}>
                       {/* <h1>My Beach Adventure</h1>
                       <p>Welcome to my blog post! Today, I'm going to take you on a journey with me to the beach. I love the beach because it's a place where I can relax and escape from the stresses of everyday life. </p>
                       <p>As soon as I arrived at the beach, I was struck by how beautiful it was. The sand was so soft and the water was crystal clear. It was a perfect day to spend at the beach.</p>

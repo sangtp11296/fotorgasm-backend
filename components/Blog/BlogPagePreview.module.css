@@ -2,8 +2,6 @@
 .standardPost{
     display: flex;
     flex-direction: row-reverse;
-    width: 90%;
-    margin: auto;
 }
 .standardPost .postCover{
     display: flex;
@@ -14,20 +12,12 @@
     background-color: var(--surface-02);
 }
 .standardPost .coverImage{
-    width: 100%;
+    /* width: 100%; */
     object-fit: cover;
-    height: 900px;
+    height: 500px;
     border-radius: 0%;
 }
-.postCover.horizontal{
-    margin-left: 70px;
-}
-.coverImage.horizontal{
-    width: auto;
-    /* object-fit: cover; */
-    height: 100%;
-    border-radius: 0%;
-}
+
 .standardPost .fullTextContainer{
     height: 100%;
     overflow: hidden;
@@ -45,24 +35,24 @@
     margin-right: auto;
 }
 .standardPost .postContent{
-    padding: 34px 55px 12px;
+    padding: 8px 16px 6px;
 }
 .standardPost .postCat{
-    margin-top: 150px;
-    margin-bottom: 20px;
+    margin-top: 70px;
+    margin-bottom: 10px;
     /* text-transform: uppercase; */
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     width: fit-content;
 }
 .standardPost .postCat a{
     color: var(--primary);
     font-family: 'Neue Helvetica';
     font-weight: 700;
-    font-size: 15px;
+    font-size: 7px;
 }
 
 .standardPost .postTitle{
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 .postTitle h1{
     display: block;
@@ -70,7 +60,7 @@
     text-transform: uppercase;
     font-family: 'Neue Helvetica';
     font-weight: 500;
-    font-size: 60px;
+    font-size: 30px;
     text-decoration: none;
     color: var(--on-surface);
     width: 85%;
@@ -83,37 +73,30 @@
 }
 .standardPost .postText{
     font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
     text-align: justify;
     color: var(--on-surface);
     width: 55%;
 }
-.postText h1{
+/* .postText h2{
     font-size: 19px;
     font-weight: 600;
     margin-bottom: 15px;
-    line-height: 1.5rem;
+    line-height: 1rem;
 }
-.postText h2{
+.postText h3{
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 15px;
-    line-height: 1.5rem;
+    line-height: 1rem;
 }
 .postText p{
-    font-size: 15px;
+    font-size: 7px;
     font-weight: 400;
     margin-bottom: 10px;
-    line-height: 1.4rem;
-}
-.horizontalPost h1{
-    margin-bottom: 15px;
-}
-.horizontalPost .postText p:last-child{
-    margin-bottom: 0;
-}
-.standardPost .postImage{
+    line-height: .8rem;
+} */
+
+/* .standardPost .postImage{
     width: 690px;
     position: relative;
     left: -310px;
@@ -121,29 +104,27 @@
     justify-content: center;
     flex-direction: row;
     gap: 20px;
-}
-.standardPost .childImage{
+} */
+/* .standardPost .childImage{
     position: relative;
     width: fit-content;
     height: fit-content;
-}
-.standardPost .postImage img{
+} */
+/* .standardPost .postImage img{
     max-height: 500px;
     height: 100%;
     max-width: 690px;
     width: auto;
-    /* margin-bottom: 5px;
-    margin-top: 20px; */
-}
-.standardPost .postImage figcaption{
+} */
+/* .standardPost .postImage figcaption{
     position: relative;
     text-align: center;
     margin-bottom: 20px;
     font-size: 13px;
     font-style: italic;
     color: var(--on-surface)
-}
-.standardPost .postImage span{
+} */
+/* .standardPost .postImage span{
     position: absolute;
     bottom: 20px;
     transform: rotate(-90deg) translateX(53px) translateY(-50px);
@@ -151,7 +132,7 @@
     font-size: 13px;
     font-style: italic;
     color: var(--on-surface)
-}
+} */
 .postInfoContainer{
     position: relative;
     display: flex;
@@ -254,6 +235,15 @@
 }
 
 /* Horizontal Post Page Formart */
+.postCover.horizontal{
+    margin-left: 70px;
+}
+.coverImage.horizontal{
+    width: auto;
+    /* object-fit: cover; */
+    height: 100%;
+    border-radius: 0%;
+}
 .horizontalPost{
     /* scroll-behavior: smooth; */
     -webkit-overflow-scrolling: touch; /* For iOS devices */
@@ -331,6 +321,10 @@
     margin-left: 70px;
     height: 100%;
 }
+.horizontalPost h1{
+    margin-bottom: 15px;
+}
+
 /* .horizontalPost .postText .postSection{
     width: 379.5px;
     height: 100%;
@@ -357,6 +351,9 @@
     color: var(--on-surface);
     margin-right: 70px;
     /* overflow: hidden; */
+}
+.horizontalPost .postText p:last-child{
+    margin-bottom: 0;
 }
 .horizontalPost .postText .postImage{
     height: 100%;

@@ -56,7 +56,17 @@ const RichEditor = ({ onChange }) => {
             removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
         },
         extraPlugins: [CustomUploadAdapterPlugin],
-        initialData: draft.content
+        initialData: draft.content,
+        htmlSupport: {
+            allow: [
+                {
+                    name: /.*/,
+                    attributes: true,
+                    classes: true,
+                    styles: true
+                }
+            ]
+        }
     };
 
   return (

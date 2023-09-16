@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './InteractiveComponent.module.css'
 import Slider from 'react-slick';
 import './SlickMenu.css'
@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateCoverRes, updateCoverUrl } from '@/redux/post/draft.slice';
 import PostThumbnail from '@/components/PostThumbnail/PostThumbnail';
 import { FinalPost } from '@/types/Posts.type';
-import { BlogPage } from '@/components/Blog/BlogPage';
+import { BlogPagePreview } from '@/components/Blog/BlogPagePreview';
 
 const InteractiveComponent: React.FC = () => {
   const [cover, setCover] = useState<File>();
@@ -71,9 +71,17 @@ const InteractiveComponent: React.FC = () => {
     dotsClass: 'slick-dots custom-dots',
     customPaging: (i: any) => <button></button>,
   }
-  console.log(!draft.coverUrl && draft.coverThumbnail)
+  // Get height of iterContainer
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const previewPages = document.getElementsByClassName(styles.previewPage)
+    for (let i = 0; i < previewPages.length; i++) {
+      const page = previewPages[i] as HTMLElement;
+      page.style.height = `${containerRef.current?.clientHeight}px`;
+    }
+  })
   return (
-    <div className={`${styles.interContainer} ${styles.gridBlock}`}>
+    <div className={`${styles.interContainer} ${styles.gridBlock}`} ref={containerRef}>
       {draft.toggle ?
         <Slider {...settings}>
           {
@@ -95,8 +103,8 @@ const InteractiveComponent: React.FC = () => {
               </div>
             </div>
           }
-          <div>
-            <BlogPage post={draft} cover={draft.coverThumbnail || draft.coverUrl}/>
+          <div className={styles.previewPage} style={{maxHeight: `${containerRef.current?.clientHeight}px`}}>
+            <BlogPagePreview post={draft} cover={draft.coverThumbnail || draft.coverUrl}/>
           </div>
         </Slider>
       :
