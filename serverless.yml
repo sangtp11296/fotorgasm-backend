@@ -115,6 +115,15 @@ functions:
           path: posts # path will be domain.name.com/dev/posts
           method: get
           cors: true
+  updatePost:
+    handler: lambdas/post/updatePost.updatePost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: post/{id} # path will be domain.name.com/dev/posts
+          method: put
+          cors: true
   uploadDraftImage:
     handler: lambdas/post/uploadFiles.uploadDraftImage
     layers:
