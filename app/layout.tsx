@@ -3,7 +3,10 @@ import { Providers } from '@/redux/provider'
 import '@/styles/globals.css'
 
 export const metadata = {
-    title: 'fotorgasm',
+    title: {
+      default: 'fotorgasm',
+      template: '%s | fotorgasm'
+    },
     description: 'Orgasm Through My Lens'
 }
 

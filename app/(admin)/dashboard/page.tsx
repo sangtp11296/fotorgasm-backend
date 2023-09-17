@@ -11,16 +11,8 @@ import InteractiveComponent from '@/components/Dashboard/InteractiveComponent/In
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 
-// Define Info Post type
-interface PostInfo {
-  format: string,
-  title: string,
-  slug: string,
-  author: string,
-  category: string,
-  description: string,
-  tags: string[],
-}
+
+
 const Dashboard: React.FC = () => {
   const session = useSession();
   const router = useRouter();

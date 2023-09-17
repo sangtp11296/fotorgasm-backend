@@ -2,7 +2,7 @@
 .standardPost{
     display: flex;
     flex-direction: row-reverse;
-    width: 90%;
+    width: 70%;
     margin: auto;
 }
 .standardPost .postCover{
@@ -14,20 +14,12 @@
     background-color: var(--surface-02);
 }
 .standardPost .coverImage{
-    width: 100%;
+    /* width: 100%; */
     object-fit: cover;
     height: 900px;
     border-radius: 0%;
 }
-.postCover.horizontal{
-    margin-left: 70px;
-}
-.coverImage.horizontal{
-    width: auto;
-    /* object-fit: cover; */
-    height: 100%;
-    border-radius: 0%;
-}
+
 .standardPost .fullTextContainer{
     height: 100%;
     overflow: hidden;
@@ -81,15 +73,15 @@
     align-items: flex-end;
     flex-direction: column;
 }
-.standardPost .postText{
+/* .standardPost .postText{
     font-family: 'Neue Helvetica';
     font-size: 15px;
     word-spacing: 1px;
     text-align: justify;
     color: var(--on-surface);
     width: 55%;
-}
-.postText h1{
+} */
+/* .postText h1{
     font-size: 19px;
     font-weight: 600;
     margin-bottom: 15px;
@@ -106,14 +98,9 @@
     font-weight: 400;
     margin-bottom: 10px;
     line-height: 1.4rem;
-}
-.horizontalPost h1{
-    margin-bottom: 15px;
-}
-.horizontalPost .postText p:last-child{
-    margin-bottom: 0;
-}
-.standardPost .postImage{
+} */
+
+/* .standardPost .postImage{
     width: 690px;
     position: relative;
     left: -310px;
@@ -132,8 +119,6 @@
     height: 100%;
     max-width: 690px;
     width: auto;
-    /* margin-bottom: 5px;
-    margin-top: 20px; */
 }
 .standardPost .postImage figcaption{
     position: relative;
@@ -151,7 +136,7 @@
     font-size: 13px;
     font-style: italic;
     color: var(--on-surface)
-}
+} */
 .postInfoContainer{
     position: relative;
     display: flex;
@@ -254,6 +239,15 @@
 }
 
 /* Horizontal Post Page Formart */
+.postCover.horizontal{
+    margin-left: 70px;
+}
+.coverImage.horizontal{
+    width: auto;
+    /* object-fit: cover; */
+    height: 100%;
+    border-radius: 0%;
+}
 .horizontalPost{
     /* scroll-behavior: smooth; */
     -webkit-overflow-scrolling: touch; /* For iOS devices */
@@ -273,6 +267,7 @@
     padding-bottom: 0;
     margin-bottom: 0;
 }
+
 .horizontalPost .postArticle{
     display: flex;
     flex-direction: row;
@@ -302,7 +297,12 @@
     font-weight: 500;
     font-size: 16px;
 }
-
+.horizontalPost h1{
+    margin-bottom: 15px;
+}
+.horizontalPost .postText p:last-child{
+    margin-bottom: 0;
+}
 .firstIntro{
     margin-top: auto;
     align-self: flex-end;

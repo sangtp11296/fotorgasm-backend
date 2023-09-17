@@ -85,6 +85,9 @@
     overflow: auto;
     border-radius: 15px;
 }
+.previewPage::-webkit-scrollbar{
+    display: none;
+}
 @media screen and (max-width: 1355px) {
     .interContainer{
         grid-column: 7 / 11;

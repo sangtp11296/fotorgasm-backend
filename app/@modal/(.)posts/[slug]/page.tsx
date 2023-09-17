@@ -1,19 +1,45 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+
+import React from 'react'
 import { Modal } from '@/components/Modal/Modal'
 import { FetchedPost } from '@/types/Posts.type';
 import { BlogPage } from '@/components/Blog/BlogPage';
 
+import type { Metadata, ResolvingMetadata } from 'next'
+ 
+type Props = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+ 
+export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  // read route params
+  const slug = params.slug
+ 
+  // fetch data post
+  const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
+    method: "GET"
+  })
+  const data = await res.json();
+  const post: FetchedPost = data.post;
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    title: `${post.title}: ${post.author}`,
+    description: `${post.title} | ${post.author}`,
+    openGraph: {
+      images: ['/some-specific-page-image.jpg', ...previousImages],
+    },
+  }
+}
 export default async function PostModal ({ params }: { params: { slug: string } }){
-  const [post, setPost] = useState<FetchedPost>();
-  const [coverUrl, setCoverUrl] = useState()
   // Get Post and Cover
-  const handleGetPost = async (slug: string) => {
-    const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
+  const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${params.slug}`, {
       method: "GET"
     })
     const data = await res.json();
-    const post = data.post;
+    const post: FetchedPost = data.post;
     const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
         method: "POST",
         body: JSON.stringify({
@@ -22,12 +48,6 @@ export default async function PostModal ({ params }: { params: { slug: string } 
     });
     const cover = await fetchCover.json();
     const coverUrl = cover.presignedUrl;
-    setCoverUrl(coverUrl);
-    setPost(post);
-  }
-  useEffect(() => {
-    handleGetPost(params.slug);
-  }, [])
   
   return (
     <Modal>
