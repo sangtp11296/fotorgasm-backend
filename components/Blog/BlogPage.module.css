@@ -73,70 +73,7 @@
     align-items: flex-end;
     flex-direction: column;
 }
-/* .standardPost .postText{
-    font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    color: var(--on-surface);
-    width: 55%;
-} */
-/* .postText h1{
-    font-size: 19px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    line-height: 1.5rem;
-}
-.postText h2{
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 15px;
-    line-height: 1.5rem;
-}
-.postText p{
-    font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    line-height: 1.4rem;
-} */
 
-/* .standardPost .postImage{
-    width: 690px;
-    position: relative;
-    left: -310px;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    gap: 20px;
-}
-.standardPost .childImage{
-    position: relative;
-    width: fit-content;
-    height: fit-content;
-}
-.standardPost .postImage img{
-    max-height: 500px;
-    height: 100%;
-    max-width: 690px;
-    width: auto;
-}
-.standardPost .postImage figcaption{
-    position: relative;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface)
-}
-.standardPost .postImage span{
-    position: absolute;
-    bottom: 20px;
-    transform: rotate(-90deg) translateX(53px) translateY(-50px);
-    letter-spacing: 1px;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface)
-} */
 .postInfoContainer{
     position: relative;
     display: flex;
@@ -239,16 +176,8 @@
 }
 
 /* Horizontal Post Page Formart */
-.postCover.horizontal{
-    margin-left: 70px;
-}
-.coverImage.horizontal{
-    width: auto;
-    /* object-fit: cover; */
-    height: 100%;
-    border-radius: 0%;
-}
-.horizontalPost{
+
+.landscapePost{
     /* scroll-behavior: smooth; */
     -webkit-overflow-scrolling: touch; /* For iOS devices */
     overflow-y: hidden;
@@ -259,150 +188,74 @@
     width: 100vw;
     height: 90vh;
 }
-.horizontalPost .fullTextContainer{
+.landscapePost::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+.landscapePost .fullTextContainer{
     height: 100%;
     display: flex;
     flex-direction: row;
     background-color: var(--surface-02);
-    padding-bottom: 0;
-    margin-bottom: 0;
+    width: max-content;
 }
 
-.horizontalPost .postArticle{
+.landscapePost .postArticle{
     display: flex;
     flex-direction: row;
     background-color: inherit;
     height: 100%;
 }
-.horizontalPost .postContent{
+.landscapePost .postContent{
     position: relative;
     display: flex;
     flex-direction: row;
-    padding: 15vh 70px 8vh;
+    padding: 15vh 220px 8vh;
 }
-.horizontalPost .catAndTitle{
+.landscapePost .catAndTitle{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-left: 150px;
+    width: 800px;
 }
-.horizontalPost .postCat{
+.landscapePost .postCat{
     letter-spacing: 2px;
     margin-bottom: 10px;
-    /* margin-top: 300px; */
 }
-.horizontalPost .postCat a{
+.landscapePost .postCat a{
     color: var(--primary);
-    font-family: 'Neue Helvetica';
     font-weight: 500;
     font-size: 16px;
 }
-.horizontalPost h1{
-    margin-bottom: 15px;
-}
-.horizontalPost .postText p:last-child{
-    margin-bottom: 0;
+.landscapePost .postTitle h1{
+    font-size: 70px;
+    width: 800px;
 }
 .firstIntro{
     margin-top: auto;
     align-self: flex-end;
-    width: 379.5px;
+    width: 400px;
     font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    /* height: 100%; */
+    font-size: 20px;
+    text-align: right;
     color: var(--on-surface);
 }
-.horizontalPost .postTitle h1{
-    font-size: 70px;
-    width: 600px;
+
+.landscapePost .postCover{
+    margin-left: 70px;
 }
-.horizontalPost .postTextContainer{
+.landscapePost .coverImage{
+    width: auto;
+    height: 100%;
+}
+.landscapePost .postTextContainer{
     width: 100%;
     display: flex;
     flex-direction: row;
     height: 100%;
-}
-.horizontalPost .postText{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 70px;
-    height: 100%;
-}
-/* .horizontalPost .postText .postSection{
-    width: 379.5px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    color: var(--on-surface);
-    margin-right: 70px;
-} */
-.horizontalPost .postText p{
-    width: 379.5px;
-    height: fit-content;
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    color: var(--on-surface);
-    margin-right: 70px;
-    /* overflow: hidden; */
-}
-.horizontalPost .postText .postImage{
-    height: 100%;
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-right: 70px;
-    gap: 50px;
 }
-.horizontalPost .postText figure{
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-right: 70px;
-    gap: 50px;
-}
-.horizontalPost .childImage{
-    position: relative;
-    margin-bottom: 20px;
-    max-height: 64vh;
-}
-.horizontalPost .postImage img{
-    max-width: 600px;
-    height: auto;
-    margin-bottom: 5px;
-    max-height: 63vh;
-}
-.horizontalPost .postImage figcaption{
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface);
-    text-align: left;
-}
-.horizontalPost .postImage span{
-    letter-spacing: 1px;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface);
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    transform: rotate(-90deg) translateX(55px) translateY(-50px);
-}
+
 /* Square Post Page Formart */
 .squarePost{
     scroll-behavior: smooth;

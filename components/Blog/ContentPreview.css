@@ -92,7 +92,6 @@
     width: 200px;
     font-family: 'Neue Helvetica';
     font-size: 7px;
-    word-spacing: 1px;
     color: var(--on-surface);
     margin-right: 35px;
 }

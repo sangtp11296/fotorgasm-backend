@@ -234,7 +234,6 @@
     align-self: flex-end;
     width: 200px;
     font-size: 7px;
-    word-spacing: 1px;
     text-align: right;
     color: var(--on-surface);
 }
@@ -253,85 +252,8 @@
     justify-content: center;
     align-items: center;
 }
-.landscapePost h1{
-    margin-bottom: 15px;
-}
 
-/* .landscapePost .postText .postSection{
-    width: 379.5px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    color: var(--on-surface);
-    margin-right: 70px;
-} */
-.landscapePost .postText p{
-    width: 379.5px;
-    height: fit-content;
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    color: var(--on-surface);
-    margin-right: 70px;
-    /* overflow: hidden; */
-}
-.landscapePost .postText p:last-child{
-    margin-bottom: 0;
-}
-.landscapePost .postText .postImage{
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-right: 70px;
-    gap: 50px;
-}
-.landscapePost .postText figure{
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-right: 70px;
-    gap: 50px;
-}
-.landscapePost .childImage{
-    position: relative;
-    margin-bottom: 20px;
-    max-height: 64vh;
-}
-.landscapePost .postImage img{
-    max-width: 600px;
-    height: auto;
-    margin-bottom: 5px;
-    max-height: 63vh;
-}
-.landscapePost .postImage figcaption{
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface);
-    text-align: left;
-}
-.landscapePost .postImage span{
-    letter-spacing: 1px;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface);
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    transform: rotate(-90deg) translateX(55px) translateY(-50px);
-}
+
 /* Square Post Page Formart */
 .squarePost{
     scroll-behavior: smooth;

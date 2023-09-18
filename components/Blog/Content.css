@@ -82,3 +82,32 @@
     color: var(--on-surface);
 }
 
+/* Landscape format */
+.landscape.postText{
+    display: flex;
+    margin-left: 70px;
+    height: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: max-content;
+    justify-content: center;
+}
+.landscape .p{
+    width: 550px;
+    font-family: 'Neue Helvetica';
+    font-size: 20px;
+    color: var(--on-surface);
+    margin-right: 70px;
+}
+.landscape .imageWrapper{
+    margin-right: 70px;
+    height: 100%;
+}
+.landscape .image{
+    position: relative;
+    height: 100%;
+}
+.landscape .photographer{
+    bottom: -5%;
+    left: -35px;
+}
