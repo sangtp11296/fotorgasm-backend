@@ -188,7 +188,7 @@ export const BlogPagePreview: React.FC<Props> = ({ post, cover }) => {
         ''
       }
       {
-        (post.coverRes.height === post.coverRes.width) ?
+        (post.coverRes.height !== 0 && post.coverRes.width !== 0 && post.coverRes.height === post.coverRes.width) ?
         <div className={styles.squarePost} ref={containerRef}>
           <div className={`${styles.fullTextContainer}`}>
             <article className={`${styles.postArticle}`}>

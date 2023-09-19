@@ -77,8 +77,8 @@ const draftSlice = createSlice({
         openDraft: (state) => {
             state.toggle = true
         },
-        submitDraft: (state) => {
-            state.submit = true
+        submitDraft: (state, action: PayloadAction<boolean>) => {
+            state.submit = action.payload
         }
     }
 })

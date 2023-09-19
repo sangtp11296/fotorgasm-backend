@@ -45,6 +45,9 @@ export default async function PostModal ({ params }: { params: { slug: string } 
         body: JSON.stringify({
           key: post.coverKey,
       }),
+      next: {
+        revalidate: 600
+      }
     });
     const cover = await fetchCover.json();
     const coverUrl = cover.presignedUrl;

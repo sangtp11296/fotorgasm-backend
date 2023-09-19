@@ -37,18 +37,21 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
   
   // Get Post and Cover
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${params.slug}`, {
-      method: "GET"
-    })
-    const data = await res.json();
-    const post: FetchedPost = data.post;
-    const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
-        method: "POST",
-        body: JSON.stringify({
-          key: post.coverKey,
+    method: "GET"
+  })
+  const data = await res.json();
+  const post: FetchedPost = data.post;
+  const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+      method: "POST",
+      body: JSON.stringify({
+        key: post.coverKey,
       }),
-    });
-    const cover = await fetchCover.json();
-    const coverUrl = cover.presignedUrl;
+      next: {
+        revalidate: 600
+      }
+  });
+  const cover = await fetchCover.json();
+  const coverUrl = cover.presignedUrl;
   return (
     ( post && coverUrl) && <BlogPage post={post} cover={coverUrl}/>
   )

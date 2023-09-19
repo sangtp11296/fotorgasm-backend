@@ -58,6 +58,7 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
       };
     }
   }, []);
+  console.log(cover)
   return (
     <>
       {
