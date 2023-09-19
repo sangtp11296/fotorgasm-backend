@@ -49,6 +49,7 @@ export const getDraftImage = async (event) => {
         }
         const command = new GetObjectCommand(s3Params)
         const presignedUrl = await getSignedUrl(s3, command, {expiresIn: URL_EXPIRATION_SECONDS});
+        console.log(presignedUrl)
         return Responses._200({
             presignedUrl
         })

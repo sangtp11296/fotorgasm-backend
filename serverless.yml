@@ -161,7 +161,7 @@ functions:
           method: post
           cors: true
   createThumbnail:
-    handler: lambdas/post/uploadFiles.createThumbnail
+    handler: lambdas/post/createThumbnail.createThumbnail
     layers:
       - !Ref FotorgasmLayerLambdaLayer
   createPost:
