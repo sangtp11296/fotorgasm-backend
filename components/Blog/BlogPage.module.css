@@ -258,7 +258,7 @@
 
 /* Square Post Page Formart */
 .squarePost{
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     -webkit-overflow-scrolling: touch;
     overflow-y: hidden;
     overflow-x: auto;
@@ -267,6 +267,9 @@
     left: 0;
     width: 100vw;
     height: 90vh;
+}
+.squarePost::-webkit-scrollbar-track{
+    background-color: transparent;
 }
 .squarePost .fullTextContainer{
     height: 100%;

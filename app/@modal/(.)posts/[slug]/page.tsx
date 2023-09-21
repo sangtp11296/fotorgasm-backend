@@ -12,8 +12,7 @@ type Props = {
  
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   // read route params
-  const slug = params.slug
-  console.log(slug)
+  const slug = params.slug;
  
   // fetch data post
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
@@ -34,23 +33,25 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   }
 }
 export default async function PostModal ({ params }: { params: { slug: string } }){
+  // read route params
+  const slug = params.slug;
   // Get Post and Cover
-  const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${params.slug}`, {
+  const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
       method: "GET"
     })
-    const data = await res.json();
-    const post: FetchedPost = data.post;
-    const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
-        method: "POST",
-        body: JSON.stringify({
-          key: post.coverKey,
-      }),
-      next: {
-        revalidate: 600
-      }
-    });
-    const cover = await fetchCover.json();
-    const coverUrl = cover.presignedUrl;
+  const data = await res.json();
+  const post: FetchedPost = data.post;
+  const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+      method: "POST",
+      body: JSON.stringify({
+        key: post.coverKey,
+    }),
+    next: {
+      revalidate: 600
+    }
+  });
+  const cover = await fetchCover.json();
+  const coverUrl = cover.presignedUrl;
   
   return (
     <Modal>

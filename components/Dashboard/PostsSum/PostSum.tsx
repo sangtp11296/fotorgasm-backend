@@ -188,21 +188,9 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
     }
   }
   // Convert title to slug
-  function containsChineseOrJapanese(str: string) {
-    // Regular expressions to detect Chinese and Japanese characters
-    const chinesePattern = /[\u4e00-\u9fa5]/; // Chinese characters
-    const japanesePattern = /[\u3040-\u30ff\u3400-\u4dbf\u20000-\u2a6df]/; // Japanese characters
-
-    // Check if the string contains Chinese or Japanese characters
-    return chinesePattern.test(str) || japanesePattern.test(str);
-}
-  function toSlug(str: string){
-    // Check if the string contains Chinese or Japanese characters
-    if (containsChineseOrJapanese(str)) {
-      return str; // Preserve the original string
-    }
+  function toSlug(string: string){
     // Chuyển hết sang chữ thường
-    str = str.toLowerCase();     
+    let str = string.toLowerCase();     
 
     // xóa dấu
     str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|ä)/g, 'a');
@@ -225,9 +213,10 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
 
     // xóa phần dư - ở cuối
     str = str.replace(/-+$/g, '');
-
-    // return
-    return str;
+    if (str === ''){
+      // return
+      return encodeURI(string);
+    } else return str;
   }
   // Convert Date Post
   function convertDatePost (date: string){
