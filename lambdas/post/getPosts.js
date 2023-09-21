@@ -39,7 +39,8 @@ export const getPost = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     await connectToDatabase();
     try{
-        const slug = event.pathParameters.slug
+        const slug = event.pathParameters.slug;
+        console.log(slug);
 
         const post = await Post.findOne({ slug });
 
