@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { FetchedPost } from '@/types/Posts.type'
 import PostThumbnail from '../PostThumbnail/PostThumbnail'
 import { useAppSelector } from '@/redux/hooks'
+import ScrollToTop from '../Button/ScrollToTop'
 
 const PostFeed: React.FC = () => {
 
@@ -88,6 +89,7 @@ const PostFeed: React.FC = () => {
           }
         </div>
       </InfiniteScroll>
+      <ScrollToTop/>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import styles from './Modal.module.css'
 
 export const Modal = ({ children }: { children: React.ReactNode }) => {
     const overlay = useRef(null);
-    const wrapper = useRef(null);
+    const button = useRef(null);
     const router = useRouter();
 
     const onDismiss = useCallback(() => {
@@ -13,10 +13,10 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
     }, [router])
 
     const onClick: React.MouseEventHandler = useCallback((e) => {
-        if (e.target === overlay.current || e.target === wrapper.current) {
+        if (e.target === overlay.current || e.target === button.current) {
             if (onDismiss) onDismiss()
         }
-    }, [onDismiss, overlay, wrapper])
+    }, [onDismiss, overlay, button])
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') onDismiss()
@@ -43,11 +43,6 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       className={styles.overlay}
       onClick={onClick}
     >
-      {/* <div
-        ref={wrapper}
-        className={styles.overlayWrapper}
-      >
-      </div> */}
         {children}
     </div>
   )

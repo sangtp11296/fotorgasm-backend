@@ -1,9 +1,12 @@
+
 /* Standard Post Page Formart*/
 .standardPost{
     display: flex;
     flex-direction: row-reverse;
     width: 70%;
-    margin: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
 }
 .standardPost .postCover{
     display: flex;
@@ -183,10 +186,11 @@
     overflow-y: hidden;
     overflow-x: auto;
     position: absolute;
-    top: 5vh;
+    top: 50%;
+    transform: translateY(-50%);
     left: 0;
     width: 100vw;
-    height: 90vh;
+    height: 85vh;
 }
 .landscapePost::-webkit-scrollbar-track{
     background-color: transparent;
@@ -233,13 +237,14 @@
 .firstIntro{
     margin-top: auto;
     align-self: flex-end;
-    width: 400px;
     font-family: 'Neue Helvetica';
     font-size: 20px;
     text-align: right;
     color: var(--on-surface);
 }
-
+.landscapePost .firstIntro{
+    width: 400px;
+}
 .landscapePost .postCover{
     margin-left: 70px;
 }
@@ -263,10 +268,11 @@
     overflow-y: hidden;
     overflow-x: auto;
     position: fixed;
-    top: 5vh;
+    top: 50%;
+    transform: translateY(-50%);
     left: 0;
     width: 100vw;
-    height: 90vh;
+    height: 85vh;
 }
 .squarePost::-webkit-scrollbar-track{
     background-color: transparent;
@@ -276,8 +282,7 @@
     display: flex;
     flex-direction: row;
     background-color: var(--surface-02);
-    padding-bottom: 0;
-    margin-bottom: 0;
+    width: max-content;
 }
 .squarePost .postArticle{
     display: flex;
@@ -298,106 +303,36 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    padding: 15vh 70px 8vh;
+    padding: 15vh 105px 8vh 0px;
 }
 .squarePost .catAndTitle{
-    margin-top: 5vh;
+    margin-left: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 40vw;
+    justify-content: flex-end;
+    width: 600px;
 }
 .squarePost .postCat{
-    width: 100%;
     letter-spacing: 2px;
     margin-bottom: 10px;
-    /* margin-top: 300px; */
 }
 .squarePost .postCat a{
     color: var(--primary);
-    font-family: 'Neue Helvetica';
     font-weight: 500;
     font-size: 16px;
 }
 .squarePost .postTitle{
-    width: 100%;
-}
-.squarePost .postTitle a{
-    width: 100%;
+    width: inherit;
 }
 .squarePost .firstIntro{
-    width: 75%;
-    justify-content: flex-end;
-    align-self: flex-start;
+    width: 100%;    
     margin-top: 0;
-    height: 45%;
+    align-self: flex-start;
+    text-align: left;
 }
 .squarePost .postTextContainer{
     width: 100%;
     display: flex;
     flex-direction: row;
     height: 100%;
-}
-.squarePost .postText{
-    display: flex;
-    flex-direction: row;
-    margin-left: 70px;
-    height: 100%;
-    /* overflow: hidden; */
-}
-.squarePost .postText .postSection{
-    width: 379.5px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Neue Helvetica';
-    font-size: 15px;
-    word-spacing: 1px;
-    text-align: justify;
-    color: var(--on-surface);
-    margin-right: 70px;
-    /* overflow: hidden; */
-}
-.squarePost h1{
-    margin-bottom: 15px;
-}
-.squarePost .postText p:last-child{
-    margin-bottom: 0;
-}
-.squarePost .postImage{
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-right: 70px;
-    gap: 50px;
-}
-.squarePost .childImage{
-    position: relative;
-    margin-bottom: 20px;
-    max-height: 64vh;
-}
-.squarePost .postImage img{
-    max-width: 600px;
-    height: auto;
-    margin-bottom: 5px;
-    max-height: 63vh;
-}
-.squarePost .postImage figcaption{
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface);
-    text-align: left;
-}
-.squarePost .postImage span{
-    letter-spacing: 1px;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--on-surface);
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    transform: rotate(-90deg) translateX(55px) translateY(-50px);
 }

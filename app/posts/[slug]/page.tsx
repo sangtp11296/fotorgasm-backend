@@ -15,7 +15,10 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   const slug = params.slug
   // fetch data post
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
-    method: "GET"
+    method: "GET",
+    next: {
+      revalidate: 600
+    }
   })
   const data = await res.json();
   const post: FetchedPost = data.post;
@@ -38,7 +41,10 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
   
   // Get Post and Cover
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
-    method: "GET"
+    method: "GET",
+    next: {
+      revalidate: 600
+    }
   })
   const data = await res.json();
   const post: FetchedPost = data.post;

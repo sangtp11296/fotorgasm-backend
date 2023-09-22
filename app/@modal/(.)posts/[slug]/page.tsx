@@ -16,7 +16,10 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
  
   // fetch data post
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
-    method: "GET"
+    method: "GET",
+    next: {
+      revalidate: 600
+    }
   })
   const data = await res.json();
   const post: FetchedPost = data.post;
@@ -37,7 +40,10 @@ export default async function PostModal ({ params }: { params: { slug: string } 
   const slug = params.slug;
   // Get Post and Cover
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
-      method: "GET"
+      method: "GET",
+      next: {
+        revalidate: 600
+      }
     })
   const data = await res.json();
   const post: FetchedPost = data.post;

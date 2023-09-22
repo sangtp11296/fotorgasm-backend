@@ -1,0 +1,117 @@
+.button{
+    background-color: transparent;
+    cursor: pointer;
+}
+/* Backward Button */
+.backButton{
+    position: fixed;
+    top: 15px;
+    left: 150px;
+}
+/* Scroll to Top Button */
+.scrollToTop{
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+.scrollToTop.visible{
+    visibility: visible;
+    opacity: 1;
+    transition: all .2s;
+}
+
+/* Next vs Prev Post Button */
+.prev{
+    background: linear-gradient(90deg, rgba(255,255,255,0.2049194677871149) 0%, rgba(255,255,255,0) 100%);  
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    left: 0;
+}
+.next{
+    background: linear-gradient(270deg, rgba(255,255,255,0.2049194677871149) 0%, rgba(255,255,255,0) 100%);
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    right: 0;
+}
+.nextPrev{
+    width: 100px;
+    height: 100%;
+    opacity: 0;
+    transition: all .3s;
+}
+.nextPrev:hover{
+    opacity: 1;
+    transition: all .3s;
+}
+
+/* Scroll To Head and Tail */
+.scrollHead{
+    z-index: 1;
+    position: fixed;
+    bottom: 15px;
+    left: 45%;
+    transform: translateX(-40%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+.scrollTail{
+    z-index: 1;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    right: 45%;
+    transform: translateX(-40%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+.scrollHead.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all .2s;
+}
+.scrollTail.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all .2s;
+}
+
+/* Scroll To Top and Bottom */
+.scrollTop{
+    z-index: 1;
+    position: fixed;
+    right: 11vw;
+    top: 45%;
+    transform: translateY(-45%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+.scrollBottom{
+    z-index: 1;
+    position: fixed;
+    right: 11vw;
+    bottom: 45%;
+    transform: translateY(-45%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+.scrollTop.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all .2s;
+}
+.scrollBottom.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all .2s;
+}
