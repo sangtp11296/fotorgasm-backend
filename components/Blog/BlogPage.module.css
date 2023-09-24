@@ -1,12 +1,20 @@
 
 /* Standard Post Page Formart*/
 .standardPost{
-    display: flex;
-    flex-direction: row-reverse;
     width: 70%;
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
+    height: 100vh;
+    overflow: auto;
+}
+.standardPost::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+.standardPost .postContainer{
+    display: flex;
+    flex-direction: row-reverse;
+    height: max-content;
 }
 .standardPost .postCover{
     display: flex;

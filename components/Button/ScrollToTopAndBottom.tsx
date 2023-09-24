@@ -12,38 +12,42 @@ export const ScrollToTopAndBottom: React.FC<Props> = ({ content }) => {
     useEffect(() => {
         const handleScroll = () => {
             if(content.current){
-                console.log(window.scrollY)
-                console.log(content.current.scrollTop)
-                if(window.scrollY > 200){
+                const maxScrollTop = content.current.scrollHeight - content.current.clientHeight;
+                if(content.current.scrollTop > 200){
                     setIsTop(true);
                 } else setIsTop(false);
-                if(window.scrollY >= (content.current.scrollHeight - 200)){
+                if(content.current.scrollTop < (maxScrollTop - 200)){
                     setIsBottom(true);
                 } else setIsBottom(false);
             }
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('wheel', handleScroll);
         handleScroll();
         // Clean up the event listener on component unmount
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('wheel', handleScroll);
         };
     }, []);
 
     const scrollToTop = () => {
         if (content.current){
-            window.scrollTo({
+            content.current.scrollTo({
                 top: 0,
                 behavior: 'smooth', // Smooth scrolling animation
             });
+            setIsTop(false);
+            setIsBottom(true);
         }
     };
     const scrollToBottom = () => {
         if (content.current){
+            const maxScrollTop = content.current.scrollHeight - content.current.clientHeight;
             content.current.scrollTo({
-                top: content.current.scrollHeight,
+                top: maxScrollTop,
                 behavior: 'smooth', // Smooth scrolling animation
             });
+            setIsTop(true);
+            setIsBottom(false);
         }
     };
   return (

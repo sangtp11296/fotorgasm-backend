@@ -38,6 +38,8 @@
     align-items: center;
     flex-direction: column;
     align-self: flex-end;
+    margin-bottom: 45px;
+
 }
 .standard .imageWrapper.row{
     gap: 25px;
@@ -55,25 +57,26 @@
     width: auto;
 }
 .image figcaption{
+    position: absolute;
+    width: min-content;
+    min-width: 100%;
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 20px;
     font-size: 16px;
     font-style: italic;
     color: var(--on-surface);
     opacity: .7;
 }
-.imageWrapper.row .photographer{
-    left: -9%;
-}
 .image .photographer{
-    position: absolute;
-    margin-bottom: 0;
+    margin: 0;
     bottom: 0;
-    left: -6%;
-    transform: rotate(-90deg) translateY(-100%) translateX(96%);
+    left: 0;
+    transform: rotate(-90deg) translateX(10px) translateY(-5px);
+    transform-origin: bottom left;
     letter-spacing: 1px;
     opacity: .5;
+    width: unset !important;
+    min-width: unset !important;
 }
 .photographer a{
     color: var(--on-surface);
@@ -106,8 +109,4 @@
 .landscape .image{
     position: relative;
     height: 100%;
-}
-.landscape .photographer{
-    bottom: -5%;
-    left: -35px;
 }

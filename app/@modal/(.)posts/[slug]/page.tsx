@@ -60,7 +60,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
   const coverUrl = cover.presignedUrl;
   
   return (
-    <Modal>
+    <Modal params={params}>
         {
           ( post && coverUrl) && <BlogPage post={post} cover={coverUrl}/>
         }

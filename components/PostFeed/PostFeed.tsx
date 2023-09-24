@@ -6,8 +6,9 @@ import { getPosts } from '@/utils/getPosts'
 import Link from 'next/link'
 import { FetchedPost } from '@/types/Posts.type'
 import PostThumbnail from '../PostThumbnail/PostThumbnail'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import ScrollToTop from '../Button/ScrollToTop'
+import { updateFetchedPost } from '@/redux/post/fetchPosts.slice'
 
 const PostFeed: React.FC = () => {
 
@@ -15,12 +16,14 @@ const PostFeed: React.FC = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(2)
 
+  const dispatch = useAppDispatch();
   const menu = useAppSelector(state => state.click.mainMenu);
 
   // Get first time loading posts
   const handleGetPosts = async (page: number) => {
     const res = getPosts(page, 5);
     setPosts((await res).posts);
+    dispatch(updateFetchedPost((await res).posts))
   }
 
   useEffect(() => {
@@ -34,6 +37,7 @@ const PostFeed: React.FC = () => {
       const posts = (await res).posts;
       if (posts.length > 0){
         setPosts((prevPhotos) => [...prevPhotos, ...posts]);
+        dispatch(updateFetchedPost(posts));
         setPage((prevPage) => prevPage + 1)
       } else {
         setHasMore(false);

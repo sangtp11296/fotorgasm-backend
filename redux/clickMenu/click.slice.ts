@@ -2,7 +2,7 @@ import { DraftPost } from "@/types/Posts.type";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    mainMenu: 'all'
+    mainMenu: 'all',
 }
 
 const clickSlice = createSlice({
@@ -11,7 +11,7 @@ const clickSlice = createSlice({
     reducers: {
         updateMainMenu: (state, action: PayloadAction<string>) => {
             state.mainMenu = action.payload
-        },
+        }
     }
 })
 

@@ -7,7 +7,7 @@ export const BackButton = () => {
     const router = useRouter();
 
     const onDismiss = useCallback(() => {
-        router.back();
+        router.push('/');
     }, [router])
   return (
     <button onClick={onDismiss}

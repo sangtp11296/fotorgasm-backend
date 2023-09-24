@@ -10,12 +10,22 @@
 }
 /* Scroll to Top Button */
 .scrollToTop{
+    background-color: var(--surface-08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
     position: fixed;
     bottom: 15px;
-    right: 15px;
+    right: 15%;
     opacity: 0;
     visibility: hidden;
     transition: all .2s;
+}
+.scrollToTop:hover{
+    background-color: var(--surface-16);
 }
 .scrollToTop.visible{
     visibility: visible;
@@ -25,7 +35,7 @@
 
 /* Next vs Prev Post Button */
 .prev{
-    background: linear-gradient(90deg, rgba(255,255,255,0.2049194677871149) 0%, rgba(255,255,255,0) 100%);  
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.116) 0%, rgba(255,255,255,0) 100%);  
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
@@ -33,7 +43,7 @@
     left: 0;
 }
 .next{
-    background: linear-gradient(270deg, rgba(255,255,255,0.2049194677871149) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(270deg, rgba(255,255,255,0.116) 0%, rgba(255,255,255,0) 100%);
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
@@ -41,6 +51,9 @@
     right: 0;
 }
 .nextPrev{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100px;
     height: 100%;
     opacity: 0;
@@ -89,8 +102,8 @@
     z-index: 1;
     position: fixed;
     right: 11vw;
-    top: 45%;
-    transform: translateY(-45%);
+    top: 40%;
+    transform: translateY(-40%);
     opacity: 0;
     visibility: hidden;
     transition: all .2s;
@@ -99,8 +112,8 @@
     z-index: 1;
     position: fixed;
     right: 11vw;
-    bottom: 45%;
-    transform: translateY(-45%);
+    bottom: 40%;
+    transform: translateY(-40%);
     opacity: 0;
     visibility: hidden;
     transition: all .2s;

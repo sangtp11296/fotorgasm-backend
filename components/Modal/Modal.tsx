@@ -1,15 +1,26 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './Modal.module.css'
+import { useAppSelector } from '@/redux/hooks'
+import { NextPrevPost } from '../Button/NextPrevPost'
+import { usePathname } from "next/navigation";
 
-export const Modal = ({ children }: { children: React.ReactNode }) => {
+type Props = {
+    params: { slug: string }
+    children: React.ReactNode
+  }
+export const Modal: React.FC<Props> = ({ children, params }) => {
+    const pathname = usePathname();
     const overlay = useRef(null);
     const button = useRef(null);
     const router = useRouter();
+    const slugs = useAppSelector(state => state.fetchedPost.slugs);
+    const [nextPost, setNextPost] = useState('');
+    const [prevPost, setPrevPost] = useState('');
 
     const onDismiss = useCallback(() => {
-        router.back()
+        router.push('/')
     }, [router])
 
     const onClick: React.MouseEventHandler = useCallback((e) => {
@@ -36,13 +47,32 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
             document.body.classList.remove('no-scroll');
         }
     }, []);
+    useEffect(() => {
+        if(params.slug){
+            const slug = params.slug;
+            const ind = slugs.indexOf(slug);
+            if(slugs[ind + 1]){
+                setNextPost(slugs[ind + 1]);
+            }
+            if(slugs[ind - 1]){
+                setPrevPost(slugs[ind - 1]);
+            }
+        }
+    },[])
 
+    // Decide whether on or off modal when using next, prev function
+    const setModal = pathname.includes('/posts/');
+    if (!setModal) {
+        document.body.classList.remove('no-scroll');
+        return null;
+    } 
   return (
     <div
       ref={overlay}
       className={styles.overlay}
       onClick={onClick}
     >
+        <NextPrevPost next={nextPost} prev={prevPost}/>
         {children}
     </div>
   )
