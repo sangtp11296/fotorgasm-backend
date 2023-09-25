@@ -28,6 +28,18 @@ export const SkeletonLoading = () => {
                 </div>
             </div>
         </div>
+        <div className={`${styles.skeletonItem} ${styles.landscape}`}>
+            <div className={styles.skeletonInfo}>
+                <div className={`${styles.skeletonCat}`}>
+                    <div className={styles.skeletonCatImage}></div>
+                    <span></span>
+                </div>
+                <div className={styles.skeletonTitle}>
+                </div>
+                <div className={styles.skeletonDesc}>
+                </div>
+            </div>
+        </div>
         <div className={`${styles.skeletonItem} ${styles.square}`}>
             <div className={styles.skeletonInfo}>
                 <div className={`${styles.skeletonCat}`}>

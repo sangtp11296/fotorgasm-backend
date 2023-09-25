@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import ScrollToTop from '../Button/ScrollToTop'
 import { updateFetchedPost } from '@/redux/post/fetchPosts.slice'
 import { SkeletonLoading } from '../SkeletonLoading/SkeletonLoading'
+import { Quotes } from '../Quotes/Quotes'
 
 const PostFeed: React.FC = () => {
 
@@ -68,7 +69,7 @@ const PostFeed: React.FC = () => {
         next={getMorePhotos}
         hasMore={hasMore}
         loader={<></>}
-        endMessage={<></>}
+        endMessage={<Quotes></Quotes>}
         style={{ overflow: 'hidden' }}
         scrollThreshold={0.9}
       >
@@ -95,6 +96,7 @@ const PostFeed: React.FC = () => {
           {
             hasMore && <SkeletonLoading/>
           }
+
         </div>
       </InfiniteScroll>
       <ScrollToTop/>
