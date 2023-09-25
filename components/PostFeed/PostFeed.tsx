@@ -9,6 +9,7 @@ import PostThumbnail from '../PostThumbnail/PostThumbnail'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import ScrollToTop from '../Button/ScrollToTop'
 import { updateFetchedPost } from '@/redux/post/fetchPosts.slice'
+import { SkeletonLoading } from '../SkeletonLoading/SkeletonLoading'
 
 const PostFeed: React.FC = () => {
 
@@ -66,8 +67,8 @@ const PostFeed: React.FC = () => {
         dataLength={posts.length}
         next={getMorePhotos}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={<h4>Nothing more to show</h4>}
+        loader={<></>}
+        endMessage={<></>}
         style={{ overflow: 'hidden' }}
         scrollThreshold={0.9}
       >
@@ -90,6 +91,9 @@ const PostFeed: React.FC = () => {
                 )
               }
             })
+          }
+          {
+            hasMore && <SkeletonLoading/>
           }
         </div>
       </InfiniteScroll>
