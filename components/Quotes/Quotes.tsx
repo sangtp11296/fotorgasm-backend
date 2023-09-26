@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Quotes.module.css'
+// import styles from './Quotes.module.css'
 
 export const Quotes = async () => {
   // Fetch Quotes
@@ -7,7 +7,6 @@ export const Quotes = async () => {
     method: "GET"
   })
   const data = await res.json()
-  console.log(data)
   return (
     <div className={styles.quotes}>
         
