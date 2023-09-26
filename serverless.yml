@@ -200,6 +200,15 @@ functions:
           path: complete-multipart-upload # path will be domain.name.com/dev/posts
           method: post
           cors: true
+  createQuote:
+    handler: lambdas/quotes.createQuote
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: quotes # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
 
 
 resources:
