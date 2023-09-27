@@ -40,3 +40,22 @@ export const createQuote = async (event, context, callback) => {
         })
     }
 };
+
+export const getQuote = async (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+  await connectToDatabase();
+    try {
+        const randomQuote = await Quote.aggregate([{ $sample: { size: 1 } }]).exec();
+        console.log('Quote is randomly picked successfully.');
+        return Responses._200 ({
+            quote: randomQuote[0]
+        })
+    } catch (error) {
+        console.error('Error getting quote:', error);
+        return Responses._500 ({
+            message: 'Error getting post', 
+            error: error.message 
+        })
+    }
+};
+
