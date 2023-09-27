@@ -1,0 +1,135 @@
+.quotes{
+    color: var(--on-background-matte);
+    margin-top: 100px;
+    max-width: 60%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .8s;
+}
+.quotes.visible{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0%);
+}
+.quotes h3{
+    font-size: 16px;
+    word-spacing: 2px;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+.quoteForm{
+    margin-bottom: 50px;
+    justify-content: center;
+    display: flex;
+    gap: 10px;
+    width: 90%;
+    align-self: center;
+}
+.quoteForm svg:last-child{
+    align-self: flex-end;
+}
+.quote{
+    font-weight: 300;
+    text-align: left;
+    font-size: 23px;
+    line-height: 30px;
+    word-spacing: 1.5px;
+}
+.authorForm{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 60%;
+    align-self: flex-end;
+}
+.author{
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--on-background-matte);
+    align-self: flex-end;
+}
+.quotes hr{
+    background-color: var(--on-background-matte);
+    height: 1px;
+    flex-grow: 1;
+    align-self: flex-end;
+}
+
+@media screen and (max-width: 1000px) {
+    .quotes{
+        margin-top: 80px;
+    }
+    .quotes h3{
+        font-size: 15px;
+    }
+    .quoteForm{
+        margin-bottom: 40px;
+    }
+    .quote{
+        font-size: 20px;
+    }
+    .author{
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .quotes{
+        margin-top: 50px;
+    }
+    .quotes h3{
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    .quoteForm{
+        margin-bottom: 25px;
+    }
+    .quote{
+        font-size: 16px;
+    }
+    .author{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 550px) {
+    .quotes{
+        margin-top: 40px;
+    }
+    .quotes h3{
+        font-size: 10px;
+        margin-bottom: 20px;
+    }
+    .quoteForm{
+        margin-bottom: 25px;
+    }
+    .quote{
+        font-size: 14px;
+    }
+    .author{
+        font-size: 12px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .quotes{
+        margin-top: 30px;
+    }
+    .quotes h3{
+        font-size: 9px;
+        margin-bottom: 18px;
+    }
+    .quoteForm{
+        margin-bottom: 18px;
+    }
+    .quote{
+        font-size: 12px;
+    }
+    .author{
+        font-size: 10px;
+    }
+}

@@ -69,7 +69,6 @@ const PostFeed: React.FC = () => {
         next={getMorePhotos}
         hasMore={hasMore}
         loader={<></>}
-        endMessage={<Quotes></Quotes>}
         style={{ overflow: 'hidden' }}
         scrollThreshold={0.9}
       >
@@ -96,9 +95,9 @@ const PostFeed: React.FC = () => {
           {
             hasMore && <SkeletonLoading/>
           }
-
         </div>
       </InfiniteScroll>
+      <Quotes invisible={!hasMore}/>
       <ScrollToTop/>
     </div>
   )

@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import styles from './MenuContainer.module.css'
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
 
