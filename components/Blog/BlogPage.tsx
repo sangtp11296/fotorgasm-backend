@@ -16,7 +16,7 @@ interface Props {
 
 export const BlogPage: React.FC<Props> = ({ post, cover }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const standardPost = useRef<HTMLDivElement | null>(null);
+  const portraitPost = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const container = containerRef.current;
     let scrollWidth: number | undefined;
@@ -67,11 +67,11 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
     <BackButton/>
     
       {
-        // Standard Post Format
+        // Portrait Post Format
         (post.coverRes.height > post.coverRes.width) ?
         <>
-          <ScrollToTopAndBottom content={standardPost}/>
-          <div className={styles.standardPost} ref={standardPost}>
+          <ScrollToTopAndBottom content={portraitPost}/>
+          <div className={styles.portraitPost} ref={portraitPost}>
             <div className={styles.postContainer}>
               <div className={`${styles.postCover}`}>
                   <img className={`${styles.coverImage}`} src={cover} alt={post?.title} />
@@ -88,7 +88,7 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
                     <div className={`${styles.postTextContainer}`}>
                       {
                         post.content && 
-                        <div className='postText standard' dangerouslySetInnerHTML={{__html:post.content}}>
+                        <div className='postText portrait' dangerouslySetInnerHTML={{__html:post.content}}>
                         </div>
                       }
                       <div className={styles.postInfoContainer}>

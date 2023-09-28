@@ -1,6 +1,6 @@
 
-/* Standard Post Page Formart*/
-.standardPost{
+/* Portrait Post Page Formart*/
+.portraitPost{
     width: 70%;
     left: 50%;
     transform: translateX(-50%);
@@ -8,15 +8,15 @@
     height: 100vh;
     overflow: auto;
 }
-.standardPost::-webkit-scrollbar-track{
+.portraitPost::-webkit-scrollbar-track{
     background-color: transparent;
 }
-.standardPost .postContainer{
+.portraitPost .postContainer{
     display: flex;
     flex-direction: row-reverse;
     height: max-content;
 }
-.standardPost .postCover{
+.portraitPost .postCover{
     display: flex;
     justify-content: center;
     max-width: 400px;
@@ -24,21 +24,21 @@
     flex: 0 0 30%;
     background-color: var(--surface-02);
 }
-.standardPost .coverImage{
+.portraitPost .coverImage{
     /* width: 100%; */
     object-fit: cover;
     height: 900px;
     border-radius: 0%;
 }
 
-.standardPost .fullTextContainer{
+.portraitPost .fullTextContainer{
     height: 100%;
     overflow: hidden;
     background-color: var(--surface-02);
     padding-bottom: 0;
     margin-bottom: 0;
 }
-.standardPost .postArticle{
+.portraitPost .postArticle{
     display: block;
     box-shadow: none;
     background-color: inherit;
@@ -47,38 +47,36 @@
     margin-left: auto;
     margin-right: auto;
 }
-.standardPost .postContent{
+.portraitPost .postContent{
     padding: 34px 55px 12px;
 }
-.standardPost .postCat{
+.portraitPost .postCat{
     margin-top: 150px;
     margin-bottom: 20px;
     /* text-transform: uppercase; */
     letter-spacing: 2px;
     width: fit-content;
-}
-.standardPost .postCat a{
-    color: var(--primary);
-    font-family: 'Neue Helvetica';
-    font-weight: 700;
     font-size: 15px;
 }
+.portraitPost .postCat a{
+    font-weight: 700;
+    color: var(--primary);
+}
 
-.standardPost .postTitle{
+.portraitPost .postTitle{
     margin-bottom: 60px;
 }
 .postTitle h1{
     display: block;
     line-height: 120%;
     text-transform: uppercase;
-    font-family: 'Neue Helvetica';
     font-weight: 500;
     font-size: 60px;
     text-decoration: none;
     color: var(--on-surface);
     width: 85%;
 }
-.standardPost .postTextContainer{
+.portraitPost .postTextContainer{
     width: 100%;
     display: flex;
     align-items: flex-end;
@@ -232,11 +230,11 @@
 .landscapePost .postCat{
     letter-spacing: 2px;
     margin-bottom: 10px;
+    font-size: 16px;
 }
 .landscapePost .postCat a{
     color: var(--primary);
     font-weight: 500;
-    font-size: 16px;
 }
 .landscapePost .postTitle h1{
     font-size: 70px;
@@ -249,6 +247,7 @@
     font-size: 20px;
     text-align: right;
     color: var(--on-surface);
+    line-height: 2rem;
 }
 .landscapePost .firstIntro{
     width: 400px;
@@ -323,14 +322,15 @@
 .squarePost .postCat{
     letter-spacing: 2px;
     margin-bottom: 10px;
+    font-size: 16px;
 }
 .squarePost .postCat a{
     color: var(--primary);
     font-weight: 500;
-    font-size: 16px;
 }
 .squarePost .postTitle{
     width: inherit;
+    margin-bottom: 10px;
 }
 .squarePost .firstIntro{
     width: 100%;    
@@ -343,4 +343,57 @@
     display: flex;
     flex-direction: row;
     height: 100%;
+}
+
+@media screen and (max-width: 1700px) {
+    .portraitPost h1{
+        font-size: 3vw;
+        line-height: 100%;
+    }
+    .portraitPost .postTitle{
+        margin-bottom: 40px;
+    }
+    .portraitPost .postCat{
+        font-size: .9vw;
+    }
+    .portraitPost .postCover{
+        flex: 0 0 25%;
+    }
+    .portraitPost .coverImage{
+        height: 50vw;
+    }
+}
+@media screen and (max-height: 1080px) {
+    .catAndTitle{
+        width: 90vh !important;
+    }
+    .landscapePost .postTitle h1{
+        width: 90vh !important;
+        font-size: 7vh;
+    }
+    .landscapePost .postCat{
+        font-size: 1.6vh;
+    }
+    .firstIntro{
+        font-size: 1.8vh;
+        line-height: 1.5rem;
+        width: 45vh !important;
+    }
+}
+@media screen and (max-height: 1080px) {
+    .catAndTitle{
+        width: 80vh !important;
+    }
+    .squarePost .postTitle h1{
+        width: 80vh !important;
+        font-size: 7vh;
+    }
+    .squarePost .postCat{
+        font-size: 1.6vh;
+    }
+    .firstIntro{
+        font-size: 1.8vh;
+        line-height: 1.5rem;
+        width: 45vh !important;
+    }
 }

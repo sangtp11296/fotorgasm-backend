@@ -17,7 +17,7 @@
     line-height: 2rem;
 }
 
-.standard.postText{
+.portrait.postText{
     font-family: 'Neue Helvetica';
     /* text-align: justify; */
     color: var(--on-surface);
@@ -26,11 +26,11 @@
     display: flex;
     flex-direction: column;
 }
-.standard .p{
+.portrait .p{
     width: 55%;
     margin-left: auto !important;
 }
-.standard .imageWrapper{
+.portrait .imageWrapper{
     width: 70%;
     position: relative;
     display: flex;
@@ -41,7 +41,7 @@
     margin-bottom: 45px;
 
 }
-.standard .imageWrapper.row{
+.portrait .imageWrapper.row{
     gap: 25px;
     width: 90%;
     flex-direction: row;
@@ -97,7 +97,6 @@
 }
 .landscape .p{
     width: 550px;
-    font-family: 'Neue Helvetica';
     font-size: 20px;
     color: var(--on-surface);
     margin-right: 70px;
@@ -109,4 +108,27 @@
 .landscape .image{
     position: relative;
     height: 100%;
+}
+.landscape .image img{
+    max-height: unset;
+}
+
+@media screen and (max-width: 1700px) {
+    .portrait .p{
+        font-size: .9vw;
+        line-height: 1.5rem;
+    }
+    .portrait figcaption{
+        font-size: .8vw;
+    }
+}
+@media screen and (max-height: 1080px) {
+    .landscape .p{
+        font-size: 1.8vh;
+        line-height: 1.5rem;
+        width: 45vh;
+    }
+    .landscape figcaption{
+        font-size: 1.6vh;
+    }
 }

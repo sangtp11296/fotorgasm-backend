@@ -88,3 +88,28 @@
         background-position: -200% 0;
     }
 }
+@media screen and (max-width: 1000px) {
+    .masonryContainer{
+        width: 700px;
+        grid-auto-rows: 68.88px;
+        grid-gap: 10px;
+    }
+    .landscape{
+        grid-column: span 3;
+        grid-row: span 3;
+    }
+}
+@media screen and (max-width: 550px) {
+    .portrait{
+        grid-column: span 4;
+        grid-row: span 7;
+    }
+    .square{
+        grid-column: span 4;
+        grid-row: span 4;
+    }
+    .landscape{
+        grid-column: span 4;
+        grid-row: span 4;
+    }
+}
