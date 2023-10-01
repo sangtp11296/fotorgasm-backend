@@ -10,6 +10,7 @@
     overflow: hidden;
 }
 .postCover{
+    position: absolute;
     display: flex;
     justify-content: center;
     height: 100%;
@@ -21,103 +22,117 @@
 .postOverlay{
     position: absolute;
     width: 100%;
-    height: 60%;
-    bottom: 0;
+    height: 40%;
+    bottom: 0%;
     transition: all .2s ease-in-out;
     background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(5,5,5,.8) 100%);
     opacity: .8;
+    border: none;
+}
+.postOverlay.active{
+    opacity: 1;
+    height: 80%;
 }
 .postInfo{
     z-index: 1;
-    bottom: 10px;
-    left: 0;
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
-    padding-left: 15px;
+    justify-content: flex-end;
+    padding-left: 1.5vh;
+    padding-bottom: 1.5vh;
     width: 85%;
-    height: 88px;
+    height: 100%;
+    /* height: min-content; */
 }
 .postCat{
     width: fit-content;
-    margin-bottom: 8px;
+    margin-bottom: .8vh;
     display: flex;
     align-items: center;
 }
 .postCat img{
     box-shadow: 0px 0px 2px 0px rgba(255, 255, 255, 0.153);
     border-radius: 100%;
+    height: 3vh;
+    width: 3vh;
 }
 .postCat span{
     padding-left: 5px;
     color: var(--on-background);
-    font-size: 12px;
+    font-size: 1vh;
     font-weight: 300;
     text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.285);
 }
 .postInfo .titlePost{
     width: 100%;
     display: block;
-    padding-bottom: 2px;
+    padding-bottom: .4vh;
 }
-.postInfo .titlePost h2{
+.postInfo .titlePost h1{
     text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.285);
     color: var(--on-background);
-    font-size: 13px;
+    font-size: 1.2vh;
     font-weight: 500;
 }
 .postDesc{
     color: var(--on-background-matte);
-    font-size: 13px;
+    font-size: 1.1vh;
     font-weight: 300;
     /* white-space: nowrap; */
+    transition: max-height .4s, overflow .4s; /* wait for content scroll to top */
     overflow: hidden;
+}
+.postDesc::-webkit-scrollbar{
+    display: none;
+}
+.postDesc.deactive{
     text-overflow: ellipsis;
-    
     -webkit-box-orient: vertical;
     display: -webkit-box;
-}
-.postDesc{
-    height: 35px;
     -webkit-line-clamp: 2;
+    max-height: 35px
+}
+.postDesc.active{
+    transition: max-height .4s, overflow .4s;
+    max-height: 45%;
+    overflow: auto;
 }
 .postSocial{
     display: flex;
     position: absolute;
     flex-direction: column;
-    right: 10px;
-    bottom: 10px;
-    width: 20px;
+    right: 1.5vh;
+    bottom: 1.5vh;
+    width: 2vh;
     justify-content: center;
     align-items: center;
-}
-.postSocial span{
     color: var(--on-background);
-    font-size: 10px;
+    font-size: 1.5vh;
+    font-weight: 300;
+    gap: .7vh;
+}
+.postSocial button{
+    margin-bottom: .5vh;
+}
+.postSocial button svg{
+    height: 2vh;
 }
 .postSocial button,.iconContainer{
-    height: 20px;
-    margin-top: 5px;
-    margin-bottom: 3px;
+    cursor: pointer;
+    height: 2vh;
     background-color: transparent;
 }
-.postSocial .iconContainer{
-    margin-bottom: 0;
-    margin-top: 13px;
-}
-.postSocial button:hover svg path{
+/* .postSocial button:hover svg path{
     transition: all .1s;
     fill: rgba(72,149,239,1);
     stroke: rgba(72,149,239,1);
-}
-.postSocial button svg{
-    cursor: pointer;
-    height: 20px;
-}
+} */
+
 .postSocial button svg path{
     transition: all .1s;
-    fill: none
+    /* fill: none */
 }
 .iconContainer svg{
-    height: 20px;
+    height: 2vh;
 }

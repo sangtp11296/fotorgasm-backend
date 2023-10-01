@@ -1,5 +1,6 @@
+'use client'
 import { FetchedPost } from '@/types/Posts.type'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BackButton } from '../Button/BackButton';
 import styles from './VideoPage.module.css'
 import Image from 'next/image';
@@ -10,6 +11,22 @@ type Props = {
     coverUrl: string
 }
 export const VideoPage: React.FC<Props> = ({post, videoUrl, coverUrl} ) => {
+
+    // Toggle Description
+    const [descActive, setDescActive] = useState(false);
+    const handleToggleDesc = () => {
+        setDescActive(!descActive);
+    }
+    useEffect(() => {
+        if(!descActive) {
+            // Scroll the description to the top when becoming deactive
+            const postDesc = document.getElementById('postDesc');
+            if (postDesc) {
+                console.log(postDesc)
+                postDesc.scrollTop = 0;
+            }
+        }
+    }, [descActive])
   return (
     <>
     <BackButton/>
@@ -17,41 +34,37 @@ export const VideoPage: React.FC<Props> = ({post, videoUrl, coverUrl} ) => {
         post.coverRes.height > post.coverRes.width && 
         <div className={styles.portraitPost}>
             <div className={styles.postCover}>
-                <video className={styles.videoSrc} poster={coverUrl} muted autoPlay loop>
-                    {videoUrl.map((vid,ind) => {
+                <video className={styles.videoSrc} src={videoUrl[0]} poster={coverUrl} muted autoPlay loop>
+                    {/* {videoUrl.map((vid,ind) => {
                         return(
                         <source src={vid}  key={ind} type={`video/${post.videoSrc?.high.split('.').pop()}`}/>
                         )
                     })}
-                    Your browser does not support the video tag.
+                    Your browser does not support the video tag. */}
                 </video>
             </div>
-            <div className={`${styles.postOverlay}`}/>
+            <div className={`${styles.postOverlay} ${descActive && styles.active}`}/>
             <div className={styles.postInfo}>
                 <div className={`${styles.postCat}`}>
                     <Image alt={`on ${post.category}`} src={`/assets/images/on ${post.category}.png`} height={25} width={25}/>
                     <span>on {post.category}</span>
                 </div>
                 <div className={styles.titlePost}>
-                    <h2>{post.title}</h2>
+                    <h1>{post.title}</h1>
                 </div>
-                <div className={styles.postDesc}>
+                <div onClick={handleToggleDesc} id='postDesc' className={`${styles.postDesc} ${!descActive ? styles.deactive : styles.active}`}>
                     {post.desc}
                 </div>
             </div>
             <div className={styles.postSocial}>
                 <button className={styles.button}>
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="var(--on-background)" strokeWidth="0.4"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 5.50063L11.4596 6.02073C11.463 6.02421 11.4664 6.02765 11.4698 6.03106L12 5.50063ZM8.96173 18.9109L8.49742 19.4999L8.96173 18.9109ZM15.0383 18.9109L14.574 18.3219L15.0383 18.9109ZM7.00061 16.4209C6.68078 16.1577 6.20813 16.2036 5.94491 16.5234C5.68169 16.8432 5.72758 17.3159 6.04741 17.5791L7.00061 16.4209ZM2.34199 13.4115C2.54074 13.7749 2.99647 13.9084 3.35988 13.7096C3.7233 13.5108 3.85677 13.0551 3.65801 12.6917L2.34199 13.4115ZM13.4698 8.03034C13.7627 8.32318 14.2376 8.32309 14.5304 8.03014C14.8233 7.7372 14.8232 7.26232 14.5302 6.96948L13.4698 8.03034ZM2.75 9.1371C2.75 6.98623 3.96537 5.18252 5.62436 4.42419C7.23607 3.68748 9.40166 3.88258 11.4596 6.02073L12.5404 4.98053C10.0985 2.44352 7.26409 2.02539 5.00076 3.05996C2.78471 4.07292 1.25 6.42503 1.25 9.1371H2.75ZM8.49742 19.4999C9.00965 19.9037 9.55955 20.3343 10.1168 20.6599C10.6739 20.9854 11.3096 21.25 12 21.25V19.75C11.6904 19.75 11.3261 19.6293 10.8736 19.3648C10.4213 19.1005 9.95208 18.7366 9.42605 18.3219L8.49742 19.4999ZM15.5026 19.4999C16.9292 18.3752 18.7528 17.0866 20.1833 15.4758C21.6395 13.8361 22.75 11.8026 22.75 9.1371H21.25C21.25 11.3345 20.3508 13.0282 19.0617 14.4798C17.7469 15.9603 16.0896 17.1271 14.574 18.3219L15.5026 19.4999ZM22.75 9.1371C22.75 6.42503 21.2153 4.07292 18.9992 3.05996C16.7359 2.02539 13.9015 2.44352 11.4596 4.98053L12.5404 6.02073C14.5983 3.88258 16.7639 3.68748 18.3756 4.42419C20.0346 5.18252 21.25 6.98623 21.25 9.1371H22.75ZM14.574 18.3219C14.0479 18.7366 13.5787 19.1005 13.1264 19.3648C12.6739 19.6293 12.3096 19.75 12 19.75V21.25C12.6904 21.25 13.3261 20.9854 13.8832 20.6599C14.4405 20.3343 14.9903 19.9037 15.5026 19.4999L14.574 18.3219ZM9.42605 18.3219C8.63014 17.6945 7.82129 17.0963 7.00061 16.4209L6.04741 17.5791C6.87768 18.2624 7.75472 18.9144 8.49742 19.4999L9.42605 18.3219ZM3.65801 12.6917C3.0968 11.6656 2.75 10.5033 2.75 9.1371H1.25C1.25 10.7746 1.66995 12.1827 2.34199 13.4115L3.65801 12.6917ZM11.4698 6.03106L13.4698 8.03034L14.5302 6.96948L12.5302 4.97021L11.4698 6.03106Z" fill="var(--on-background)"></path> </g></svg>
                 </button>
-                {post.likes}
+                {post.likes > 0 && post.likes}
                 <button className={styles.button}>
-                    <svg viewBox="0 0 24 24" id="Layer_1" post-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
-                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                    <path className="cls-1" d="M21.5,12A9.5,9.5,0,1,0,12,21.5h9.5l-2.66-2.92A9.43,9.43,0,0,0,21.5,12Z" fill='none' stroke='#fff' strokeMiterlimit={10} strokeWidth='1.2px'></path></g></svg>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 10.5H16" stroke="var(--on-background-matte)" strokeWidth="1.5" strokeLinecap="round"></path> <path d="M8 14H13.5" stroke="var(--on-background-matte)" strokeWidth="1.5" strokeLinecap="round"></path> <path d="M17 3.33782C15.5291 2.48697 13.8214 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22C17.5228 22 22 17.5228 22 12C22 10.1786 21.513 8.47087 20.6622 7" stroke="var(--on-background)" strokeWidth="2" strokeLinecap="round"></path> </g></svg>
                 </button>
-                {post.comments.length}
+                {post.comments.length > 0 && post.comments.length}
                 <button className={styles.button}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.5 3.5L3.5 9L10 12L17 7L12 14L15 20.5L20.5 3.5Z" strokeWidth='1.2' stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
                 </button>

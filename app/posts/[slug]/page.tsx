@@ -1,18 +1,20 @@
 
-import { BlogPage } from '@/components/Blog/BlogPage';
-import { FetchedPost } from '@/types/Posts.type';
 import React from 'react'
+import { Modal } from '@/components/Modal/Modal'
+import { FetchedPost } from '@/types/Posts.type';
+import { BlogPage } from '@/components/Blog/BlogPage';
 
 import type { Metadata, ResolvingMetadata } from 'next'
+import { VideoPage } from '@/components/Video/VideoPage';
  
 type Props = {
   params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }
  
-export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   // read route params
-  const slug = params.slug
+  const slug = params.slug;
+ 
   // fetch data post
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
     method: "GET",
@@ -34,35 +36,77 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     },
   }
 }
-
-const PostPage = async ({ params }: { params: { slug: string } }) => {
+export default async function PostModal ({ params }: { params: { slug: string } }){
   // read route params
   const slug = params.slug;
-  
   // Get Post and Cover
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
-    method: "GET",
-    next: {
-      revalidate: 600
-    }
-  })
+      method: "GET",
+      next: {
+        revalidate: 600
+      }
+    })
   const data = await res.json();
   const post: FetchedPost = data.post;
-  console.log(post)
-  const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
-      method: "POST",
-      body: JSON.stringify({
-        key: post.coverKey,
+  if (post.format === 'blog'){
+    const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+        method: "POST",
+        body: JSON.stringify({
+          key: post.coverKey,
       }),
       next: {
         revalidate: 600
       }
-  });
-  const cover = await fetchCover.json();
-  const coverUrl = cover.presignedUrl;
-  return (
-    ( post && coverUrl) && <BlogPage post={post} cover={coverUrl}/>
-  )
-}
+    });
+    const cover = await fetchCover.json();
+    const coverUrl = cover.presignedUrl;
+    return (
+      ( post && coverUrl) && <BlogPage post={post} cover={coverUrl}/>
+    )
+  }
+  if (post.format === 'video'){
+    const videoUrl = [];
+    const highVideo = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+        method: 'POST',
+        body: JSON.stringify({
+            key: post.videoSrc?.high,
+        })
+    })
+    const highData = await highVideo.json();
+    videoUrl.push(highData.presignedUrl);
 
-export default PostPage
+    const mediumVideo = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+        method: 'POST',
+        body: JSON.stringify({
+            key: post.videoSrc?.medium,
+        })
+    })
+    const mediumData = await mediumVideo.json();
+    videoUrl.push(mediumData.presignedUrl);
+
+    const lowVideo = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+        method: 'POST',
+        body: JSON.stringify({
+            key: post.videoSrc?.low,
+        })
+    })
+    const lowData = await lowVideo.json();
+    videoUrl.push(lowData.presignedUrl);
+    const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+        method: "POST",
+        body: JSON.stringify({
+          key: post.coverKey,
+      }),
+      next: {
+        revalidate: 600
+      }
+    });
+    const cover = await fetchCover.json();
+    const coverUrl = cover.presignedUrl;
+    return (
+      ( post && videoUrl) && <VideoPage post={post} videoUrl={videoUrl} coverUrl={coverUrl}/>
+    )
+  }
+  
+  
+}
