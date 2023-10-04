@@ -14,6 +14,7 @@
     display: flex;
     justify-content: center;
     height: 100%;
+    width: 100%;
 }
 .videoSrc{
     object-fit: cover;
@@ -27,7 +28,8 @@
     transition: all .2s ease-in-out;
     background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(5,5,5,.8) 100%);
     opacity: .8;
-    border: none;
+    margin: 0;
+    padding: 0;
 }
 .postOverlay.active{
     opacity: 1;
@@ -41,7 +43,7 @@
     justify-content: flex-end;
     padding-left: 1.5vh;
     padding-bottom: 1.5vh;
-    width: 85%;
+    width: 80%;
     height: 100%;
     /* height: min-content; */
 }
@@ -58,7 +60,7 @@
     width: 3vh;
 }
 .postCat span{
-    padding-left: 5px;
+    padding-left: .5vh;
     color: var(--on-background);
     font-size: 1vh;
     font-weight: 300;
@@ -95,16 +97,28 @@
 }
 .postDesc.active{
     transition: max-height .4s, overflow .4s;
-    max-height: 45%;
+    max-height: 35%;
     overflow: auto;
 }
+.postAuthor{
+    width: 3vh;
+    height: 3vh;
+    margin-top: 1.5vh;
+}
+.postAuthor img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 20%;
+    border: 1px solid var(--on-background);
+}
 .postSocial{
-    display: flex;
     position: absolute;
-    flex-direction: column;
     right: 1.5vh;
     bottom: 1.5vh;
-    width: 2vh;
+    display: flex;
+    flex-direction: column;
+    width: 2.5vh;
     justify-content: center;
     align-items: center;
     color: var(--on-background);
@@ -116,11 +130,11 @@
     margin-bottom: .5vh;
 }
 .postSocial button svg{
-    height: 2vh;
+    height: 2.5vh;
 }
 .postSocial button,.iconContainer{
     cursor: pointer;
-    height: 2vh;
+    height: 2.5vh;
     background-color: transparent;
 }
 /* .postSocial button:hover svg path{
@@ -134,5 +148,41 @@
     /* fill: none */
 }
 .iconContainer svg{
-    height: 2vh;
+    height: 2.5vh;
+}
+
+
+/* Landscape Post Format */
+.landscapePost{
+    position: fixed;
+    width: 65vw;
+    height: auto;
+    aspect-ratio: 16/9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1000px) {
+    .centerContainer{
+        width: 700px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .centerContainer{
+        width: 500px;
+    }
+}
+@media screen and (max-width: 550px) {
+    .centerContainer{
+        width: 400px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .centerContainer{
+        min-width: 340px;
+        width: 340px;
+    }
 }

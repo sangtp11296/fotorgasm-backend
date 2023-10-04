@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateContent, updateCoverKey, updateCoverRes, updateCoverThumbnail, updateDesc, updateFormat, updateId, updateSlug, updateStatus, updateTag, updateTitle } from '@/redux/post/draft.slice'
 import { FetchedPost, FinalPost } from '@/types/Posts.type'
 import { getPosts } from '@/utils/getPosts'
-import Slider from 'react-slick'
+import { getTeams } from '@/utils/getTeam'
+import { Teammate } from '@/types/User.type'
 
 // Define props
 interface Props {
@@ -41,6 +42,17 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
 
   const session = useSession();
   const user = session.data?.user;
+  // Fetch team members
+  const [members, setMembers] = useState<Teammate[]>([]);
+  const handleGetTeamMembers = async () => {
+      if (user?.team){
+          const members = getTeams(user.team);
+          setMembers((await members).teamMembers);
+      }
+  }
+  useEffect(() => {
+      handleGetTeamMembers();
+  },[])
 
   const handleTrigger = async () => {
     if (!addTrigger) {
@@ -315,7 +327,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
                   <select name='author' defaultValue={draft.author} placeholder='Author...' className={styles.textInput}  onChange={(e) => dispatch(updateAuthor(e.target.value))}>
                     <option value='' defaultValue='' className={styles.items}>Author...</option>
                     {
-                      user?.team.map((mem, ind) => {
+                      members.map((mem, ind) => {
                         return <option key={ind} value={mem.name} className={styles.items}>{mem.name}</option>
                       })
                     }

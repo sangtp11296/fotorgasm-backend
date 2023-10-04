@@ -23,6 +23,7 @@ const SignUp = () => {
                     const password = passRef.current.value;
                     const avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
                     const role = 'Project Admin';
+                    const team = `${username}-team`
 
                     const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/register', {
                         method: "POST",
@@ -34,7 +35,8 @@ const SignUp = () => {
                             username,
                             password,
                             avatar,
-                            role
+                            role,
+                            team
                         })
                     })
                     res.status === 200 && window.location.reload();

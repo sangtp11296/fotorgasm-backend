@@ -8,12 +8,7 @@ type User = {
     id: string;
     avatar: string;
     role: string;
-    team: {
-        name: string;
-        role: string[];
-        avatar: string;
-        _id: string;
-    }[];
+    team: string;
     name?: string | null | undefined;
     email?: string | null | undefined;
     image?: string | null | undefined;
