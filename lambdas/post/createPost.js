@@ -9,7 +9,6 @@ export const createPost = async (event, context, callback) => {
     await connectToDatabase();
     try {
         const data = JSON.parse(event.body);
-        console.log(data);
         // Create a new Post document
         const newPost = new Post({
             author: data.author,

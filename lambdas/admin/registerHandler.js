@@ -10,7 +10,7 @@ export const registerUser = async (event, context, callback) => {
   connectToDatabase();
   
     try{
-        const {email, username, password, avatar, role} = JSON.parse(event.body);
+        const {email, username, password, avatar, role, team} = JSON.parse(event.body);
         
         // Check if the user already exists
         const existingUser = await User.findOne({ username });
@@ -34,7 +34,8 @@ export const registerUser = async (event, context, callback) => {
             email,
             password: hashedPassword,
             avatar,
-            role
+            role,
+            team
         });
 
         return Responses._200({ message: 'User registered successfully'});

@@ -78,6 +78,25 @@ functions:
           method: put
           cors: true
   # Team member api
+
+  getMembers:
+    handler: lambdas/team/getMemberHandler.getMembers
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: team
+          method: get
+          cors: true
+  getAuthor:
+    handler: lambdas/team/getMemberHandler.getMember
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: author
+          method: get
+          cors: true
   createMemberHandler:
     handler: lambdas/team/createMemberHandler.createMemberHandler
     layers:

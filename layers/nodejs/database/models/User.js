@@ -23,22 +23,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    team:[
-        {
-            name: {
-                type: String,
-                unique: true
-            },
-            role: [
-                {
-                    type: String
-                }
-            ],
-            avatar: {
-                type: String
-            }
-        }
-    ]
+    team:{
+        type: String,
+        unique: true
+    }
 });
 
 const User = mongoose.model('User', userSchema);

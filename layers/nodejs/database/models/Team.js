@@ -1,20 +1,20 @@
 import mongoose from 'mongoose';
 
 const teamSchema = new mongoose.Schema({
-    userId: {
+    teamName: {
         type: String,
+        required: true
     },
     name: {
         type: String,
-        required: true
-    },
-    title: {
-        type: String,
-        required: true
+        required: true,
+        unique: true
     },
     avatar: {
-        data: Buffer,
-        contentType: String
+        type: String,
+    },
+    role: {
+        type: Array
     }
 });
 

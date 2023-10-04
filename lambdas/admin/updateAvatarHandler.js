@@ -1,4 +1,5 @@
 import { User } from '/opt/nodejs/database/models/User.js';
+import { Team } from '/opt/nodejs/database/models/Team.js';
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
@@ -53,7 +54,7 @@ export async function updateAvatarHandler(event, context, callback) {
     }
 
     // Set avatar width. Resize will set the height automatically to maintain aspect ratio.
-    const width  = 200;
+    const width  = 300;
 
     // Use the sharp module to resize the image and save in a buffer.
     try {    
@@ -97,10 +98,10 @@ export async function updateAvatarHandler(event, context, callback) {
                 console.log('Avatar URL updated successfully:', updatedUser);
             } else if (!updatedUser) {
                 // In case the ID is team member ID
-                const memberId = { 'team._id': srcKey.substring(startIndex, endIndex)};
-                const updatedTeamMember = await User.updateOne(
+                const memberId = srcKey.substring(startIndex, endIndex);
+                const updatedTeamMember = await Team.findByIdAndUpdate(
                     memberId,
-                    { $set: { 'team.$.avatar': url } },
+                    { $set: { avatar: url } },
                     { new: true }
                 );
                 if(updatedTeamMember) {
