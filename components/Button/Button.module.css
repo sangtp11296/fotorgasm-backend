@@ -5,8 +5,17 @@
 /* Backward Button */
 .backButton{
     position: fixed;
-    top: 15px;
-    left: 150px;
+    z-index: 1;
+    top: 2%;
+    left: 2%;
+    height: 60px;
+    width: auto;
+    aspect-ratio: 1/1;
+    opacity: .7;
+    transition: all .3s;
+}
+.backButton:hover{
+    opacity: 1;
 }
 /* Scroll to Top Button */
 .scrollToTop{
@@ -65,23 +74,22 @@
 }
 
 /* Scroll To Head and Tail */
-.scrollHead{
-    z-index: 1;
+.twoButton{
     position: fixed;
+    z-index: 1;
     bottom: 15px;
-    left: 45%;
-    transform: translateX(-40%);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: 10vw;
+}
+.scrollHead{
     opacity: 0;
     visibility: hidden;
     transition: all .2s;
 }
 .scrollTail{
-    z-index: 1;
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    right: 45%;
-    transform: translateX(-40%);
     opacity: 0;
     visibility: hidden;
     transition: all .2s;
@@ -98,22 +106,22 @@
 }
 
 /* Scroll To Top and Bottom */
-.scrollTop{
-    z-index: 1;
+.twoButtonTB{
     position: fixed;
-    right: 11vw;
-    top: 40%;
-    transform: translateY(-40%);
+    z-index: 1;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10vh;
+}
+.scrollTop{
     opacity: 0;
     visibility: hidden;
     transition: all .2s;
 }
 .scrollBottom{
-    z-index: 1;
-    position: fixed;
-    right: 11vw;
-    bottom: 40%;
-    transform: translateY(-40%);
     opacity: 0;
     visibility: hidden;
     transition: all .2s;
@@ -130,6 +138,10 @@
 }
 
 @media screen and (max-width: 1500px) {
+    .backButton{
+        height: 50px;
+        top: 15px;
+    }
     .scrollToTop{
         right: 2%;
     }
@@ -145,7 +157,10 @@
     }
 }
 @media screen and (max-width: 768px) {
-   
+    .backButton{
+        height: 40px;
+        top: 15px;
+    }
 }
 @media screen and (max-width: 550px) {
     .scrollToTop{
@@ -158,6 +173,10 @@
     }
 }
 @media screen and (max-width: 400px) {
+    .backButton{
+        top: 15px;
+        height: 30px;
+    }
     .scrollToTop{
         width: 20px;
         height: 20px;

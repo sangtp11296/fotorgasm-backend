@@ -64,7 +64,7 @@ export const BlogPage: React.FC<Props> = ({ post, cover }) => {
   }, []);
   return (
     <>
-    <BackButton/>
+    {/* <BackButton/> */}
     
       {
         // Portrait Post Format

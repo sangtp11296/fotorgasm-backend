@@ -202,22 +202,13 @@
     margin-bottom: 3px;
     background-color: transparent;
 }
+.postSocial svg{
+    cursor: pointer;
+    height: 100%;
+}
 .postSocial .iconContainer{
     margin-bottom: 0;
     margin-top: 13px;
-}
-.postSocial button:hover svg path{
-    transition: all .1s;
-    fill: rgba(72,149,239,1);
-    stroke: rgba(72,149,239,1);
-}
-.postSocial button svg{
-    cursor: pointer;
-    height: 20px;
-}
-.postSocial button svg path{
-    transition: all .1s;
-    fill: none
 }
 .iconContainer svg{
     height: 20px;

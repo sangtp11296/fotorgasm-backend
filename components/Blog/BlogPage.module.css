@@ -19,16 +19,15 @@
 .portraitPost .postCover{
     display: flex;
     justify-content: center;
-    max-width: 400px;
+    /* max-width: 400px; */
     overflow: hidden;
-    flex: 0 0 30%;
+    flex: 0 0 25%;
     background-color: var(--surface-02);
 }
 .portraitPost .coverImage{
     /* width: 100%; */
     object-fit: cover;
-    height: 900px;
-    border-radius: 0%;
+    height: 40vw;
 }
 
 .portraitPost .fullTextContainer{
@@ -42,36 +41,36 @@
     display: block;
     box-shadow: none;
     background-color: inherit;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     position: relative;
     margin-left: auto;
     margin-right: auto;
 }
 .portraitPost .postContent{
-    padding: 34px 55px 12px;
+    padding: 2vw 3.5vw 1vw;
 }
 .portraitPost .postCat{
-    margin-top: 150px;
-    margin-bottom: 20px;
+    margin-top: 10vw;
+    margin-bottom: .8vw;
     /* text-transform: uppercase; */
-    letter-spacing: 2px;
     width: fit-content;
-    font-size: 15px;
 }
 .portraitPost .postCat a{
+    letter-spacing: 2px;
+    font-size: .8vw;
     font-weight: 700;
     color: var(--primary);
 }
 
 .portraitPost .postTitle{
-    margin-bottom: 60px;
+    margin-bottom: 3vw;
 }
 .postTitle h1{
     display: block;
     line-height: 120%;
     text-transform: uppercase;
     font-weight: 500;
-    font-size: 60px;
+    font-size: 3vw;
     text-decoration: none;
     color: var(--on-surface);
     width: 85%;
@@ -219,41 +218,41 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    padding: 15vh 220px 8vh;
+    padding: 15vh 20vh 8vh;
 }
 .landscapePost .catAndTitle{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 800px;
+    width: 90vh;
 }
 .landscapePost .postCat{
     letter-spacing: 2px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    margin-bottom: 1vh;
 }
 .landscapePost .postCat a{
+    font-size: 1.6vh;
     color: var(--primary);
     font-weight: 500;
 }
 .landscapePost .postTitle h1{
-    font-size: 70px;
-    width: 800px;
+    font-size: 7vh;
+    width: 90vh;
 }
 .firstIntro{
     margin-top: auto;
     align-self: flex-end;
     font-family: 'Neue Helvetica';
-    font-size: 20px;
+    font-size: 2vh;
     text-align: right;
     color: var(--on-surface);
-    line-height: 2rem;
+    line-height: 3vh;
 }
 .landscapePost .firstIntro{
-    width: 400px;
+    width: 45vh;
 }
 .landscapePost .postCover{
-    margin-left: 70px;
+    margin-left: 8vh;
 }
 .landscapePost .coverImage{
     width: auto;
@@ -310,30 +309,35 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    padding: 15vh 105px 8vh 0px;
+    padding: 15vh 9vh 8vh 0px;
 }
 .squarePost .catAndTitle{
     margin-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 600px;
+    width: 70vh;
 }
 .squarePost .postCat{
     letter-spacing: 2px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    margin-bottom: 1vh;
 }
 .squarePost .postCat a{
+    font-size: 1.6vh;
     color: var(--primary);
     font-weight: 500;
 }
 .squarePost .postTitle{
     width: inherit;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
+}
+.squarePost .postTitle h1{
+    font-size: 7vh;
+    width: inherit;
+    margin-bottom: 1vh;
 }
 .squarePost .firstIntro{
-    width: 100%;    
+    width: 45vh;    
     margin-top: 0;
     align-self: flex-start;
     text-align: left;
@@ -346,7 +350,7 @@
 }
 
 @media screen and (max-width: 1700px) {
-    .portraitPost h1{
+    /* .portraitPost h1{
         font-size: 3vw;
         line-height: 100%;
     }
@@ -361,10 +365,10 @@
     }
     .portraitPost .coverImage{
         height: 50vw;
-    }
+    } */
 }
 @media screen and (max-height: 1080px) {
-    .catAndTitle{
+    /* .catAndTitle{
         width: 90vh !important;
     }
     .landscapePost .postTitle h1{
@@ -378,10 +382,10 @@
         font-size: 1.8vh;
         line-height: 1.5rem;
         width: 45vh !important;
-    }
+    } */
 }
 @media screen and (max-height: 1080px) {
-    .catAndTitle{
+    /* .catAndTitle{
         width: 80vh !important;
     }
     .squarePost .postTitle h1{
@@ -395,5 +399,5 @@
         font-size: 1.8vh;
         line-height: 1.5rem;
         width: 45vh !important;
-    }
+    } */
 }

@@ -24,7 +24,7 @@
     position: absolute;
     width: 100%;
     height: 40%;
-    bottom: 0%;
+    bottom: -5%;
     transition: all .2s ease-in-out;
     background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(5,5,5,.8) 100%);
     opacity: .8;
@@ -33,7 +33,7 @@
 }
 .postOverlay.active{
     opacity: 1;
-    height: 80%;
+    height: 60%;
 }
 .postInfo{
     z-index: 1;
@@ -93,7 +93,7 @@
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    max-height: 35px
+    max-height: 10%
 }
 .postDesc.active{
     transition: max-height .4s, overflow .4s;
@@ -118,16 +118,11 @@
     bottom: 1.5vh;
     display: flex;
     flex-direction: column;
-    width: 2.5vh;
     justify-content: center;
     align-items: center;
     color: var(--on-background);
     font-size: 1.5vh;
     font-weight: 300;
-    gap: .7vh;
-}
-.postSocial button{
-    margin-bottom: .5vh;
 }
 .postSocial button svg{
     height: 2.5vh;
@@ -136,12 +131,8 @@
     cursor: pointer;
     height: 2.5vh;
     background-color: transparent;
+    margin-top: 1vh;
 }
-/* .postSocial button:hover svg path{
-    transition: all .1s;
-    fill: rgba(72,149,239,1);
-    stroke: rgba(72,149,239,1);
-} */
 
 .postSocial button svg path{
     transition: all .1s;
@@ -164,25 +155,68 @@
     border-radius: 15px;
     overflow: hidden;
 }
+.landscapePost .postInfo{
+    padding-left: 1vw;
+    padding-bottom: 1vw;
+    width: 85%;
+}
+.landscapePost .postCat{
+    margin-bottom: .5vw;
+}
+.landscapePost .postCat img{
+    height: 1.5vw;
+    width: 1.5vw;
+}
+.landscapePost .postCat span{
+    padding-left: .3vw;
+    font-size: .5vw;
+}
+.landscapePost .postInfo .titlePost{
+    padding-bottom: .3vw;
+}
+.landscapePost .postInfo .titlePost h1{
+    font-size: .7vw;
+}
+.landscapePost .postDesc{
+    font-size: .6vw;
+}
+
+.landscapePost .postSocial{
+    right: 1vw;
+    bottom: 1vw;
+    font-size: .8vw;
+}
+.landscapePost .postSocial button svg{
+    height: 1.3vw;
+}
+.landscapePost .postSocial button{
+    cursor: pointer;
+    height: 1.3vw;
+    background-color: transparent;
+    margin-top: .5vw;
+}
+.postAuthor{
+    width: 1.5vw;
+    height: 1.5vw;
+    margin-top: 1.3vw;
+}
 
 @media screen and (max-width: 1000px) {
-    .centerContainer{
-        width: 700px;
-    }
+    
 }
 @media screen and (max-width: 768px) {
-    .centerContainer{
-        width: 500px;
+    .portraitPost{
+        height: 75vh;
     }
 }
 @media screen and (max-width: 550px) {
-    .centerContainer{
-        width: 400px;
+    .portraitPost{
+        height: 65vh;
     }
 }
 @media screen and (max-width: 400px) {
-    .centerContainer{
-        min-width: 340px;
-        width: 340px;
+    .portraitPost{
+        width: 95vw;
+        height: auto;
     }
 }

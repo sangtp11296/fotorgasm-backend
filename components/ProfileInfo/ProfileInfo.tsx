@@ -27,7 +27,7 @@ const ProfileInfo = () => {
             </defs>
             <circle cx="50" cy="50" r="47"></circle>
             </svg>
-            <Image className={styles.logoBrand} width={130} height={130} priority={true} loading='eager' src='/assets/images/portrait.png' alt=' '/>
+            <Image className={styles.logoBrand} width={130} height={130} priority={true} loading='eager' src='/assets/icons/fotorgasm-logo-no-ring.png' alt='fotorgasm'/>
             {/* <img className={styles.logoBrand} src='../public/assets/images/portrait.png'></img> */}
         </div>
         <div className={styles.profileMain}>
