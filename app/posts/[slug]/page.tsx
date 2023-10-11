@@ -1,6 +1,5 @@
 
 import React from 'react'
-import { Modal } from '@/components/Modal/Modal'
 import { FetchedPost } from '@/types/Posts.type';
 import { BlogPage } from '@/components/Blog/BlogPage';
 
@@ -19,9 +18,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   // fetch data post
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
     method: "GET",
-    next: {
-      revalidate: 600
-    }
+    cache: 'no-store'
   })
   const data = await res.json();
   const post: FetchedPost = data.post;
@@ -43,9 +40,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
   // Get Post and Cover
   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
       method: "GET",
-      next: {
-        revalidate: 600
-      }
+      cache: 'no-store'
     })
   const data = await res.json();
   const post: FetchedPost = data.post;
@@ -55,9 +50,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
         body: JSON.stringify({
           key: post.coverKey,
       }),
-      next: {
-        revalidate: 600
-      }
+      cache: 'no-store'
     });
     const cover = await fetchCover.json();
     const coverUrl = cover.presignedUrl;
@@ -74,7 +67,8 @@ export default async function PostModal ({ params }: { params: { slug: string } 
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.high,
-        })
+        }),
+        cache: 'no-store'
     })
     const highData = await highVideo.json();
     videoUrl.push(highData.presignedUrl);
@@ -83,7 +77,8 @@ export default async function PostModal ({ params }: { params: { slug: string } 
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.medium,
-        })
+        }),
+        cache: 'no-store'
     })
     const mediumData = await mediumVideo.json();
     videoUrl.push(mediumData.presignedUrl);
@@ -92,7 +87,8 @@ export default async function PostModal ({ params }: { params: { slug: string } 
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.low,
-        })
+        }),
+        cache: 'no-store'
     })
     const lowData = await lowVideo.json();
     videoUrl.push(lowData.presignedUrl);
@@ -101,9 +97,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
         body: JSON.stringify({
           key: post.coverKey,
       }),
-      next: {
-        revalidate: 600
-      }
+      cache: 'no-store'
     });
     const cover = await fetchCover.json();
     const coverUrl = cover.presignedUrl;

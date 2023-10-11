@@ -10,15 +10,70 @@
     overflow: hidden;
 }
 .postCover{
-    position: absolute;
+    /* position: absolute; */
     display: flex;
     justify-content: center;
     height: 100%;
     width: 100%;
 }
+.postCover button{
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 6vh;
+    width: 6vh;
+    background-color: transparent;
+    transform-origin: center center;
+}
+.postCover button.visible{
+    animation: fadeInOut .3s ease-out;
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    50%{
+        opacity: 100%;
+        visibility: visible;
+        scale: 1.1;
+    }
+    100%{
+        opacity: 0%;
+        visibility: hidden;
+        scale: 1;
+
+    }
+}
+.videoAudio{
+    transition: all .2s;
+    position: absolute;
+    right: 5.5vh;
+    bottom: 1.5vh;
+    z-index: 3;
+}
+.videoAudio button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    height: 2.5vh;
+    width: 2.5vh;
+}
+.videoAudio button svg{
+    height: 100%;
+    width: 100%;
+}
+.videoAudio button:hover{
+    scale: 1.1;
+}
 .videoSrc{
     object-fit: cover;
     width: 100%;
+    cursor: pointer;
 }
 .postOverlay{
     position: absolute;
@@ -37,15 +92,14 @@
 }
 .postInfo{
     z-index: 1;
-    position: relative;
+    position: absolute;
+    left: 1.5vh;
+    bottom: 1.5vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding-left: 1.5vh;
-    padding-bottom: 1.5vh;
     width: 80%;
-    height: 100%;
-    /* height: min-content; */
+    height: 40%;
 }
 .postCat{
     width: fit-content;
@@ -93,12 +147,14 @@
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    max-height: 10%
+    max-height: 20%
 }
 .postDesc.active{
     transition: max-height .4s, overflow .4s;
-    max-height: 35%;
+    max-height: 100%;
     overflow: auto;
+    color: var(--on-background);
+    opacity: .8;
 }
 .postAuthor{
     width: 3vh;
@@ -156,8 +212,8 @@
     overflow: hidden;
 }
 .landscapePost .postInfo{
-    padding-left: 1vw;
-    padding-bottom: 1vw;
+    left: 1vw;
+    bottom: 1vw;
     width: 85%;
 }
 .landscapePost .postCat{
@@ -169,7 +225,7 @@
 }
 .landscapePost .postCat span{
     padding-left: .3vw;
-    font-size: .5vw;
+    font-size: .6vw;
 }
 .landscapePost .postInfo .titlePost{
     padding-bottom: .3vw;
@@ -178,9 +234,17 @@
     font-size: .7vw;
 }
 .landscapePost .postDesc{
-    font-size: .6vw;
+    font-size: .7vw;
+    width: 60%;
 }
-
+.landscapePost .videoAudio{
+    right: 4vw;
+    bottom: 1vw;
+}
+.landscapePost .videoAudio button svg{
+    height: 1.5vw;
+    width: 1.5vw;
+}
 .landscapePost .postSocial{
     right: 1vw;
     bottom: 1vw;

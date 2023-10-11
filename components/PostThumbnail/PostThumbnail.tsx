@@ -1,7 +1,7 @@
 'use client'
 import styles from './PostThumbnail.module.css'
 import Image from 'next/image'
-import { DraftPost, FetchedPost } from '@/types/Posts.type';
+import { FetchedPost } from '@/types/Posts.type';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
