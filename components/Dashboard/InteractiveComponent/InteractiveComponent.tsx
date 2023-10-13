@@ -6,12 +6,16 @@ import './SlickMenu.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateCoverRes, updateCoverUrl } from '@/redux/post/draft.slice';
 import PostThumbnail from '@/components/PostThumbnail/PostThumbnail';
-import { FinalPost } from '@/types/Posts.type';
 import { BlogPagePreview } from '@/components/Blog/BlogPagePreview';
+import { AlbumThumbnail } from '@/components/AlbumThumbnail/AlbumThumbnail';
+import { DraftAlbum } from '../../../types/Album.type';
+import { albumCoverUrl } from '@/redux/post/album.slice';
+import { Album } from '@/components/Album/Album';
 
 const InteractiveComponent: React.FC = () => {
   const [cover, setCover] = useState<File>();
   const draft = useAppSelector((state) => state.draft);
+  const draftAlbum = useAppSelector((state) => state.draftAlbum);
   const dispatch = useAppDispatch();
 
   // Upload Cover Image and Consider Resolution
@@ -19,6 +23,7 @@ const InteractiveComponent: React.FC = () => {
     const file = event.target.files?.[0];
     const imageUrl = file ? URL.createObjectURL(file) : '';
     dispatch(updateCoverUrl(imageUrl));
+    dispatch(albumCoverUrl(imageUrl));
     setCover(file);
     if(file) {
       const image = new Image();
@@ -99,12 +104,14 @@ const InteractiveComponent: React.FC = () => {
                 <svg height='15px' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" strokeWidth="7" stroke="#fff" fill="none"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><line x1="8.06" y1="8.06" x2="55.41" y2="55.94"></line><line x1="55.94" y1="8.06" x2="8.59" y2="55.94"></line></g></svg>
               </div>
               <div className={`${styles.coverWraper} ${draft.coverRes.width < draft.coverRes.height ? styles.portrait : (draft.coverRes.width > draft.coverRes.height) ? styles.landscape : styles.square}`}>
-                <PostThumbnail data={draft}/>
+                {(draft.format === 'blog' || draft.format === 'video') && <PostThumbnail data={draft}/>}
+                {(draft.format === 'album') && <AlbumThumbnail data={draftAlbum}/>}
               </div>
             </div>
           }
           <div className={styles.previewPage} style={{maxHeight: `${containerRef.current?.clientHeight}px`}}>
-            <BlogPagePreview post={draft} cover={draft.coverThumbnail || draft.coverUrl}/>
+            {(draft.format === 'blog' || draft.format === 'video') && <BlogPagePreview post={draft} cover={draft.coverThumbnail || draft.coverUrl}/>}
+            {(draft.format === 'album') && <Album data={draftAlbum}/>}
           </div>
         </Slider>
       :

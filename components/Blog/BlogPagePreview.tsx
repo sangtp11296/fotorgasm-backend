@@ -1,12 +1,12 @@
 'use client'
-import { FetchedPost } from '@/types/Posts.type'
+import { DraftPost, FetchedPost } from '@/types/Posts.type'
 import styles from './BlogPagePreview.module.css'
 import './ContentPreview.css'
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 
 interface Props {
-  post: FetchedPost,
+  post: FetchedPost | DraftPost,
   cover: string,
 }
 export const BlogPagePreview: React.FC<Props> = ({ post, cover }) => {

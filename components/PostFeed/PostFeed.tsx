@@ -70,7 +70,7 @@ const PostFeed: React.FC = () => {
         hasMore={hasMore}
         loader={<></>}
         style={{ overflow: 'hidden' }}
-        scrollThreshold={0.8}
+        scrollThreshold={0.65}
       >
         <div className={styles.masonryContainer}>
           {

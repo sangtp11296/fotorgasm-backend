@@ -1,4 +1,4 @@
-import { openDraft } from '@/redux/post/draft.slice';
+
 export type FinalPost = {
   format: string,
   title: string,
@@ -40,6 +40,11 @@ export type DraftPost = {
   coverRes: {
     width: number,
     height: number
+  },
+  videoSrc?: {
+    high: string,
+    medium: string,
+    low: string,
   },
   createdAt: string, // Add createdAt
   views: string,     // Add views

@@ -8,6 +8,7 @@ import { FetchedPost, FinalPost } from '@/types/Posts.type'
 import { getPosts } from '@/utils/getPosts'
 import { getTeams } from '@/utils/getTeam'
 import { Teammate } from '@/types/User.type'
+import { albumArtists, albumComposers, albumGenres, albumSlug, albumTags, albumTitle, albumYear } from '@/redux/post/album.slice'
 
 // Define props
 interface Props {
@@ -38,6 +39,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   const addTrigger = useAppSelector((state) => state.draft.toggle);
   const dispatch = useAppDispatch();
   const draft = useAppSelector((state) => state.draft); 
+  const draftList = useAppSelector((state) => state.draftAlbum); 
   const [error, setError] = useState<boolean>(false);
 
   const session = useSession();
@@ -312,50 +314,93 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
                       <option value='blog' className={styles.items}>blog</option>
                       <option value='photo' className={styles.items}>photo</option>
                       <option value='video' className={styles.items}>video</option>
-                      <option value='audio' className={styles.items}>audio</option>
+                      <option value='album' className={styles.items}>album</option>
                   </select>
               </div>
-              <div className={styles.textField}>
-                  <label>Title of the Post<span className={styles.textDanger}> *</span></label>
-                  <input name='title' type='text' defaultValue={draft.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Title' onChange={(e) => {
-                    dispatch(updateTitle(e.target.value));
-                    dispatch(updateSlug(toSlug(e.target.value)));
-                    }}/>
-              </div>
-              <div className={styles.textField}>
-                  <label>Author<span className={styles.textDanger}> *</span></label>
-                  <select name='author' defaultValue={draft.author} placeholder='Author...' className={styles.textInput}  onChange={(e) => dispatch(updateAuthor(e.target.value))}>
-                    <option value='' defaultValue='' className={styles.items}>Author...</option>
-                    {
-                      members.map((mem, ind) => {
-                        return <option key={ind} value={mem.name} className={styles.items}>{mem.name}</option>
-                      })
-                    }
-                  </select>
-              </div>
-              <div className={styles.textField}>
-                  <label>Category<span className={styles.textDanger}> *</span></label>
-                  <select defaultValue={draft.category} name='category' placeholder='Select category...' className={styles.textInput}  onChange={(e) => dispatch(updateCat(e.target.value))}>
-                      <option value='' defaultValue='' className={styles.items}>Select section...</option>
-                      <option value='Fotography' className={styles.items}>Fotography</option>
-                      <option value='Films' className={styles.items}>Films</option>
-                      <option value='Something' className={styles.items}>Something</option>
-                      <option value='Vinyls' className={styles.items}>Vinyls</option>
-                      <option value='Moods' className={styles.items}>Moods</option>
-                      <option value='Memories' className={styles.items}>Memories</option>
-                      <option value='Running' className={styles.items}>Running</option>
-                      <option value='Music' className={styles.items}>Music</option>
-                      <option value='Reading' className={styles.items}>Reading</option>
-                  </select>
-              </div>
-              <div className={styles.textField}>
-                  <label>Tags<span className={styles.textDanger}> *</span></label>
-                  <input defaultValue={draft.tags} name='tags' type='text' className={styles.textInput} onChange={(e) => dispatch(updateTag(e.target.value.split(', ')))}/>
-              </div>
-              <div className={styles.textField}>
-                <label>Description<span className={styles.textDanger}> *</span></label>
-                <textarea defaultValue={draft.desc} name='description' style={{maxHeight:'65px', maxWidth:'250px',minWidth:'250px', minHeight:'28px'}} className={styles.textInput} placeholder='Description' onChange={(e) => dispatch(updateDesc(e.target.value))}></textarea>
-              </div>
+              {
+                (draft.format === 'blog' || draft.format === 'video') &&
+                <>
+                  <div className={styles.textField}>
+                      <label>Title of the Post<span className={styles.textDanger}> *</span></label>
+                      <input name='title' type='text' defaultValue={draft.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Title' onChange={(e) => {
+                        dispatch(updateTitle(e.target.value));
+                        dispatch(updateSlug(toSlug(e.target.value)));
+                        }}/>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Author<span className={styles.textDanger}> *</span></label>
+                      <select name='author' defaultValue={draft.author} placeholder='Author...' className={styles.textInput}  onChange={(e) => dispatch(updateAuthor(e.target.value))}>
+                        <option value='' defaultValue='' className={styles.items}>Author...</option>
+                        {
+                          members.map((mem, ind) => {
+                            return <option key={ind} value={mem.name} className={styles.items}>{mem.name}</option>
+                          })
+                        }
+                      </select>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Category<span className={styles.textDanger}> *</span></label>
+                      <select defaultValue={draft.category} name='category' placeholder='Select category...' className={styles.textInput}  onChange={(e) => dispatch(updateCat(e.target.value))}>
+                          <option value='' defaultValue='' className={styles.items}>Select section...</option>
+                          <option value='Fotography' className={styles.items}>Fotography</option>
+                          <option value='Films' className={styles.items}>Films</option>
+                          <option value='Something' className={styles.items}>Something</option>
+                          <option value='Vinyls' className={styles.items}>Vinyls</option>
+                          <option value='Moods' className={styles.items}>Moods</option>
+                          <option value='Memories' className={styles.items}>Memories</option>
+                          <option value='Running' className={styles.items}>Running</option>
+                          <option value='Music' className={styles.items}>Music</option>
+                          <option value='Reading' className={styles.items}>Reading</option>
+                      </select>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Tags<span className={styles.textDanger}> *</span></label>
+                      <input defaultValue={draft.tags} name='tags' type='text' className={styles.textInput} onChange={(e) => dispatch(updateTag(e.target.value.split(', ')))}/>
+                  </div>
+                  <div className={styles.textField}>
+                    <label>Description<span className={styles.textDanger}> *</span></label>
+                    <textarea defaultValue={draft.desc} name='description' style={{maxHeight:'65px', maxWidth:'250px',minWidth:'250px', minHeight:'28px'}} className={styles.textInput} placeholder='Description' onChange={(e) => dispatch(updateDesc(e.target.value))}></textarea>
+                  </div>
+                </>
+              }
+              {
+                (draft.format === 'album') &&
+                <>
+                  <div className={styles.textField}>
+                      <label>Title of the Playlist<span className={styles.textDanger}> *</span></label>
+                      <input name='title' type='text' defaultValue={draft.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Title...' onChange={(e) => {
+                        dispatch(albumTitle(e.target.value));
+                        dispatch(albumSlug(toSlug(e.target.value)));
+                        }}/>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Artists<span className={styles.textDanger}> *</span></label>
+                      <input name='artists' type='text' defaultValue={draft.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Artist...' onChange={(e) => {
+                        dispatch(albumArtists(e.target.value.split(', ')));
+                        }}/>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Composers<span className={styles.textDanger}> *</span></label>
+                      <input name='composers' type='text' defaultValue={draft.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Composers...' onChange={(e) => {
+                        dispatch(albumComposers(e.target.value.split(', ')));
+                        }}/>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Genres<span className={styles.textDanger}> *</span></label>
+                      <input name='genres' type='text' defaultValue={draft.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Genres...' onChange={(e) => {
+                        dispatch(albumGenres(e.target.value.split(', ')));
+                        }}/>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Tags<span className={styles.textDanger}> *</span></label>
+                      <input defaultValue={draft.tags} name='tags' type='text' className={styles.textInput} onChange={(e) => dispatch(albumTags(e.target.value.split(', ')))}/>
+                  </div>
+                  <div className={styles.textField}>
+                      <label>Year of Composition<span className={styles.textDanger}> *</span></label>
+                      <input defaultValue={draft.tags} name='year' type='text' className={styles.textInput} onChange={(e) => dispatch(albumYear(parseInt(e.target.value)))}/>
+                  </div>
+                </>
+              }
               <div className={styles.submit}>
                 {
                   draft.status === 'published' ?

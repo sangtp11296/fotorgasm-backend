@@ -1,0 +1,67 @@
+.albumThumbnail{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: all .3s;
+    cursor: pointer;
+}
+.albumThumbnail:hover{
+    box-shadow: 9px 3px 13px 5px rgba(0,0,0,0.41);
+}
+.albumThumbnail:hover .fullScreen{
+    opacity: 1;
+}
+.albumThumbnail:hover .albumInfo{
+    opacity: 1;
+}
+.albumThumbnail:hover .vinylImage{
+    transform: translateX(25%);
+}
+.albumCover{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.albumCover img{
+    border-radius: 2%;
+    height: 100%;
+    width: 100%;
+}
+.vinylImage{
+    transition: all .8s;
+    transition-delay: .3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.fullScreen,.minorScreen{
+    position: absolute;
+    background-color: transparent;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    transition: all .2s;
+    opacity: 0;
+    z-index: 2;
+}
+.fullScreen svg{
+    height: 30px;
+    transition: all .2s;
+}
+.albumInfo{
+    opacity: 0;
+    transition: all .3s;
+    position: absolute;
+    bottom: -12%;
+    color: var(--on-background);
+}
+.albumInfo h2{
+    font-size: 100%;
+    font-weight: 500;
+    padding-bottom: 5%;
+}
+.albumInfo h3{
+    font-size: 90%;
+    font-weight: 300;
+}
