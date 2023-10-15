@@ -186,3 +186,29 @@ export const abortMultiPartUpload = async (event) => {
         })
     }
 }
+
+// Upload Songs
+export const uploadDraftSong = async (event) => {
+    try{
+        console.log(JSON.parse(event.body))
+        const { fileName, fileType } = JSON.parse(event.body);
+        const key = `${fileName}`;
+        //Get signed URL form S3
+        const s3Params = {
+            Bucket: uploadBucket,
+            Key: `draft/${key}`,
+            ContentType: fileType,
+            ACL: 'bucket-owner-full-control'
+        }
+        const command = new PutObjectCommand(s3Params)
+        const presignedUrl = await getSignedUrl(s3, command, {expiresIn: 60});
+        return Responses._200({
+            presignedUrl,
+            key: `draft/${key}`,
+        })
+    } catch (err) {
+        return Responses._500({
+            error: 'Error generating presigned URL ' + err
+        })
+    };
+};

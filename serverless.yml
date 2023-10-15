@@ -170,6 +170,15 @@ functions:
           path: delete-draft # path will be domain.name.com/dev/posts
           method: delete
           cors: true
+  deleteFile:
+    handler: lambdas/post/deleteDraft.deleteFile
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: delete-file # path will be domain.name.com/dev/posts
+          method: delete
+          cors: true
   uploadPostThumbnail:
     handler: lambdas/post/uploadFiles.uploadPostThumbnail
     layers:
@@ -237,7 +246,16 @@ functions:
           path: quotes # path will be domain.name.com/dev/posts
           method: get
           cors: true
-
+  # Album API
+  uploadDraftSong:
+    handler: lambdas/post/uploadFiles.uploadDraftSong
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: upload-draft-song # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
 
 resources:
   Resources:   
