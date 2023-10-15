@@ -50,18 +50,20 @@
     transition: all .2s;
 }
 .albumInfo{
-    opacity: 0;
+    /* opacity: 0; */
     transition: all .3s;
     position: absolute;
-    bottom: -12%;
+    bottom: 0;
+    transform: translateY(100%);
     color: var(--on-background);
 }
 .albumInfo h2{
-    font-size: 100%;
+    font-size: .9vw;
     font-weight: 500;
-    padding-bottom: 5%;
+    padding-top: 3%;
 }
 .albumInfo h3{
-    font-size: 90%;
+    /* padding-top: 3%; */
+    font-size: .8vw;
     font-weight: 300;
 }
