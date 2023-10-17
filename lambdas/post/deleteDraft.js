@@ -1,9 +1,10 @@
-import { S3Client, ListObjectsV2Command, DeleteObjectCommand,  DeleteObjectsCommand, CopyObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, ListObjectsV2Command, GetObjectCommand, DeleteObjectCommand,  DeleteObjectsCommand, CopyObjectCommand } from '@aws-sdk/client-s3';
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import { Post } from '/opt/nodejs/database/models/Post.js';
+import * as mm from 'music-metadata'
 
 
 
@@ -51,11 +52,9 @@ export const deleteDraft = async (event) => {
 
 export const moveDraft = async (event, context) => {
     try {
-
         const data = JSON.parse(event.body);
         const slug = data.slug;
         const format = data.format;
-        const destinationFolder = `posts/${slug}/`;
 
         // List the objects in the source folder
         const listObjectsResponse = await s3.send(new ListObjectsV2Command({ 
@@ -63,6 +62,8 @@ export const moveDraft = async (event, context) => {
             Prefix: folderKey 
         }));
         if (format === 'image'){
+            const destinationFolder = `posts/${slug}/`;
+
             // Sort the objects by LastModified time (ascending)
             const sortedObjects = listObjectsResponse.Contents.sort((a, b) => a.LastModified - b.LastModified);
 
@@ -94,7 +95,7 @@ export const moveDraft = async (event, context) => {
             // Connect to the database
             context.callbackWaitsForEmptyEventLoop = false;
             await connectToDatabase();
-
+            const destinationFolder = `posts/${slug}/`;
             // Sort the objects by video size (ascending)
             const sortedObjects = listObjectsResponse.Contents.sort((a, b) => a.Size - b.Size);
 
@@ -150,8 +151,40 @@ export const moveDraft = async (event, context) => {
             return Responses._200({
                 message: 'Files moved, renamed and updated successfully!'
             });
+        } else if (format === 'album'){
+            const destinationFolder = `albums/${slug}/`;
+            // Connect to the database
+            context.callbackWaitsForEmptyEventLoop = false;
+            await connectToDatabase();
+
+            // Collect all songs
+            const collectedSongs = listObjectsResponse.Contents;
+
+            // Move each song to new destination bucket
+            const movePromises = collectedSongs.map(async (song, index) => {
+
+                const sourceKey = song.Key;
+                const destinationKey = `${destinationFolder}${sourceKey.split('/').pop()}`;
+                console.log(destinationKey);
+
+                const copyCommand = new CopyObjectCommand({
+                    CopySource: `/${uploadBucket}/${sourceKey}`,
+                    Bucket: uploadBucket,
+                    Key: destinationKey
+                });
+                await s3.send(copyCommand);
+
+                const deleteCommand = new DeleteObjectCommand({
+                    Bucket: uploadBucket,
+                    Key: sourceKey
+                });
+                await s3.send(deleteCommand);
+            })
+            await Promise.all(movePromises);
         }
-        
+        return Responses._200({
+            message: 'Songs moved successfully!'
+        });
     } catch (error) {
         console.error('Error moving files:', error);
         return Responses._500({

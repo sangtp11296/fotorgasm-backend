@@ -1,6 +1,43 @@
 import mongoose from 'mongoose';
 
-const PlaylistSchema = new mongoose.Schema({
+const songSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: false
+    },
+    trackNum:{
+        type: Number,
+    },
+    artists:{
+        type: Array,
+        required: false
+    },
+    album:{
+        type: String,
+    },
+    composers:{
+        type: Array,
+        required: false
+    },
+    genres:{
+        type: Array,
+        required: true
+    },
+    year:{
+        type: Number,
+        default: null
+    },
+    date:{
+        type: String
+    },
+    picture:{
+        type: Array
+    },
+    srcKey:{
+        type: String
+    },
+});
+const AlbumSchema = new mongoose.Schema({
     format:{
         type: String,
         required: true
@@ -19,7 +56,7 @@ const PlaylistSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    composer:{
+    composers:{
         type: Array,
         required: false
     },
@@ -53,10 +90,7 @@ const PlaylistSchema = new mongoose.Schema({
             required: true
         }
     },
-    songs:{
-        type: Array,
-        required: true
-    },
+    songs:[songSchema],
     likes:{
         type: Number,
         default: 0
@@ -70,6 +104,5 @@ const PlaylistSchema = new mongoose.Schema({
         required: false
     }
 },{timestamps: true});
-
-const Playlist = mongoose.model('Playlist', PlaylistSchema);
-export { Playlist }
+const Album = mongoose.model('Album', AlbumSchema);
+export { Album }

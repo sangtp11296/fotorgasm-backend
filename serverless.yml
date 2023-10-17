@@ -192,6 +192,7 @@ functions:
     handler: lambdas/post/createThumbnail.createThumbnail
     layers:
       - !Ref FotorgasmLayerLambdaLayer
+    memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes   
   createPost:
     handler: lambdas/post/createPost.createPost
     layers:
@@ -246,7 +247,7 @@ functions:
           path: quotes # path will be domain.name.com/dev/posts
           method: get
           cors: true
-  # Album API
+  # Music API
   uploadDraftSong:
     handler: lambdas/post/uploadFiles.uploadDraftSong
     layers:
@@ -256,6 +257,20 @@ functions:
           path: upload-draft-song # path will be domain.name.com/dev/posts
           method: post
           cors: true
+  createAlbum:
+    handler: lambdas/music/createMusic.createAlbum
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  createMetadata:
+    handler: lambdas/music/createMetadata.createMetadata
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes
 
 resources:
   Resources:   

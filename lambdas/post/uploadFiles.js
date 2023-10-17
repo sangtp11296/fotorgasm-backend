@@ -32,6 +32,7 @@ export const uploadDraftImage = async (event) => {
             key: `draft/${key}`,
         })
     } catch (err) {
+        console.log(err);
         return Responses._500({
             error: 'Error generating presigned URL ' + err
         })
@@ -54,6 +55,7 @@ export const getDraftImage = async (event) => {
             presignedUrl
         })
     } catch (err) {
+        console.log(err);
         return Responses._500({
             error: 'Error getting presigned URL ' + err 
         })
@@ -207,6 +209,7 @@ export const uploadDraftSong = async (event) => {
             key: `draft/${key}`,
         })
     } catch (err) {
+        console.log(err);
         return Responses._500({
             error: 'Error generating presigned URL ' + err
         })

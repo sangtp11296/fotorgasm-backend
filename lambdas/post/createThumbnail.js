@@ -1,4 +1,5 @@
 import { Post } from '/opt/nodejs/database/models/Post.js';
+import { Album } from '/opt/nodejs/database/models/Album.js';
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
@@ -55,7 +56,7 @@ export async function createThumbnail (event, context, callback) {
     }
 
     // Set thumbnail width. Resize will set the height automatically to maintain aspect ratio.
-    const width  = 500;
+    const width  = 600;
 
     // Use the sharp module to resize the image and save in a buffer.
     try {    
@@ -84,10 +85,9 @@ export async function createThumbnail (event, context, callback) {
         return Responses._400({ message: error.message || 'Failed to upload avatar!' });
     }
 
-    // Update the thumbnail url to Post model schema
+    // Update the thumbnail url to Post or Album model schema
     try{
         console.log('Update the thumbnail url to Post model schema');
-        
         await connectToDatabase();
         // Extract the post slug from source key
         const match = srcKey.match(/\/([^/]+)-cover\.\w+$/);
@@ -103,9 +103,20 @@ export async function createThumbnail (event, context, callback) {
                 { new: true }
             );
             if (updatedPost) {
-                console.log('Avatar URL updated successfully:', updatedPost);
+                console.log('Cover URL updated successfully:', updatedPost);
             } else {
-                console.log('Post not found.');
+                console.log('Post not found. Try to update Album');
+                const updatedAlbum = await Album.findOneAndUpdate(
+                    { slug: postSlug },
+                    { $set: { 
+                        coverKey: srcKey,
+                        coverThumbnail: url
+                     } },
+                    { new: true }
+                );
+                if (updatedAlbum){
+                    console.log('Cover URL updated successfully:', updatedAlbum);
+                } else console.log('Nothing found!')
             }
         } else {
             console.log('Post slug invalid!');
