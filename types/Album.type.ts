@@ -5,8 +5,22 @@
 //     url: string;
 //     videos: Video[];
 // }
+export type FinalAlbum = {
+  format: string,
+  title: string,
+  slug: string,
+  artists: string[],
+  genres: string[],
+  composers: string[],
+  tags: string[],
+  year: number,
+  coverRes: {
+    width: number,
+    height: number
+  },
+  status: string,
+};
 export interface DraftAlbum {
-  toggle: boolean,
   submit: boolean,
   _id: string,
   format: string,

@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     mainMenu: 'all',
+    editorMode: false
 }
 
 const clickSlice = createSlice({
@@ -11,11 +12,14 @@ const clickSlice = createSlice({
     reducers: {
         updateMainMenu: (state, action: PayloadAction<string>) => {
             state.mainMenu = action.payload
+        },
+        toggleEditor: (state, action: PayloadAction<boolean>) => {
+            state.editorMode = action.payload
         }
     }
 })
 
-export const { updateMainMenu } = clickSlice.actions;
+export const { updateMainMenu, toggleEditor } = clickSlice.actions;
 const clickReducer = clickSlice.reducer;
 
 export default clickReducer;

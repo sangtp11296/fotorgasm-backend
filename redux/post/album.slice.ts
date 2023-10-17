@@ -2,7 +2,6 @@ import { DraftAlbum } from "@/types/Album.type";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: DraftAlbum = {
-    toggle: false,
     submit: false,
     _id: '',
     format: '',
@@ -75,17 +74,14 @@ const AlbumSlice = createSlice({
         albumId: (state, action: PayloadAction<string>) => {
             state._id = action.payload
         },
-        clearDraft: () => initialState,
-        openDraft: (state) => {
-            state.toggle = true
-        },
-        submitDraft: (state, action: PayloadAction<boolean>) => {
+        clearAlbum: () => initialState,
+        submitAlbum: (state, action: PayloadAction<boolean>) => {
             state.submit = action.payload
         }
     }
 })
 
-export const { albumId, albumTitle, albumFormat, albumSlug, albumArtists, albumComposers, albumGenres, albumTags, albumYear,albumCoverThumbnail, albumCoverUrl, albumCoverKey, albumCoverRes, albumSongs, albumStatus, clearDraft, openDraft, submitDraft } = AlbumSlice.actions;
+export const { albumId, albumTitle, albumFormat, albumSlug, albumArtists, albumComposers, albumGenres, albumTags, albumYear,albumCoverThumbnail, albumCoverUrl, albumCoverKey, albumCoverRes, albumSongs, albumStatus, clearAlbum, submitAlbum } = AlbumSlice.actions;
 const albumReducer = AlbumSlice.reducer;
 
 export default albumReducer;

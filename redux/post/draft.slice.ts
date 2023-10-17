@@ -2,7 +2,6 @@ import { DraftPost } from "@/types/Posts.type";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: DraftPost = {
-    toggle: false,
     submit: false,
     _id: '',
     format: '',
@@ -74,16 +73,13 @@ const draftSlice = createSlice({
             state._id = action.payload
         },
         clearDraft: () => initialState,
-        openDraft: (state) => {
-            state.toggle = true
-        },
         submitDraft: (state, action: PayloadAction<boolean>) => {
             state.submit = action.payload
         }
     }
 })
 
-export const { updateId, updateTitle, updateFormat, updateSlug, updateAuthor, updateCat, updateDesc, updateTag, updateCoverThumbnail, updateCoverUrl, updateCoverKey, updateCoverRes, updateContent, updateStatus, clearDraft, openDraft, submitDraft } = draftSlice.actions;
+export const { updateId, updateTitle, updateFormat, updateSlug, updateAuthor, updateCat, updateDesc, updateTag, updateCoverThumbnail, updateCoverUrl, updateCoverKey, updateCoverRes, updateContent, updateStatus, clearDraft, submitDraft } = draftSlice.actions;
 const draftReducer = draftSlice.reducer;
 
 export default draftReducer;

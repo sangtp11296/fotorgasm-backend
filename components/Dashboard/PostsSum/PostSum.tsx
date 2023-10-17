@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react'
 import styles from './PostSum.module.css'
 import { useSession } from 'next-auth/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { clearDraft, openDraft, submitDraft, updateAuthor, updateCat, updateContent, updateCoverKey, updateCoverRes, updateCoverThumbnail, updateDesc, updateFormat, updateId, updateSlug, updateStatus, updateTag, updateTitle } from '@/redux/post/draft.slice'
+import { clearDraft, submitDraft, updateAuthor, updateCat, updateContent, updateCoverKey, updateCoverRes, updateCoverThumbnail, updateDesc, updateFormat, updateId, updateSlug, updateStatus, updateTag, updateTitle } from '@/redux/post/draft.slice'
 import { FetchedPost, FinalPost } from '@/types/Posts.type'
 import { getPosts } from '@/utils/getPosts'
 import { getTeams } from '@/utils/getTeam'
 import { Teammate } from '@/types/User.type'
-import { albumArtists, albumComposers, albumGenres, albumSlug, albumTags, albumTitle, albumYear } from '@/redux/post/album.slice'
+import { albumArtists, albumComposers, albumFormat, albumGenres, albumSlug, albumTags, albumTitle, albumYear, clearAlbum, submitAlbum } from '@/redux/post/album.slice'
+import { toggleEditor } from '@/redux/clickMenu/click.slice'
+import { FinalAlbum } from '@/types/Album.type'
 
 // Define props
 interface Props {
@@ -36,10 +38,10 @@ const icons: { [key: string]: React.JSX.Element } = {
 }
 
 const PostSum: React.FC<Props> = ({ menuType }) => {
-  const addTrigger = useAppSelector((state) => state.draft.toggle);
+  const addTrigger = useAppSelector((state) => state.click.editorMode);
   const dispatch = useAppDispatch();
   const draft = useAppSelector((state) => state.draft); 
-  const draftList = useAppSelector((state) => state.draftAlbum); 
+  const draftAlbum = useAppSelector((state) => state.draftAlbum); 
   const [error, setError] = useState<boolean>(false);
 
   const session = useSession();
@@ -58,9 +60,13 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
 
   const handleTrigger = async () => {
     if (!addTrigger) {
-      dispatch(openDraft());
+      dispatch(toggleEditor(true))
+      // dispatch(openDraft());
+      // dispatch(openAlbum());
     } else {
+      dispatch(toggleEditor(false))
       dispatch(clearDraft());
+      dispatch(clearAlbum());
 
       // Fetch api to delete everthing in draft folder
       const reqDeleteDraft = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/delete-draft',{
@@ -114,7 +120,6 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
     } else {
       // Create new Post
       if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.desc && draft.coverUrl) {
-  
         dispatch(submitDraft(false));
         dispatch(submitDraft(true));
         if (draft.format === 'blog'){
@@ -198,7 +203,46 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   
           res.status === 200 && window.location.reload();
         }
-      } 
+      }
+      // Create new Album
+      if (draftAlbum.format && draftAlbum.artists && draftAlbum.composers && draftAlbum.coverUrl && draftAlbum.genres && draftAlbum.tags && draftAlbum.title && draftAlbum.year){
+        dispatch(submitAlbum(false));
+        dispatch(submitAlbum(true));
+        // Update cover photo first to get the thumbnail url and cover key
+        const formData: FinalAlbum = {
+          artists: draftAlbum.artists,
+          composers: draftAlbum.composers,
+          genres: draftAlbum.genres,
+          coverRes: draftAlbum.coverRes,
+          format: draftAlbum.format,
+          title: draftAlbum.title,
+          slug: draftAlbum.slug,
+          tags: draftAlbum.tags,
+          year: draftAlbum.year,
+          status: 'published'
+        }
+        const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/music', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header
+          },
+          body: JSON.stringify(formData)
+        });
+
+        // Move all draft songs to albums folder in s3 bucket
+        await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header
+          },
+          body: JSON.stringify({
+            slug: draftAlbum.slug,
+            format: 'album'
+          }),
+        });
+
+        res.status === 200 && window.location.reload();
+      }
     }
   }
   // Convert title to slug
@@ -252,7 +296,6 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
   const [chosenPost, setChosenPost] = useState<FetchedPost>()
   const handleEditTrigger = (post: FetchedPost) => {
     if (!addTrigger) {
-      dispatch(openDraft());
       dispatch(updateId(post._id))
       dispatch(updateFormat(post.format));
       dispatch(updateTitle(post.title));
@@ -309,7 +352,14 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
               <div className={styles.textField}>
                   <label>Post Format<span className={styles.textDanger}> *</span></label>
                   <select name='post_format' defaultValue={draft.format} placeholder='Select Post Format...' className={styles.textInput}
-                  onChange={(e) => dispatch(updateFormat(e.target.value))}>
+                  onChange={(e) => {
+                    if (e.target.value === 'album'){
+                      dispatch(clearDraft())
+                      dispatch(albumFormat(e.target.value))
+                    } else {
+                      dispatch(clearAlbum())
+                      dispatch(updateFormat(e.target.value))
+                    }}}>
                       <option value='none' defaultValue='none' className={styles.items}>Select Post Format...</option>
                       <option value='blog' className={styles.items}>blog</option>
                       <option value='photo' className={styles.items}>photo</option>
@@ -364,7 +414,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
                 </>
               }
               {
-                (draft.format === 'album') &&
+                (draftAlbum.format === 'album') &&
                 <>
                   <div className={styles.textField}>
                       <label>Title of the Playlist<span className={styles.textDanger}> *</span></label>

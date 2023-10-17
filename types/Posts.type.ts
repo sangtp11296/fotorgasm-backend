@@ -23,7 +23,6 @@ export type FinalPost = {
 };
 export type FetchedPost = FinalPost & { _id: string, coverUrl: string, createdAt: string, views: string, likes: number, comments: [], status: string };
 export type DraftPost = {
-  toggle: boolean,
   submit: boolean,
   _id: string,
   format: string,
