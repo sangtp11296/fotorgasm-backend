@@ -1,10 +1,12 @@
-import { S3Client,  GetObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, ListObjectsV2Command, GetObjectCommand, DeleteObjectCommand,  DeleteObjectsCommand, CopyObjectCommand } from '@aws-sdk/client-s3';
+import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import { Album } from '/opt/nodejs/database/models/Album.js';
 import * as mm from 'music-metadata'
 import util from 'util';
+import { title } from 'process';
 
 
 const s3 = new S3Client({ region: process.env.region});
@@ -16,8 +18,10 @@ export async function createMetadata (event, context, callback) {
   const srcBucket = event.Records[0].s3.bucket.name;
   // Object key may have spaces or unicode non-ASCII characters
   const srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
+  console.log(srcKey);
   const fileName = srcKey.split('/').pop();
   const tilteName = srcKey.split('/')[1];
+  console.log(tilteName);
 
   // Connect to the database
   context.callbackWaitsForEmptyEventLoop = false;
@@ -53,11 +57,12 @@ export async function createMetadata (event, context, callback) {
       picture: songMetadata.picture,
       srcKey: srcKey
     }
-    const album = await Album.findOne({title: tilteName});
+    const album = await Album.findOne({slug: tilteName});
     if(!album){
       console.log('Cannot find album or album is not existed');
       return
     } else {
+      console.log(album);
       // Push the song object into the songs array
       album.songs.push(song);
 

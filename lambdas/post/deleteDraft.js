@@ -162,28 +162,29 @@ export const moveDraft = async (event, context) => {
 
             // Move each song to new destination bucket
             const movePromises = collectedSongs.map(async (song, index) => {
-
                 const sourceKey = song.Key;
                 const destinationKey = `${destinationFolder}${sourceKey.split('/').pop()}`;
                 console.log(destinationKey);
 
                 const copyCommand = new CopyObjectCommand({
-                    CopySource: `/${uploadBucket}/${sourceKey}`,
+                    CopySource: encodeURI(`/${uploadBucket}/${sourceKey}`),
                     Bucket: uploadBucket,
                     Key: destinationKey
                 });
                 await s3.send(copyCommand);
+                console.log('Move file ' + sourceKey.split('/').pop() +' successfully')
 
                 const deleteCommand = new DeleteObjectCommand({
                     Bucket: uploadBucket,
                     Key: sourceKey
                 });
                 await s3.send(deleteCommand);
+                console.log('Delete file ' + sourceKey.split('/').pop() +' successfully')
             })
             await Promise.all(movePromises);
         }
         return Responses._200({
-            message: 'Songs moved successfully!'
+            message: 'Songs are moved successfully!'
         });
     } catch (error) {
         console.error('Error moving files:', error);
@@ -212,7 +213,7 @@ export const deleteFile = async (event) => {
     } catch (error) {
         console.log(error);
         return Responses._500({
-            error: `Error deleting file ${fileName} ` + err
+            error: `Error deleting file: ` + error
         })
     }
 
