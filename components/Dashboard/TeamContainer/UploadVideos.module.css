@@ -32,6 +32,7 @@
     margin-left: auto;
     margin-right: auto;
     height: 150px;
+    max-height: 150px;
     width: 60%;
     border: 2px dashed var(--on-background-matte);
     border-radius: 10px;

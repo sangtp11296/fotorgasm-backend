@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import styles from './UploadVIdeos.module.css'
+import styles from './UploadVideos.module.css'
 import { useAppSelector } from '@/redux/hooks'
 import axios from 'axios'
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar'
@@ -10,7 +10,7 @@ type Props = {
 }
 export const UploadAlbum: React.FC<Props> = ({ songList }) => {
     const editorMode = useAppSelector((state) => state.click.editorMode);
-    const format = useAppSelector((state) => state.draft.format);
+    const format = useAppSelector((state) => state.draftAlbum.format);
     
     // Handle Upload File
     const [files, setFiles] = useState<File[]>([]);
@@ -21,53 +21,70 @@ export const UploadAlbum: React.FC<Props> = ({ songList }) => {
             setFiles([]);
         }
     }, [editorMode])
-    const handleAddFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAddFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const fileList = e.target.files;
-        if(fileList){
-            const fileArray = Array.from(fileList).map(file => {
-                handleUploadFile(file);
-                return file
-            });
-            setFiles(prevSelectedFiles => [...prevSelectedFiles, ...fileArray]);
+        // if(fileList){
+        //     songList(Array.from(fileList))
+        //     setFiles(prevSelectedFiles => [...prevSelectedFiles, ...fileArray]);
+        //     const fileArray = Array.from(fileList).map(file => {
+        //         handleUploadFile(file);
+        //         return file
+        //     });
+        // }   
+        if (fileList) {
+            const fileArray = Array.from(fileList);
             songList(fileArray)
-        }   
+            for (let i = 0; i < fileArray.length; i++) {
+                const file = fileArray[i];
+                handleUploadFile(file);
+                setFiles((prevSelectedFiles) => [...prevSelectedFiles, file]);
+
+                // Add a delay after every 10 fetches
+                if (i > 0 && i % 9 === 0) {
+                    const delay = 2000; // Delay in milliseconds (1 second in this example)
+                    await new Promise((resolve) => setTimeout(resolve, delay));
+                }
+            }
+        }
     }
     const handleUploadFile = async (file: File) => {
         // Request Presigned URL
-        const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-song', {
-            method: "POST",
-            body: JSON.stringify({
-                fileName: file.name,
-                fileType: file.type,
-            }),
-        })
-        const resData = await res.json();
-        const config = {
-            headers: {
-              'Content-Type': file.type,
-            },
-            onUploadProgress: (progressEvent: any) => {
-                // You can handle progress here
-                if (progressEvent) {
-                  const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                  setUploadProgress((prev) => ({
-                        ...prev,
-                        [file.name]: progress
-                    }))
+        if(file) {
+            try{
+                const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-song', {
+                    method: "POST",
+                    body: JSON.stringify({
+                        fileName: file.name,
+                        fileType: file.type,
+                    })
+                })
+                const resData = await res.json();
+                const config = {
+                    headers: {
+                    'Content-Type': file.type,
+                    },
+                    onUploadProgress: (progressEvent: any) => {
+                        // You can handle progress here
+                        if (progressEvent) {
+                        const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                        setUploadProgress((prev) => ({
+                                ...prev,
+                                [file.name]: progress
+                            }))
+                        }
+                    },
                 }
-              },
-          }
-        await axios
-            .put(resData.presignedUrl, file, config)
-            .then((response) => {
-                // Handle the successful upload here
-                console.log('Upload successful', response);
-            })
-            .catch((error) => {
-                // Handle any errors
-                console.error('Error uploading file', error);
-            });
+                await axios
+                    .put(resData.presignedUrl, file, config)
+                    .catch((error) => {
+                        // Handle any errors
+                        console.error('Error uploading file', error);
+                    });
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
     // Handle Delete File 
     const handleDeleteFile = async (fileToDelete: File) => {

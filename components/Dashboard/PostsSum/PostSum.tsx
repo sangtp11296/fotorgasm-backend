@@ -120,8 +120,7 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
     } else {
       // Create new Post
       if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.desc && draft.coverUrl) {
-        dispatch(submitDraft(false));
-        dispatch(submitDraft(true));
+        
         if (draft.format === 'blog'){
           // Update cover photo first to get the thumbnail url and cover key
           const formData: FinalPost = {
@@ -138,20 +137,6 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
             tags: draft.tags,
             status: 'published'
           }
-          // Move all draft images to posts folder in s3 bucket
-          if(draft.content.includes('<img')){
-            await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-              method: "POST",
-              headers: {
-                'Content-Type': 'application/json' // Set the Content-Type header
-              },
-              body: JSON.stringify({
-                slug: draft.slug,
-                format: 'image'
-              }),
-            });
-          }
-    
           const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
             method: 'POST',
             headers: {
@@ -159,7 +144,24 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
             },
             body: JSON.stringify(formData)
           });
-          res.status === 200 && window.location.reload();
+          // Move all draft images to posts folder in s3 bucket
+          if(res.status === 200){
+            dispatch(submitDraft(false));
+            dispatch(submitDraft(true));
+            if(draft.content.includes('<img')){
+              const moveDraft = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json' // Set the Content-Type header
+                },
+                body: JSON.stringify({
+                  slug: draft.slug,
+                  format: 'image'
+                }),
+              });
+              moveDraft.status === 200 && window.location.reload();
+            }
+          }
         } else if (draft.format === 'video') {
           // Update cover photo first to get the thumbnail url and cover key
           const formData: FinalPost = {
@@ -190,24 +192,27 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
           });
   
           // Move all draft videos to posts folder in s3 bucket
-          await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json' // Set the Content-Type header
-            },
-            body: JSON.stringify({
-              slug: draft.slug,
-              format: 'video'
-            }),
-          });
+          if (res.status === 200){
+            dispatch(submitDraft(false));
+            dispatch(submitDraft(true));
+            const moveDraft = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json' // Set the Content-Type header
+              },
+              body: JSON.stringify({
+                slug: draft.slug,
+                format: 'video'
+              }),
+            });
+            moveDraft.status === 200 && window.location.reload();
+          }
   
-          res.status === 200 && window.location.reload();
         }
       }
       // Create new Album
       if (draftAlbum.format && draftAlbum.artists && draftAlbum.composers && draftAlbum.coverUrl && draftAlbum.genres && draftAlbum.tags && draftAlbum.title && draftAlbum.year){
-        dispatch(submitAlbum(false));
-        dispatch(submitAlbum(true));
+        
         // Update cover photo first to get the thumbnail url and cover key
         const formData: FinalAlbum = {
           artists: draftAlbum.artists,
@@ -230,18 +235,22 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
         });
 
         // Move all draft songs to albums folder in s3 bucket
-        await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json' // Set the Content-Type header
-          },
-          body: JSON.stringify({
-            slug: draftAlbum.slug,
-            format: 'album'
-          }),
-        });
+        if(res.status === 200){
+          dispatch(submitAlbum(false));
+          dispatch(submitAlbum(true));
+          const moveDraft = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify({
+              slug: draftAlbum.slug,
+              format: 'album'
+            }),
+          });
+          (moveDraft.status === 200) && window.location.reload();
+        }
 
-        res.status === 200 && window.location.reload();
       }
     }
   }

@@ -34,7 +34,7 @@ export const AlbumCoverThumbnail: React.FC<Props> = ({ cover }) => {
     
     useEffect(() => {
         if (album.submit) {
-        handleUploadThumbnail();
+            handleUploadThumbnail();
         }
     }, [album.submit])
   return (

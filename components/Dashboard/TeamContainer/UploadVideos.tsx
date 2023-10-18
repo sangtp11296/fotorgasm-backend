@@ -1,12 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import styles from './UploadVIdeos.module.css'
+import styles from './UploadVideos.module.css'
 import { useAppSelector } from '@/redux/hooks'
 import axios from 'axios'
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar'
 
 export const UploadVideos = () => {
-    const editorMode = useAppSelector((state) => state.draft.toggle);
+    const editorMode = useAppSelector((state) => state.click.editorMode);
     const format = useAppSelector((state) => state.draft.format);
     
     // Handle Upload File
