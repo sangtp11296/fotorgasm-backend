@@ -14,6 +14,8 @@ export type FinalAlbum = {
   composers: string[],
   tags: string[],
   year: number,
+  distinctions: string[],
+  desc: string,
   coverRes: {
     width: number,
     height: number
@@ -32,6 +34,8 @@ export interface DraftAlbum {
   composers: string[],
   tags: string[],
   year: number,
+  distinctions: string[],
+  desc: string,
   coverThumbnail: string,
   coverUrl: string,
   coverKey: string,

@@ -14,11 +14,7 @@ const TeamContainer: React.FC = () => {
     const editorMode = useAppSelector((state) => state.click.editorMode);
     const postFormat = useAppSelector((state) => state.draft.format);
     const albumFormat = useAppSelector((state) => state.draftAlbum.format)
-
-    const [selectedSongs, setSelectedSongs] = useState<File[]>([]);
-    const handleSongList = (fileList: File[]) => {
-        setSelectedSongs(fileList);
-    };
+    
   return (
       <div className={`${styles.teamContainer} ${styles.gridBlock}`}>
         {!editorMode ?
@@ -29,7 +25,7 @@ const TeamContainer: React.FC = () => {
             // Upload Videos
             <UploadVideos/>
         : (editorMode && albumFormat === 'album' ) ?
-            <UploadAlbum songList={handleSongList}/>
+            <UploadAlbum/>
         : ''
         }
     </div>

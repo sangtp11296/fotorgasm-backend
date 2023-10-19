@@ -23,7 +23,7 @@ const PostFeed: React.FC = () => {
 
   // Get first time loading posts
   const handleGetPosts = async (page: number) => {
-    const res = getPosts(page, 5);
+    const res = getPosts('all', page, 5);
     setPosts((await res).posts);
     dispatch(updateFetchedPost((await res).posts))
   }
@@ -35,7 +35,7 @@ const PostFeed: React.FC = () => {
   // Get more posts
   const getMorePhotos = async () => {
     try{
-      const res = getPosts(page, 5);
+      const res = getPosts('all', page, 5);
       const posts = (await res).posts;
       if (posts.length > 0){
         setPosts((prevPhotos) => [...prevPhotos, ...posts]);

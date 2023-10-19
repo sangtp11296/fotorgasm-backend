@@ -12,6 +12,8 @@ const initialState: DraftAlbum = {
     genres: [],
     artists: [],
     tags: [],
+    distinctions: [],
+    desc: '',
     year: 0,
     coverThumbnail: '',
     coverUrl: '',
@@ -53,6 +55,12 @@ const AlbumSlice = createSlice({
         albumTags: (state, action: PayloadAction<string[]>) => {
             state.tags = action.payload
         },
+        albumDistinctions: (state, action: PayloadAction<string[]>) => {
+            state.distinctions = action.payload
+        },
+        albumDesc: (state, action: PayloadAction<string>) => {
+            state.desc = action.payload
+        },
         albumYear: (state, action: PayloadAction<number>) => {
             state.year = action.payload
         },
@@ -81,7 +89,7 @@ const AlbumSlice = createSlice({
     }
 })
 
-export const { albumId, albumTitle, albumFormat, albumSlug, albumArtists, albumComposers, albumGenres, albumTags, albumYear,albumCoverThumbnail, albumCoverUrl, albumCoverKey, albumCoverRes, albumSongs, albumStatus, clearAlbum, submitAlbum } = AlbumSlice.actions;
+export const { albumId, albumTitle, albumFormat, albumSlug, albumArtists, albumComposers, albumGenres, albumTags, albumDistinctions, albumDesc, albumYear,albumCoverThumbnail, albumCoverUrl, albumCoverKey, albumCoverRes, albumSongs, albumStatus, clearAlbum, submitAlbum } = AlbumSlice.actions;
 const albumReducer = AlbumSlice.reducer;
 
 export default albumReducer;

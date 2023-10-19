@@ -13,7 +13,7 @@ export const AlbumCoverThumbnail: React.FC<Props> = ({ cover }) => {
     const album = useAppSelector((state) => state.draftAlbum);
     // Get presigned Url to upload cover and get the thumbnail URL
     const handleUploadThumbnail = async () => {
-        const reqPresignedURL = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/upload-thumbnail-image', {
+        const reqPresignedURL = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-thumbnail-image', {
         method: 'POST',
         body: JSON.stringify({
             fileName: album.slug + `-cover.${cover?.type.split('/')[1]}`,

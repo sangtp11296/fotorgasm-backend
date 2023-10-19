@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 interface Props {
 //   data: FetchedPost & { coverUrl: string };
-    data: DraftPost
+    data: DraftPost | FetchedPost
 }
 // Generate type for icons
 interface iconsObj {
@@ -19,7 +19,7 @@ const PostThumbnail: React.FC<Props> = ({ data }) => {
     const [thumbnailVideoSrc, setThumbnailVideoSrc] = useState();
     async function handleFetchThumbnailVideo (){
         if (data.format === 'video') {
-            const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+            const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
                 method: 'POST',
                 body: JSON.stringify({
                     key: data.videoSrc?.low,

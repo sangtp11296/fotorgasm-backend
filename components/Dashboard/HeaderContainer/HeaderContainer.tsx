@@ -90,7 +90,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
         const image = event.target.files?.[0] || null;
         try {
             if(image){
-                const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: user.id,
@@ -120,7 +120,7 @@ const HeaderContainer: React.FC<Props> = ({user}) => {
         e.preventDefault();
         try {
             if(name && title){
-                const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/admin/${user.id}`, {
+                const res = await fetch(`https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/admin/${user.id}`, {
                     method: 'PUT',
                     body: JSON.stringify({
                         userID: user.id,

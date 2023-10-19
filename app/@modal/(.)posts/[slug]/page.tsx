@@ -16,7 +16,7 @@ type Props = {
 //   const slug = params.slug;
  
 //   // fetch data post
-//   const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
+//   const res = await fetch(`https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
 //     method: "GET",
 //     next: {
 //       revalidate: 600
@@ -40,14 +40,14 @@ export default async function PostModal ({ params }: { params: { slug: string } 
   // read route params
   const slug = params.slug;
   // Get Post and Cover
-  const res = await fetch(`https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/posts/${slug}`, {
+  const res = await fetch(`https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${slug}`, {
       method: "GET",
       cache: 'no-store'
     })
   const data = await res.json();
   const post: FetchedPost = data.post;
   if (post.format === 'blog'){
-    const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const fetchCover = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
         method: "POST",
         body: JSON.stringify({
           key: post.coverKey,
@@ -67,7 +67,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
   }
   if (post.format === 'video'){
     const videoUrl = [];
-    const highVideo = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const highVideo = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.high,
@@ -77,7 +77,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
     const highData = await highVideo.json();
     videoUrl.push(highData.presignedUrl);
 
-    const mediumVideo = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const mediumVideo = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.medium,
@@ -87,7 +87,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
     const mediumData = await mediumVideo.json();
     videoUrl.push(mediumData.presignedUrl);
 
-    const lowVideo = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const lowVideo = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.low,
@@ -96,7 +96,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
     })
     const lowData = await lowVideo.json();
     videoUrl.push(lowData.presignedUrl);
-    const fetchCover = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const fetchCover = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
         method: "POST",
         body: JSON.stringify({
           key: post.coverKey,

@@ -25,7 +25,7 @@ const SignUp = () => {
                     const role = 'Project Admin';
                     const team = `${username}-team`
 
-                    const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/register', {
+                    const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/register', {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

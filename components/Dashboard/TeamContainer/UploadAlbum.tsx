@@ -5,10 +5,7 @@ import { useAppSelector } from '@/redux/hooks'
 import axios from 'axios'
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar'
 
-type Props = {
-    songList: (fileList: File[]) => void;
-}
-export const UploadAlbum: React.FC<Props> = ({ songList }) => {
+export const UploadAlbum: React.FC = () => {
     const editorMode = useAppSelector((state) => state.click.editorMode);
     const format = useAppSelector((state) => state.draftAlbum.format);
     
@@ -24,17 +21,8 @@ export const UploadAlbum: React.FC<Props> = ({ songList }) => {
     const handleAddFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const fileList = e.target.files;
-        // if(fileList){
-        //     songList(Array.from(fileList))
-        //     setFiles(prevSelectedFiles => [...prevSelectedFiles, ...fileArray]);
-        //     const fileArray = Array.from(fileList).map(file => {
-        //         handleUploadFile(file);
-        //         return file
-        //     });
-        // }   
         if (fileList) {
             const fileArray = Array.from(fileList);
-            songList(fileArray)
             for (let i = 0; i < fileArray.length; i++) {
                 const file = fileArray[i];
                 handleUploadFile(file);
@@ -52,7 +40,7 @@ export const UploadAlbum: React.FC<Props> = ({ songList }) => {
         // Request Presigned URL
         if(file) {
             try{
-                const res = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-song', {
+                const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-song', {
                     method: "POST",
                     body: JSON.stringify({
                         fileName: file.name,
@@ -88,7 +76,7 @@ export const UploadAlbum: React.FC<Props> = ({ songList }) => {
     }
     // Handle Delete File 
     const handleDeleteFile = async (fileToDelete: File) => {
-        const deleteReq = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
+        const deleteReq = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
             method: "DELETE",
             body: JSON.stringify({
                 fileName: fileToDelete.name,

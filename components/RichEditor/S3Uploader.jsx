@@ -4,7 +4,7 @@
 //     const upload = async () => {
 //         const data = await loader.file;
 
-//         const reqUpPresignedUrl = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-image', {
+//         const reqUpPresignedUrl = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-image', {
 //             method: 'POST',
 //             body: JSON.stringify({
 //                 postSlug: draft.slug,
@@ -25,7 +25,7 @@
 //         })
 
 //         // Getting draft image from presigned Url
-//         const getDraftImage = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+//         const getDraftImage = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
 //             method: 'GET',
 //             body: JSON.stringify({
 //                 key: key
@@ -49,7 +49,7 @@ class S3Uploader {
     
     async upload() {
         const data = await this.loader.file;
-        const reqUpPresignedUrl = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-image', {
+        const reqUpPresignedUrl = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-image', {
             method: 'POST',
             body: JSON.stringify({
                 fileName: data.name,
@@ -71,7 +71,7 @@ class S3Uploader {
 
         if (uploadImage.status === 200) {
             // Getting draft image from presigned Url
-            const getDraftImage = await fetch('https://vjbjtwm3k8.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+            const getDraftImage = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
                 method: 'POST',
                 body: JSON.stringify({
                     key: key,
