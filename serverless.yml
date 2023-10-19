@@ -68,6 +68,7 @@ functions:
     handler: lambdas/admin/updateAvatarHandler.updateAvatarHandler
     layers:
       - !Ref FotorgasmLayerLambdaLayer
+    memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes   
   userInfoUpdate:
     handler: lambdas/admin/updateInfoHandler.updateInfoHandler
     layers:
@@ -122,7 +123,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: posts/{slug} # path will be domain.name.com/dev/posts
+          path: post/{slug} # path will be domain.name.com/dev/posts
           method: get
           cors: true
   getPosts:
@@ -131,7 +132,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: posts # path will be domain.name.com/dev/posts
+          path: post # path will be domain.name.com/dev/posts
           method: get
           cors: true
   updatePost:
@@ -140,7 +141,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: post/{id} # path will be domain.name.com/dev/posts
+          path: post/{slug} # path will be domain.name.com/dev/posts
           method: put
           cors: true
   uploadDraftImage:
@@ -211,6 +212,7 @@ functions:
           path: move-draft # path will be domain.name.com/dev/posts
           method: post
           cors: true
+    timeout: 20 # the timeout is 10 seconds (default is 6 seconds) 
   startMultiPartUpload:
     handler: lambdas/post/uploadFiles.startMultiPartUpload
     layers:
@@ -235,7 +237,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: quotes # path will be domain.name.com/dev/posts
+          path: quote # path will be domain.name.com/dev/posts
           method: post
           cors: true
   getQuote:
@@ -244,7 +246,7 @@ functions:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: quotes # path will be domain.name.com/dev/posts
+          path: quote # path will be domain.name.com/dev/posts
           method: get
           cors: true
   # Music API
@@ -271,7 +273,25 @@ functions:
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes
-
+  getAlbum:
+    handler: lambdas/music/getAlbums.getAlbum
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music/{slug} # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  getAlbums:
+    handler: lambdas/music/getAlbums.getAlbums
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  
 resources:
   Resources:   
     fotorgasmPublicData:

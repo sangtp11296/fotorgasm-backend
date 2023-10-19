@@ -23,6 +23,12 @@ const songSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    desc:{
+        type: String,
+    },
+    distinctions:{
+        type: Array
+    },
     year:{
         type: Number,
         default: null

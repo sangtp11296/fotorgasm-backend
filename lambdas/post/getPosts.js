@@ -8,25 +8,41 @@ export const getPosts = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     await connectToDatabase();
     try {
+        const format = event.queryStringParameters.format;
         const page = parseInt(event.queryStringParameters.page) || 1;
         console.log(page);
         const perPage = parseInt(event.queryStringParameters.perPage) || 5;
         console.log(perPage);
         const skip = (page - 1) * perPage;
 
-        // Count total posts before applying skip and limit
-        const totalPosts = await Post.countDocuments(); 
+        if (format === 'blog' || format === 'video'){
+            // Count total posts before applying skip and limit
+            const totalPosts = await Post.countDocuments({ format: format}); 
 
-        const posts = await Post.find()
-            .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
-            .skip(skip)
-            .limit(perPage);
-
-        return Responses._200 ({
-            message: 'Posts gotten successfully',
-            posts: posts,
-            totalPosts: totalPosts
-        })
+            const posts = await Post.find({ format: format})
+                .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
+                .skip(skip)
+                .limit(perPage);
+            return Responses._200 ({
+                message: 'Posts gotten successfully',
+                posts: posts,
+                totalPosts: totalPosts
+            })
+        } else {
+            // Count total posts before applying skip and limit
+            const totalPosts = await Post.countDocuments(); 
+            
+            const posts = await Post.find()
+                .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
+                .skip(skip)
+                .limit(perPage);
+    
+            return Responses._200 ({
+                message: 'Posts gotten successfully',
+                posts: posts,
+                totalPosts: totalPosts
+            })
+        }
     } catch (error) {
         console.error('Error getting posts', error);
         return Responses._500 ({
