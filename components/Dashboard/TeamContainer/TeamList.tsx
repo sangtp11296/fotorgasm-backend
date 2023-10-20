@@ -36,7 +36,7 @@ export const TeamList = () => {
         // Upload team member info first
         try{
             if (name !== updateName || role.join(', ') !== updateRole){
-                const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
+                const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
                     method: 'PUT',
                     body: JSON.stringify({
                         userID: user?.id,
@@ -52,7 +52,7 @@ export const TeamList = () => {
             };
             if (updateAvatar) {
                 console.log(updateAvatar)
-                const req = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                const req = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: updateID,
@@ -92,7 +92,7 @@ export const TeamList = () => {
         e.preventDefault();
         // Upload team member info first
         try{
-            const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
+            const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/team', {
                 method: 'POST',
                 body: JSON.stringify({
                     userID: user?.id,
@@ -108,7 +108,7 @@ export const TeamList = () => {
             const newMemberData = data.newMember;
             console.log(newMemberData)
             if (res.status === 200 && selectedAva) {
-                const req = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
+                const req = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-presigned-url', {
                     method: 'POST',
                     body: JSON.stringify({
                         userID: newMemberData._id,

@@ -16,6 +16,20 @@
     grid-auto-rows: 90.55px;
     grid-gap: 15px;
 }
+.albumGrid{
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 50px;
+    row-gap: 70px;
+    padding-right: 35px;
+    padding-left: 35px;
+    padding-bottom: 70px;
+}
+.albumWrapper{
+    grid-column: span 1;
+    grid-row: span 1;
+    aspect-ratio: 1/1;
+}
 .portrait{
     grid-column: span 3;
     grid-row: span 5;

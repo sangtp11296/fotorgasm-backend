@@ -34,7 +34,7 @@ export const UploadVideos = () => {
         // Split File into parts
         const fileParts = await splitFileIntoParts(file);
         // Request Multipart Upload
-        const reqMultiPart = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/start-multipart-upload', {
+        const reqMultiPart = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/start-multipart-upload', {
             method: "POST",
             body: JSON.stringify({ 
                 numberOfFiles: fileParts.length,
@@ -86,7 +86,7 @@ export const UploadVideos = () => {
             }
             if (uploadedPartETags.length === fileParts.length){
                 // Complete the multipart upload
-                const completeUploadResponse = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/complete-multipart-upload', {
+                const completeUploadResponse = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/complete-multipart-upload', {
                     method: 'POST',
                     body: JSON.stringify({
                         uploadId: uploadId,
@@ -126,7 +126,7 @@ export const UploadVideos = () => {
 
     // Handle Abort Uploading Files
     const handleAbortUpload =  async (fileToAbort: File) => {
-        const abort = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/abort-multipart-upload', {
+        const abort = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/abort-multipart-upload', {
             method: "POST",
             body: JSON.stringify({
                 fileName: fileToAbort.name,
@@ -149,7 +149,7 @@ export const UploadVideos = () => {
     }
     // Handle Delete File 
     const handleDeleteFile = async (fileToDelete: File) => {
-        const deleteReq = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
+        const deleteReq = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
             method: "DELETE",
             body: JSON.stringify({
                 fileName: fileToDelete.name,

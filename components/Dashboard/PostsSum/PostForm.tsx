@@ -7,6 +7,7 @@ import { Teammate } from '@/types/User.type'
 import { useSession } from 'next-auth/react'
 import { getTeams } from '@/utils/getTeam'
 import { albumFormat, clearAlbum } from '@/redux/post/album.slice'
+import { toSlug } from '@/utils/common/toSlug'
 
 export const PostForm = () => {
     const draft = useAppSelector((state) => state.draft);

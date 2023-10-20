@@ -12,6 +12,11 @@
     border-radius: 15px;
     position: relative;
 }
+.album{
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    border-radius: 2%;
+}
 .landscape{
     grid-column: span 3;
     grid-row: span 2;

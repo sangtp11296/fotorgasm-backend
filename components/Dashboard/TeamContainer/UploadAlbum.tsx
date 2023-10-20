@@ -40,7 +40,7 @@ export const UploadAlbum: React.FC = () => {
         // Request Presigned URL
         if(file) {
             try{
-                const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-song', {
+                const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-draft-song', {
                     method: "POST",
                     body: JSON.stringify({
                         fileName: file.name,
@@ -76,7 +76,7 @@ export const UploadAlbum: React.FC = () => {
     }
     // Handle Delete File 
     const handleDeleteFile = async (fileToDelete: File) => {
-        const deleteReq = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
+        const deleteReq = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/delete-file', {
             method: "DELETE",
             body: JSON.stringify({
                 fileName: fileToDelete.name,

@@ -26,7 +26,7 @@ const Quotes = () => {
   }, [value]);
   console.log(quotes)
   const handleSubmit = async () => {
-    const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/quotes',{
+    const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/quotes',{
         method: "POST",
         body: JSON.stringify(quotes)
     })

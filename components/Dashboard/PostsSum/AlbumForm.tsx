@@ -4,6 +4,7 @@ import styles from './PostSum.module.css'
 import { albumArtists, albumComposers, albumDesc, albumDistinctions, albumFormat, albumGenres, albumSlug, albumTags, albumTitle, albumYear, clearAlbum } from '@/redux/post/album.slice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearDraft, updateFormat } from '@/redux/post/draft.slice'
+import { toSlug } from '@/utils/common/toSlug'
 
 export const AlbumForm = () => {
     const draftAlbum = useAppSelector((state) => state.draftAlbum); 
@@ -37,25 +38,25 @@ export const AlbumForm = () => {
         </div>
         <div className={styles.textField}>
             <label>Artists<span className={styles.textDanger}> *</span></label>
-            <input name='artists' type='text' defaultValue={draftAlbum.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Artist...' onChange={(e) => {
+            <input name='artists' type='text' defaultValue={draftAlbum.artists} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Artist...' onChange={(e) => {
             dispatch(albumArtists(e.target.value.split(', ')));
             }}/>
         </div>
         <div className={styles.textField}>
             <label>Composers<span className={styles.textDanger}> *</span></label>
-            <input name='composers' type='text' defaultValue={draftAlbum.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Composers...' onChange={(e) => {
+            <input name='composers' type='text' defaultValue={draftAlbum.composers} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Composers...' onChange={(e) => {
             dispatch(albumComposers(e.target.value.split(', ')));
             }}/>
         </div>
         <div className={styles.textField}>
             <label>Genres<span className={styles.textDanger}> *</span></label>
-            <input name='genres' type='text' defaultValue={draftAlbum.title} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Genres...' onChange={(e) => {
+            <input name='genres' type='text' defaultValue={draftAlbum.genres} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Genres...' onChange={(e) => {
             dispatch(albumGenres(e.target.value.split(', ')));
             }}/>
         </div>
         <div className={styles.textField}>
             <label>Distinctions</label>
-            <input name='distinctions' type='text' defaultValue={draftAlbum.title} maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Distinctions...' onChange={(e) => {
+            <input name='distinctions' type='text' defaultValue={draftAlbum.distinctions} maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Distinctions...' onChange={(e) => {
             dispatch(albumDistinctions(e.target.value.split(', ')));
             }}/>
         </div>
@@ -65,7 +66,7 @@ export const AlbumForm = () => {
         </div>
         <div className={styles.textField}>
             <label>Year of Composition<span className={styles.textDanger}> *</span></label>
-            <input defaultValue={draftAlbum.tags} name='year' type='text' required className={styles.textInput} onChange={(e) => dispatch(albumYear(parseInt(e.target.value)))}/>
+            <input defaultValue={draftAlbum.year} name='year' type='text' required className={styles.textInput} onChange={(e) => dispatch(albumYear(parseInt(e.target.value)))}/>
         </div>
         <div className={styles.textField}>
         <label>Description</label>

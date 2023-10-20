@@ -1,14 +1,13 @@
 
 import React from 'react'
 import SubMenu from '../SubMenu/SubMenu'
-import PostFeed from '../PostFeed/PostFeed'
+import GridContainer from '../GridContainer/GridContainer'
 
 async function PostGrid() {
-
   return (
     <>
         <SubMenu/>
-        <PostFeed/>
+        <GridContainer/>
     </>
   )
 }

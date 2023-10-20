@@ -1,4 +1,4 @@
-function toSlug(string: string){
+export function toSlug(string: string){
     // Chuyển hết sang chữ thường
     let str = string.toLowerCase();     
 

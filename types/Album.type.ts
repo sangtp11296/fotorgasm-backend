@@ -5,6 +5,31 @@
 //     url: string;
 //     videos: Video[];
 // }
+export type FetchAlbum = {
+  _id: string,
+  format: string,
+  title: string,
+  slug: string,
+  artists: string[],
+  composers: string[],
+  genres: string[],
+  desc: string,
+  distinctions: string[],
+  year: number
+  tags: string[],
+  coverRes: {
+    width: number,
+    height: number
+  },
+  likes: number
+  views: number
+  status: string,
+  songs: [],
+  createdAt: string,
+  coverKey: string,
+  coverThumbnail: string,
+  coverUrl?: string
+}
 export type FinalAlbum = {
   format: string,
   title: string,

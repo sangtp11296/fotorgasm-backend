@@ -31,7 +31,7 @@ export const EditForm = () => {
         slug: draft.slug,
         tags: draft.tags,
       }
-      const res = await fetch(`https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft._id}`, {
+      const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft._id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header
@@ -59,7 +59,7 @@ export const EditForm = () => {
             tags: draft.tags,
             status: 'published'
           }
-          const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
+          const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header
@@ -71,7 +71,7 @@ export const EditForm = () => {
             dispatch(submitDraft(false));
             dispatch(submitDraft(true));
             if(draft.content.includes('<img')){
-              const moveDraft = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+              const moveDraft = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json' // Set the Content-Type header
@@ -105,7 +105,7 @@ export const EditForm = () => {
             status: 'published'
           }
   
-          const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
+          const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header
@@ -117,7 +117,7 @@ export const EditForm = () => {
           if (res.status === 200){
             dispatch(submitDraft(false));
             dispatch(submitDraft(true));
-            const moveDraft = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+            const moveDraft = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
               method: "POST",
               headers: {
                 'Content-Type': 'application/json' // Set the Content-Type header
@@ -150,7 +150,7 @@ export const EditForm = () => {
           year: draftAlbum.year,
           status: 'published'
         }
-        const res = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/music', {
+        const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/music', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json' // Set the Content-Type header
@@ -162,19 +162,7 @@ export const EditForm = () => {
         if(res.status === 200){
           dispatch(submitAlbum(false));
           dispatch(submitAlbum(true));
-          const moveDraft = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json' // Set the Content-Type header
-            },
-            body: JSON.stringify({
-              slug: draftAlbum.slug,
-              format: 'album'
-            }),
-          });
-          (moveDraft.status === 200) && window.location.reload();
         }
-
       }
     }
   }

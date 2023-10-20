@@ -15,7 +15,7 @@
     opacity: 1;
 }
 .albumThumbnail:hover .vinylImage{
-    transform: translateX(25%);
+    transform: translateX(20%);
 }
 .albumCover{
     position: relative;
@@ -46,7 +46,7 @@
     z-index: 2;
 }
 .fullScreen svg{
-    height: 30px;
+    height: 20px;
     transition: all .2s;
 }
 .albumInfo{
@@ -58,12 +58,12 @@
     color: var(--on-background);
 }
 .albumInfo h2{
-    font-size: .9vw;
+    font-size: 13px;
     font-weight: 500;
-    padding-top: 3%;
+    padding-top: 5px;
 }
 .albumInfo h3{
     /* padding-top: 3%; */
-    font-size: .8vw;
+    font-size: 12px;
     font-weight: 300;
 }

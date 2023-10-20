@@ -13,7 +13,7 @@ export const AlbumCoverThumbnail: React.FC<Props> = ({ cover }) => {
     const album = useAppSelector((state) => state.draftAlbum);
     // Get presigned Url to upload cover and get the thumbnail URL
     const handleUploadThumbnail = async () => {
-        const reqPresignedURL = await fetch('https://dit6xpvzr3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-thumbnail-image', {
+        const reqPresignedURL = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/upload-thumbnail-image', {
         method: 'POST',
         body: JSON.stringify({
             fileName: album.slug + `-cover.${cover?.type.split('/')[1]}`,
@@ -23,13 +23,24 @@ export const AlbumCoverThumbnail: React.FC<Props> = ({ cover }) => {
         const reqData = await reqPresignedURL.json();
         const { presignedUrl } = JSON.parse(reqData.body);
 
-        await fetch(presignedUrl, {
+        const upload = await fetch(presignedUrl, {
             method: 'PUT',
             headers: {
                 'Content-Type': cover!.type,
             },
             body: cover,
         })
+        const moveDraft = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/move-draft', {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify({
+              slug: album.slug,
+              format: 'album'
+            }),
+        });
+        moveDraft.status === 200 && window.location.reload();
     }
     
     useEffect(() => {
