@@ -23,12 +23,6 @@ const songSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    desc:{
-        type: String,
-    },
-    distinctions:{
-        type: Array
-    },
     year:{
         type: Number,
         default: null
@@ -37,7 +31,10 @@ const songSchema = new mongoose.Schema({
         type: String
     },
     picture:{
-        type: Array
+        type: String
+    },
+    thumbnail:{
+        type: String
     },
     srcKey:{
         type: String
@@ -69,6 +66,12 @@ const AlbumSchema = new mongoose.Schema({
     genres:{
         type: Array,
         required: true
+    },
+    desc:{
+        type: String,
+    },
+    distinctions:{
+        type: Array
     },
     year:{
         type: Number,

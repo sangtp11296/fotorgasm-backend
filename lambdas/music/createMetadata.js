@@ -54,7 +54,6 @@ export async function createMetadata (event, context, callback) {
       genres: songMetadata.genre,
       year: songMetadata.year,
       date: songMetadata.date,
-      picture: songMetadata.picture,
       srcKey: srcKey
     }
     const album = await Album.findOne({slug: tilteName});
@@ -63,9 +62,13 @@ export async function createMetadata (event, context, callback) {
       return
     } else {
       console.log(album);
-      // Push the song object into the songs array
-      album.songs.push(song);
-
+      // Push the song object with the updated picture and thumbnail fields
+    album.songs.push({ 
+      ...song,
+      picture: album.coverKey,
+      thumbnail: album.coverThumbnail 
+    });
+    
       // Save the updated album to the database
       await album.save();
 

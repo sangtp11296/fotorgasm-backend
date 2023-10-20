@@ -22,6 +22,8 @@ export const createAlbum = async (event, context, callback) => {
             title: data.title,
             slug: data.slug,
             tags: data.tags,
+            distinctions: data.distinctions,
+            desc: data.desc,
             year: data.year,
             status: 'published'
         });

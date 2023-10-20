@@ -106,6 +106,7 @@ export async function createThumbnail (event, context, callback) {
                 console.log('Cover URL updated successfully:', updatedPost);
             } else {
                 console.log('Post not found. Try to update Album');
+                // Find the album by its slug
                 const updatedAlbum = await Album.findOneAndUpdate(
                     { slug: postSlug },
                     { $set: { 

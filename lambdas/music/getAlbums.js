@@ -25,7 +25,7 @@ export const getAlbums = async (event, context, callback) => {
         return Responses._200 ({
             message: 'albums gotten successfully',
             albums: albums,
-            totalPosts: totalAlbums
+            totalAlbums: totalAlbums
         })
     } catch (error) {
         console.error('Error getting albums', error);
