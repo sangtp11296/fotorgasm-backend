@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
 import { Responses } from '/opt/nodejs/functions/common/API_Responses.js'
 
+
 export const getAlbums = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     await connectToDatabase();

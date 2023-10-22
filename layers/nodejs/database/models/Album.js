@@ -99,6 +99,9 @@ const AlbumSchema = new mongoose.Schema({
             required: true
         }
     },
+    dominantColor: {
+        type: String
+    },
     songs:[songSchema],
     likes:{
         type: Number,
