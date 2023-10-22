@@ -98,7 +98,6 @@ const PostSum: React.FC<Props> = ({ menuType }) => {
       dispatch(toggleEditor(false));
     }
   }
-  console.log(totalPosts)
   return (
     <div className={`${styles.postSumContainer} ${styles.gridBlock}`}>
       <div className={styles.sumHeader}>

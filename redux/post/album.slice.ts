@@ -22,6 +22,7 @@ const initialState: DraftAlbum = {
         width: 0,
         height: 0
     },
+    dominantColor: '',    
     views: '',     // Add views
     likes: 0,     // Add likes
     status: 'draft'
@@ -76,6 +77,9 @@ const AlbumSlice = createSlice({
         albumCoverRes: (state, action: PayloadAction<{width: number, height: number}>) => {
             state.coverRes = action.payload
         },
+        albumDominantColor: (state, action: PayloadAction<string>) => {
+            state.dominantColor = action.payload
+        },
         albumStatus: (state, action: PayloadAction<string>) => {
             state.status = action.payload
         },
@@ -89,7 +93,7 @@ const AlbumSlice = createSlice({
     }
 })
 
-export const { albumId, albumTitle, albumFormat, albumSlug, albumArtists, albumComposers, albumGenres, albumTags, albumDistinctions, albumDesc, albumYear,albumCoverThumbnail, albumCoverUrl, albumCoverKey, albumCoverRes, albumSongs, albumStatus, clearAlbum, submitAlbum } = AlbumSlice.actions;
+export const { albumId, albumTitle, albumFormat, albumSlug, albumArtists, albumComposers, albumGenres, albumTags, albumDistinctions, albumDesc, albumYear,albumCoverThumbnail, albumCoverUrl, albumCoverKey, albumCoverRes, albumDominantColor, albumSongs, albumStatus, clearAlbum, submitAlbum } = AlbumSlice.actions;
 const albumReducer = AlbumSlice.reducer;
 
 export default albumReducer;

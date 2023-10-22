@@ -44,7 +44,7 @@ export const Modal: React.FC<Props> = ({ children, params }) => {
     }, [onDismiss, overlay, button])
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
-        e.preventDefault();
+        // e.preventDefault();
         if (e.key === 'Escape') onDismiss()
     }, [onDismiss])
 
@@ -55,7 +55,7 @@ export const Modal: React.FC<Props> = ({ children, params }) => {
 
 
     // Decide whether on or off modal when using next, prev function
-    const setModal = pathname.includes('/posts/');
+    const setModal = pathname.includes('/posts/') || pathname.includes('/albums/');
     if (!setModal) {
         return null;
     } 

@@ -1,0 +1,31 @@
+.album{
+    position: fixed;
+    width: auto;
+    height: 85vh;
+    aspect-ratio: 1080/1920;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: var(--surface-02);
+}
+.albumBackground{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.albumCover{
+    position: absolute;
+    top: 15vh;
+    left: 50%;
+    height: 20vh;
+    width: 20vh;
+    transform: translate(-50%, -50%);
+}
+.albumCover img{
+    object-fit: cover;
+    height: inherit;
+    width: inherit;
+}

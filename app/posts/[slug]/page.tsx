@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     },
   }
 }
-export default async function PostModal ({ params }: { params: { slug: string } }){
+export default async function PostPage ({ params }: { params: { slug: string } }){
   // read route params
   const slug = params.slug;
   // Get Post and Cover

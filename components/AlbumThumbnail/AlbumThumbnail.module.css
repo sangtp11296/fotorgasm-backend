@@ -38,8 +38,8 @@
 .fullScreen,.minorScreen{
     position: absolute;
     background-color: transparent;
-    right: 10px;
-    top: 10px;
+    right: 2%;
+    top: 2%;
     cursor: pointer;
     transition: all .2s;
     opacity: 0;
@@ -50,7 +50,7 @@
     transition: all .2s;
 }
 .albumInfo{
-    opacity: 0;
+    /* opacity: 0; */
     transition: all .3s;
     position: absolute;
     bottom: 0;
@@ -58,12 +58,61 @@
     color: var(--on-background);
 }
 .albumInfo h2{
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     padding-top: 5px;
 }
 .albumInfo h3{
     /* padding-top: 3%; */
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 300;
+}
+@media screen and (max-width: 1000px){
+    .albumInfo h2{
+        font-size: 12px;
+        padding-top: 5px;
+    }
+    .albumInfo h3{
+        /* padding-top: 3%; */
+        font-size: 11px;
+    }
+}
+@media screen and (max-width: 768px){
+    .albumInfo h2{
+        font-size: 9px;
+        padding-top: 3px;
+    }
+    .albumInfo h3{
+        /* padding-top: 3%; */
+        font-size: 8px;
+    }
+    .fullScreen svg{
+        height: 15px;
+    }
+}
+@media screen and (max-width: 550px){
+    .albumInfo h2{
+        font-size: 7px;
+        padding-top: 3px;
+    }
+    .albumInfo h3{
+        /* padding-top: 3%; */
+        font-size: 6px;
+    }
+    .fullScreen svg{
+        height: 10px;
+    }
+}
+@media screen and (max-width: 400px){
+    .albumInfo h2{
+        font-size: 5px;
+        padding-top: 3px;
+    }
+    .albumInfo h3{
+        /* padding-top: 3%; */
+        font-size: 4px;
+    }
+    .fullScreen svg{
+        height: 8px;
+    }
 }

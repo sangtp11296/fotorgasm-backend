@@ -71,7 +71,7 @@ export const AlbumFeed: React.FC<Props> = ({ format }) => {
             {
                 albums.map((album) => {
                     return(
-                        <Link key={album._id} onClick={(e) => handleClick(album._id)} href={`/albums/${album.slug}`} className={`${styles.albumWrapper}}`}>
+                        <Link key={album._id} onClick={(e) => handleClick(album._id)} href={`/albums/${album.slug}`} className={`${styles.albumWrapper}`}>
                             <AlbumThumbnail data={album}/>
                         </Link>
                     )

@@ -15,6 +15,7 @@
 .album{
     grid-column: span 1 !important;
     grid-row: span 1 !important;
+    aspect-ratio: 1/1;
     border-radius: 2%;
 }
 .landscape{
@@ -104,6 +105,36 @@
         grid-row: span 3;
     }
 }
+@media screen and (max-width: 768px) {
+    .skeletonInfo{
+        bottom: 6%;
+        padding-left: 6%;
+        height: 70px;
+    }
+    .skeletonCat{
+        height: 20px;
+        width: 50%;
+        margin-bottom: 5px;
+    }
+    .skeletonCat div{
+        height: 20px;
+        width: 20px;
+    }
+    .skeletonCat span{
+        margin-left: 5%;
+        border-radius: 3px;
+        height: 10px;
+    }
+    .skeletonTitle{
+        margin-bottom: 5%;
+        border-radius: 3px;
+        height: 13px;
+    }
+    .skeletonDesc{
+        border-radius: 3px;
+        height: 25px;
+    }
+}
 @media screen and (max-width: 550px) {
     .portrait{
         grid-column: span 4;
@@ -116,5 +147,63 @@
     .landscape{
         grid-column: span 4;
         grid-row: span 4;
+    }
+    .skeletonInfo{
+        bottom: 5%;
+        padding-left: 5%;
+        height: 70px;
+        justify-content: flex-end;
+    }
+    .skeletonCat{
+        height: 15px;
+        margin-bottom: 5px;
+    }
+    .skeletonCat div{
+        height: 15px;
+        width: 15px;
+    }
+    .skeletonCat span{
+        margin-left: 5%;
+        border-radius: 2px;
+        height: 7px;
+    }
+    .skeletonTitle{
+        margin-bottom: 5%;
+        border-radius: 3px;
+        height: 10px;
+    }
+    .skeletonDesc{
+        border-radius: 3px;
+        height: 20px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .skeletonInfo{
+        bottom: 5%;
+        padding-left: 5%;
+        height: 70px;
+        justify-content: flex-end;
+    }
+    .skeletonCat{
+        height: 10px;
+        margin-bottom: 5px;
+    }
+    .skeletonCat div{
+        height: 10px;
+        width: 10px;
+    }
+    .skeletonCat span{
+        margin-left: 5%;
+        border-radius: 1px;
+        height: 4px;
+    }
+    .skeletonTitle{
+        margin-bottom: 5%;
+        border-radius: 3px;
+        height: 8px;
+    }
+    .skeletonDesc{
+        border-radius: 3px;
+        height: 15px;
     }
 }

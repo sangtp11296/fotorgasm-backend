@@ -21,6 +21,7 @@ export type FetchAlbum = {
     width: number,
     height: number
   },
+  dominantColor: string,
   likes: number
   views: number
   status: string,
@@ -45,6 +46,7 @@ export type FinalAlbum = {
     width: number,
     height: number
   },
+  dominantColor: string,
   status: string,
 };
 export interface DraftAlbum {
@@ -68,6 +70,7 @@ export interface DraftAlbum {
     width: number,
     height: number
   },
+  dominantColor: string,
   views: string,     // Add views
   likes: number,     // Add likes
   status: string,

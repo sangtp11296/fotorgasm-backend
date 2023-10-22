@@ -148,6 +148,7 @@ export const EditForm = () => {
           distinctions: draftAlbum.distinctions,
           desc: draftAlbum.desc,
           year: draftAlbum.year,
+          dominantColor: draftAlbum.dominantColor,
           status: 'published'
         }
         const res = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/music', {

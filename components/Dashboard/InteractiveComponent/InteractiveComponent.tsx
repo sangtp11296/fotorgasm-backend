@@ -6,10 +6,10 @@ import './SlickMenu.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateCoverRes, updateCoverUrl } from '@/redux/post/draft.slice';
 import { BlogPagePreview } from '@/components/Blog/BlogPagePreview';
-import { albumCoverRes, albumCoverUrl } from '@/redux/post/album.slice';
-import { Album } from '@/components/Album/Album';
+import { albumCoverRes, albumCoverUrl, albumDominantColor } from '@/redux/post/album.slice';
 import { PostCoverThumbnail } from './PostCoverThumbnail';
 import { AlbumCoverThumbnail } from './AlbumCoverThumbnail';
+import { getDominantColor } from '@/utils/common/getDominantColor';
 
 const InteractiveComponent: React.FC = () => {
   const [cover, setCover] = useState<File>();
@@ -38,18 +38,22 @@ const InteractiveComponent: React.FC = () => {
       dispatch(albumCoverUrl(imageUrl));
       if(file) {
         const image = new Image();
+        image.src = URL.createObjectURL(file);
         image.onload = () => {
-          dispatch(albumCoverRes({
+          dispatch(updateCoverRes({
             width: image.naturalWidth,
             height: image.naturalHeight
-          }))
+          }));
+          // Call getDominantColor with the image source and a callback function
+          getDominantColor(image.src, (dominantColor) => {
+            console.log('Dominant Color:', dominantColor);
+            dispatch(albumDominantColor(dominantColor));
+          });
         };
-        image.src = URL.createObjectURL(file);
       }
       setCover(file);
     }
   }
-
   // Pagination setting
   const settings = {
     dots: true,
@@ -92,7 +96,6 @@ const InteractiveComponent: React.FC = () => {
           }
           <div className={styles.previewPage} style={{maxHeight: `${containerRef.current?.clientHeight}px`}}>
             {(draft.format === 'blog' || draft.format === 'video') && <BlogPagePreview post={draft} cover={draft.coverThumbnail || draft.coverUrl}/>}
-            {(draft.format === 'album') && <Album data={draftAlbum}/>}
           </div>
         </Slider>
       :
