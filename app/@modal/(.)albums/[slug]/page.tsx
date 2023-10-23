@@ -7,7 +7,6 @@ import React from 'react'
 export default async function AlbumModal({ params }: { params: { slug: string } }) {
     // read route params
     const slug = params.slug;
-    console.log(slug)
     // Get Album and Cover
     const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/music/${slug}`, {
         method: "GET",
