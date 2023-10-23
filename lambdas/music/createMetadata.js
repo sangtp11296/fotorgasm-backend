@@ -48,10 +48,10 @@ export async function createMetadata (event, context, callback) {
     const song = {
       title: songMetadata.title,
       trackNum: songMetadata.track.no,
-      artists: songMetadata.artists,
+      artists: songMetadata.artists[0].split(', '),
       album: songMetadata.album,
-      composers: songMetadata.composer,
-      genres: songMetadata.genre,
+      composers: songMetadata.composer[0].split(', '),
+      genres: songMetadata.genre[0].split(', '),
       year: songMetadata.year,
       date: songMetadata.date,
       srcKey: srcKey

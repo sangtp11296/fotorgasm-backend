@@ -44,11 +44,18 @@ export const getAlbum = async (event, context, callback) => {
         console.log(slug);
 
         const album = await Album.findOne({ slug });
-
-        return Responses._200({
-            message: 'Album is gotten successfully',
-            album: album
-        })
+        if (album) {
+            // Sort the songs by trackNum
+            album.songs.sort((a, b) => a.trackNum - b.trackNum);
+            return Responses._200({
+                message: 'Album is gotten successfully',
+                album: album
+            })
+        } else {
+            return Responses._404({
+                message: 'Album not found',
+            })
+        }
     } catch (err) {
         return Responses._500 ({
             message: 'Error getting Album', 
