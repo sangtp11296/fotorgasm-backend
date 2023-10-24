@@ -39,7 +39,7 @@ export const uploadDraftImage = async (event) => {
     };
 };
 
-export const getDraftImage = async (event) => {
+export const getFile = async (event) => {
     try{
         const { key } = JSON.parse(event.body);
         

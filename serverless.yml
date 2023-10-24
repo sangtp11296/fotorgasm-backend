@@ -153,13 +153,13 @@ functions:
           path: upload-draft-image # path will be domain.name.com/dev/posts
           method: post
           cors: true
-  getDraftImage:
-    handler: lambdas/post/uploadFiles.getDraftImage
+  getFile:
+    handler: lambdas/post/uploadFiles.getFile
     layers:
       - !Ref FotorgasmLayerLambdaLayer
     events:
       - http:
-          path: get-draft-image # path will be domain.name.com/dev/posts
+          path: get-file # path will be domain.name.com/dev/posts
           method: post
           cors: true
   deleteDraft:
