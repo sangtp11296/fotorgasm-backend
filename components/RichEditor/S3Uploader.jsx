@@ -25,7 +25,7 @@
 //         })
 
 //         // Getting draft image from presigned Url
-//         const getDraftImage = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+//         const getDraftImage = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
 //             method: 'GET',
 //             body: JSON.stringify({
 //                 key: key
@@ -71,7 +71,7 @@ class S3Uploader {
 
         if (uploadImage.status === 200) {
             // Getting draft image from presigned Url
-            const getDraftImage = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+            const getDraftImage = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
                 method: 'POST',
                 body: JSON.stringify({
                     key: key,

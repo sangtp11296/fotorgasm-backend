@@ -45,7 +45,7 @@ export default async function PostPage ({ params }: { params: { slug: string } }
   const data = await res.json();
   const post: FetchedPost = data.post;
   if (post.format === 'blog'){
-    const fetchCover = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const fetchCover = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: "POST",
         body: JSON.stringify({
           key: post.coverKey,
@@ -63,7 +63,7 @@ export default async function PostPage ({ params }: { params: { slug: string } }
   }
   if (post.format === 'video'){
     const videoUrl = [];
-    const highVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const highVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.high,
@@ -73,7 +73,7 @@ export default async function PostPage ({ params }: { params: { slug: string } }
     const highData = await highVideo.json();
     videoUrl.push(highData.presignedUrl);
 
-    const mediumVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const mediumVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.medium,
@@ -83,7 +83,7 @@ export default async function PostPage ({ params }: { params: { slug: string } }
     const mediumData = await mediumVideo.json();
     videoUrl.push(mediumData.presignedUrl);
 
-    const lowVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const lowVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: 'POST',
         body: JSON.stringify({
             key: post.videoSrc?.low,
@@ -92,7 +92,7 @@ export default async function PostPage ({ params }: { params: { slug: string } }
     })
     const lowData = await lowVideo.json();
     videoUrl.push(lowData.presignedUrl);
-    const fetchCover = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const fetchCover = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: "POST",
         body: JSON.stringify({
           key: post.coverKey,

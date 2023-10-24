@@ -14,7 +14,7 @@ export default async function AlbumModal({ params }: { params: { slug: string } 
         })
     const data = await res.json();
     const album: FetchAlbum = data.album;
-    const fetchCover = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-draft-image', {
+    const fetchCover = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: "POST",
         body: JSON.stringify({
             key: album.coverKey,

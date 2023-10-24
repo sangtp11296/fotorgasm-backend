@@ -137,14 +137,10 @@
     transition: all .2s;
 }
 
-.playButton{
-    height: 70px;
-    width: 70px;
-    cursor: pointer;
-}
+
 .shuffle{
-    height: 35px;
-    width: 35px;
+    height: 3vh;
+    width: 3vh;
     cursor: pointer;
 }
 

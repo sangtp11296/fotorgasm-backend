@@ -5,6 +5,19 @@
 //     url: string;
 //     videos: Video[];
 // }
+export type Song = {
+  title: string,
+  trackNum: number,
+  artists: string[],
+  album: string,
+  composers: string[],
+  genres: string[],
+  year: number,
+  date: string,
+  picture: string,
+  thumbnail: string,
+  srcKey: string
+}
 export type FetchAlbum = {
   _id: string,
   format: string,
