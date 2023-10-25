@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0px 0px 400px 200px rgba(0,0,0,0.2) inset;
+    box-shadow: 0px 0px 400px 200px rgba(0, 0, 0, 0.4) inset;
     cursor: pointer;
 }
 .upperField{
@@ -86,10 +86,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.playBtn.unactive svg{
-    height: 2.5vh !important;
-    width: 2.5vh !important;
 }
 .repeatBtn.active::after, .shuffleBtn.active::after{
     content: '';

@@ -138,11 +138,7 @@
 }
 
 
-.shuffle{
-    height: 3vh;
-    width: 3vh;
-    cursor: pointer;
-}
+
 
 @media screen and (max-width: 1500px) {
     .backButton{

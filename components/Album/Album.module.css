@@ -117,6 +117,23 @@
     height: 4vh;
     width: 4vh;
 }
+.shuffleButton{
+    height: 3vh;
+    width: 3vh;
+    cursor: pointer;
+    position: relative;
+}
+.shuffleButton.active::after{
+    content: '';
+    height: .5vh;
+    width: .5vh;
+    background-color: var(--on-background);
+    position: absolute;
+    border-radius: .5vh;
+    bottom: -.4vh;
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+}
 .button{
     cursor: pointer;
     height: 2.5vh;
@@ -164,6 +181,13 @@
 }
 
 .song:hover .icon {
+    display: block;
+}
+.song.active .trackNumber {
+    display: none;
+}
+
+.song.active .icon {
     display: block;
 }
 

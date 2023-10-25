@@ -1,4 +1,3 @@
-import { DraftPost } from "@/types/Posts.type";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
