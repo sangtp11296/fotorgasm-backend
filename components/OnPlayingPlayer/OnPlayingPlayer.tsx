@@ -31,17 +31,10 @@ export const OnPlayingPlayer: React.FC<Props> = ({ color }) => {
         }
         if(playlist.playlist.length > 0) {
             const indexOfCurrentSong = playlist.playlist.findIndex(song => song === playlist.current);
-            if ((indexOfCurrentSong + 1) === playlist.playlist.length){
-                if(playlist.repeat === 'all'){
-                    dispatch(updatePrevSong(playlist.playlist[indexOfCurrentSong - 1]));
-                    dispatch(updateNextSong(playlist.playlist[0]));
-                } else {
-                    dispatch(updatePrevSong(playlist.playlist[indexOfCurrentSong - 1]));
-                    dispatch(updateNextSong({} as Song));
-                }
-            } else {
-                dispatch(updatePrevSong(playlist.playlist[indexOfCurrentSong - 1]));
-                dispatch(updateNextSong(playlist.playlist[indexOfCurrentSong + 1]));
+            dispatch(updatePrevSong(playlist.playlist[indexOfCurrentSong - 1]));
+            dispatch(updateNextSong(playlist.playlist[indexOfCurrentSong + 1]));
+            if ( (indexOfCurrentSong + 1 === playlist.playlist.length) && playlist.repeat === 'all'){
+                dispatch(updateNextSong(playlist.playlist[0]))
             }
         }
     }, [playlist.current]) 
@@ -62,6 +55,14 @@ export const OnPlayingPlayer: React.FC<Props> = ({ color }) => {
             dispatch(toggleRepeat('off'));
         }
     }
+    useEffect(() => {
+        if(playlist.playlist.length > 0) {
+            const indexOfCurrentSong = playlist.playlist.findIndex(song => song === playlist.current);
+            if ( (indexOfCurrentSong + 1 === playlist.playlist.length) && playlist.repeat === 'all'){
+                dispatch(updateNextSong(playlist.playlist[0]))
+            }
+        }
+    }, [playlist.repeat])
     // Handle Play Pause
     useEffect(() => {
         if(audioRef.current){
@@ -143,7 +144,7 @@ export const OnPlayingPlayer: React.FC<Props> = ({ color }) => {
                     
                 </button>
                 {/* Prev button */}
-                <button className={`${styles.prevBtn}`} disabled={playlist.prev === {} as Song} onClick={() => dispatch(updateCurrentSong(playlist.prev))}>
+                <button className={`${styles.prevBtn}`} disabled={!playlist.prev} onClick={() => dispatch(updateCurrentSong(playlist.prev))}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M20.2409 7.22005V16.7901C20.2409 18.7501 18.111 19.98 16.411 19L12.261 16.61L8.11094 14.21C6.41094 13.23 6.41094 10.78 8.11094 9.80004L12.261 7.40004L16.411 5.01006C18.111 4.03006 20.2409 5.25005 20.2409 7.22005Z" fill="var(--on-background)"></path> <path d="M3.75977 18.9298C3.34977 18.9298 3.00977 18.5898 3.00977 18.1798V5.81982C3.00977 5.40982 3.34977 5.06982 3.75977 5.06982C4.16977 5.06982 4.50977 5.40982 4.50977 5.81982V18.1798C4.50977 18.5898 4.16977 18.9298 3.75977 18.9298Z" fill="var(--on-background)"></path> </g></svg>
                 </button>
                 <button disabled={playlist.playlist.length === 0} className={`${styles.playBtn} ${playlist.isPlay && styles.unactive}`} onClick={() => dispatch(togglePlay(!playlist.isPlay))}>
@@ -155,7 +156,7 @@ export const OnPlayingPlayer: React.FC<Props> = ({ color }) => {
                     }
                 </button>
                 {/* Next button */}
-                <button className={`${styles.nextBtn}`} disabled={playlist.next === {} as Song} onClick={() => dispatch(updateCurrentSong(playlist.next))}>
+                <button className={`${styles.nextBtn}`} disabled={!playlist.next} onClick={() => dispatch(updateCurrentSong(playlist.next))}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M3.75977 7.22005V16.7901C3.75977 18.7501 5.88975 19.98 7.58975 19L11.7397 16.61L15.8898 14.21C17.5898 13.23 17.5898 10.78 15.8898 9.80004L11.7397 7.40004L7.58975 5.01006C5.88975 4.03006 3.75977 5.25005 3.75977 7.22005Z" fill="var(--on-background)"></path> <path d="M20.2402 18.9298C19.8302 18.9298 19.4902 18.5898 19.4902 18.1798V5.81982C19.4902 5.40982 19.8302 5.06982 20.2402 5.06982C20.6502 5.06982 20.9902 5.40982 20.9902 5.81982V18.1798C20.9902 18.5898 20.6602 18.9298 20.2402 18.9298Z" fill="var(--on-background)"></path> </g></svg>
                 </button>
 
