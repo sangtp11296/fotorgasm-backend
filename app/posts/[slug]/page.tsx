@@ -5,7 +5,7 @@ import { BlogPage } from '@/components/Blog/BlogPage';
 
 import type { Metadata, ResolvingMetadata } from 'next'
 import { VideoPage } from '@/components/Video/VideoPage';
-import { HomeButton } from '@/components/Button/BackButton';
+import { HomeButton } from '@/components/ButtonIcon/BackButton';
  
 type Props = {
   params: { slug: string }

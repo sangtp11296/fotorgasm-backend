@@ -2,7 +2,7 @@ import ProfileInfo from '@/components/ProfileInfo/ProfileInfo'
 import styles from './Home.module.css'
 import SlickMenu from '@/components/SlickMenu/SlickMenu'
 import PostGrid from '@/components/PostGrid/PostGrid'
-import ScrollToTop from '@/components/Button/ScrollToTop'
+import ScrollToTop from '@/components/ButtonIcon/ScrollToTop'
 import { Footer } from '@/components/Footer/Footer'
 const Home = () => {
   return (

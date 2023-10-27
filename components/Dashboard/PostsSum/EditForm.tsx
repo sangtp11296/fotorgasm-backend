@@ -39,6 +39,30 @@ export const EditForm = () => {
             body: JSON.stringify(formUpdate)
           });
           res.status === 200 && window.location.reload();
+    } else if (draftAlbum.status === 'published'){
+      // Update published album
+      const formUpdate = {
+        artists: draftAlbum.artists,
+        composers: draftAlbum.composers,
+        genres: draftAlbum.genres,
+        coverRes: draftAlbum.coverRes,
+        format: draftAlbum.format,
+        title: draftAlbum.title,
+        slug: draftAlbum.slug,
+        tags: draftAlbum.tags,
+        distinctions: draftAlbum.distinctions,
+        desc: draftAlbum.desc,
+        year: draftAlbum.year,
+        dominantColor: draftAlbum.dominantColor,
+      }
+      const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json' // Set the Content-Type header
+            },
+            body: JSON.stringify(formUpdate)
+          });
+          res.status === 200 && window.location.reload();
     } else {
       // Create new Post
       if (draft.author && draft.format && draft.title && draft.category && draft.tags && draft.desc && draft.coverUrl) {

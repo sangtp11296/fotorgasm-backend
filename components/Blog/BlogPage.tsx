@@ -4,10 +4,10 @@ import styles from './BlogPage.module.css'
 import './Content.css'
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { BackButton } from '../Button/BackButton'
-import { ScrollToHeadAndTail } from '../Button/ScrollToHeadAndTail'
-import ScrollToTop from '../Button/ScrollToTop'
-import { ScrollToTopAndBottom } from '../Button/ScrollToTopAndBottom'
+import { BackButton } from '../ButtonIcon/BackButton'
+import { ScrollToHeadAndTail } from '../ButtonIcon/ScrollToHeadAndTail'
+import ScrollToTop from '../ButtonIcon/ScrollToTop'
+import { ScrollToTopAndBottom } from '../ButtonIcon/ScrollToTopAndBottom'
 
 interface Props {
   post: FetchedPost,

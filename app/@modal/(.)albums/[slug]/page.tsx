@@ -1,5 +1,5 @@
 import { AlbumPage } from '@/components/Album/Album';
-import { BackButton } from '@/components/Button/BackButton';
+import { BackButton } from '@/components/ButtonIcon/BackButton';
 import { Modal } from '@/components/Modal/Modal';
 import { FetchAlbum } from '@/types/Album.type';
 import React from 'react'

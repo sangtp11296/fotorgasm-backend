@@ -189,3 +189,9 @@
         height: 15px;
     }
 }
+
+/* Static Icon */
+.svg{
+    height: inherit;
+    width: inherit;
+}

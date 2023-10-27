@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './Modal.module.css'
 import { useAppSelector } from '@/redux/hooks'
-import { NextPrevPost } from '../Button/NextPrevPost'
+import { NextPrevPost } from '../ButtonIcon/NextPrevPost'
 import { usePathname } from "next/navigation";
 
 type Props = {

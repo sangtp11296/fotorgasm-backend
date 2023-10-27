@@ -23,7 +23,13 @@ export type FetchAlbum = {
   format: string,
   title: string,
   slug: string,
-  artists: string[],
+  artists: [
+    {
+      name: string,
+      bio: string,
+      avatar: string
+    }
+  ],
   composers: string[],
   genres: string[],
   desc: string,
@@ -48,7 +54,13 @@ export type FinalAlbum = {
   format: string,
   title: string,
   slug: string,
-  artists: string[],
+  artists: [
+    {
+      name: string,
+      bio: string,
+      avatar: string
+    }
+  ],
   genres: string[],
   composers: string[],
   tags: string[],
@@ -68,7 +80,13 @@ export interface DraftAlbum {
   format: string,
   title: string,
   slug: string,
-  artists: string[],
+  artists: [
+    {
+      name: string,
+      bio: string,
+      avatar: string
+    }
+  ],
   genres: string[],
   songs: string[],
   composers: string[],

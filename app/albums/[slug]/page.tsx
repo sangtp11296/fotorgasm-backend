@@ -1,5 +1,5 @@
 import { AlbumPage } from '@/components/Album/Album';
-import { BackButton } from '@/components/Button/BackButton';
+import { BackButton } from '@/components/ButtonIcon/BackButton';
 import { FetchAlbum } from '@/types/Album.type';
 import { Metadata, ResolvingMetadata } from 'next';
 import React from 'react'

@@ -10,7 +10,11 @@ const initialState: DraftAlbum = {
     composers: [],
     songs: [],
     genres: [],
-    artists: [],
+    artists: [{
+        name: '',
+        bio: '',
+        avatar: ''
+    }],
     tags: [],
     distinctions: [],
     desc: '',
@@ -44,8 +48,18 @@ const AlbumSlice = createSlice({
         albumComposers: (state, action: PayloadAction<string[]>) => {
             state.composers = action.payload
         },
-        albumArtists: (state, action: PayloadAction<string[]>) => {
-            state.artists = action.payload
+        albumArtists: (state, action: PayloadAction<
+            {
+              name: string,
+              bio: string,
+              avatar: string
+            }[]>) => {
+            // Create a new artist object from the action payload
+            const newArtists  = action.payload;
+            // Push each new artist into the existing artists array
+            newArtists.forEach((newArtist) => {
+                state.artists.push(newArtist);
+            });
         },
         albumSongs: (state, action: PayloadAction<string[]>) => {
             state.songs = action.payload

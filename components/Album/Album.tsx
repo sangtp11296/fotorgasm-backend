@@ -2,7 +2,7 @@
 import { FetchAlbum, Song } from '@/types/Album.type'
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './Album.module.css'
-import { Shuffle } from '../Button/Shuffle'
+import { Shuffle } from '../ButtonIcon/Shuffle'
 import { OnPlayingPlayer } from '../OnPlayingPlayer/OnPlayingPlayer'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { togglePlay, toggleShuffle, updateCurrentSong, updateNextSong, updatePlaylist, updatePrevSong } from '@/redux/playlist/playlist.slice'

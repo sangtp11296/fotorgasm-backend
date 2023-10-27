@@ -1,5 +1,5 @@
 'use client'
-import styles from './Button.module.css'
+import styles from './ButtonIcon\.module\.css'
 import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 

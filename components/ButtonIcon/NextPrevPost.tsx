@@ -1,6 +1,6 @@
 'use client'
 import React, { useCallback } from 'react'
-import styles from './Button.module.css'
+import styles from './ButtonIcon\.module\.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 export const NextPrevPost = ({ next, prev }: { next: string, prev: string }) => {

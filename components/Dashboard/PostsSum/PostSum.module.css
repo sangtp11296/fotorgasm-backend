@@ -51,13 +51,11 @@
     background-color: transparent;
     cursor: pointer;
     opacity: .6;
+    width: 25px;
+    height: 25px;
 }
 .button:hover{
     opacity: 1;
-}
-.button svg{
-    width: 25px;
-    height: 25px;
 }
 .listCount{
     background-color: var(--surface-08);
@@ -71,13 +69,10 @@
 }
 .listCount .iconContainer{
     display: flex;
+    height: 23px;
+    width: 23px;
     justify-content: center;
     align-items: center;
-}
-.iconContainer svg{
-    height: 23px;
-    stroke: var(--primary);
-    /* fill: var(--primary); */
 }
 
 /* Posts list part */
@@ -95,6 +90,10 @@
     letter-spacing: .5px;
     font-weight: 600;
     text-align: center;
+}
+.labelItem.iconContainer{
+    height: 20px;
+    width: 20px;
 }
 .postList tr, .postList td{
     font-family: 'Neue Helvetica';
@@ -129,12 +128,9 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
-.postList td svg{
+.postList td:nth-child(3){
     height: 18px;
     width: 18px;
-}
-.postList td svg path{
-    fill: var(--on-background-matte);
 }
 .pagination{
     position: absolute;

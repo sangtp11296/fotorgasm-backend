@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import styles from './Button.module.css'
+import styles from './ButtonIcon\.module\.css'
 
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);

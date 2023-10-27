@@ -5,7 +5,7 @@ import { FetchedPost } from '@/types/Posts.type';
 import { BlogPage } from '@/components/Blog/BlogPage';
 import type { Metadata, ResolvingMetadata } from 'next'
 import { VideoPage } from '@/components/Video/VideoPage';
-import { BackButton } from '@/components/Button/BackButton';
+import { BackButton } from '@/components/ButtonIcon/BackButton';
  
 type Props = {
   params: { slug: string }
