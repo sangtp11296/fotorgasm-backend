@@ -2,11 +2,6 @@ import { useEffect } from "react"
 
 
 export const getArtistBio = async ( artist: string ) => {
-    const LASTFM_API_KEY= '98d56ecd23b65c46c3ca0d92571bf0c9'
-    const LASTFM_SECRET= 'cdb687a050741d45855ef95b4470a6c2'
-
-    const SPOTIFY_CLIENT_ID= '8d657fb47e584d3995caac9a235b549b'
-    const SPOTIFY_CLIENT_SECRET= 'a239ab4a841443e594dd0e2680aec257'
     const newArtist = artist.replace(/ /g, '+')
     
     // API Access Token
@@ -15,7 +10,7 @@ export const getArtistBio = async ( artist: string ) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'grant_type=client_credentials&client_id=' + SPOTIFY_CLIENT_ID + '&client_secret=' + SPOTIFY_CLIENT_SECRET
+        body: 'grant_type=client_credentials&client_id=' + process.env.SPOTIFY_CLIENT_ID + '&client_secret=' + process.env.SPOTIFY_CLIENT_SECRET
     }
     const accessTokenResponse = await fetch('https://accounts.spotify.com/api/token', authParams);
     const accessTokenData = await accessTokenResponse.json();
@@ -30,7 +25,7 @@ export const getArtistBio = async ( artist: string ) => {
     const artistIdData = await artistIdRes.json();
     const artistId = artistIdData.artists.items[0];
 
-    const artistBioRes = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${newArtist}&api_key=${LASTFM_API_KEY}&format=json`);
+    const artistBioRes = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${newArtist}&api_key=${process.env.LASTFM_API_KEY}&format=json`);
     const artistBioData = await artistBioRes.json();
     const artistBio = artistBioData.artist.bio;
 
