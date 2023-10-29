@@ -40,6 +40,24 @@ const songSchema = new mongoose.Schema({
         type: String
     },
 });
+const artistSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: false
+    },
+    bio:{
+        content: {
+            type: String,
+        },
+        summary: {
+            type: String,
+        }
+    },
+    avatar:{
+        type: String,
+        required: false
+    },
+});
 const AlbumSchema = new mongoose.Schema({
     format:{
         type: String,
@@ -55,10 +73,7 @@ const AlbumSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    artists:{
-        type: Array,
-        required: true
-    },
+    artists: [artistSchema],
     composers:{
         type: Array,
         required: false

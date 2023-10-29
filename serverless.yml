@@ -291,7 +291,16 @@ functions:
           path: music # path will be domain.name.com/dev/posts
           method: get
           cors: true
-    
+  updateAlbum:
+    handler: lambdas/music/updateAlbum.updateAlbum
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music/{slug} # path will be domain.name.com/dev/posts
+          method: put
+          cors: true
+   
   
 resources:
   Resources:   
