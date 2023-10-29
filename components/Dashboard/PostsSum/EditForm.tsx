@@ -31,7 +31,7 @@ export const EditForm = () => {
         slug: draft.slug,
         tags: draft.tags,
       }
-      const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft._id}`, {
+      const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft.slug}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header
@@ -41,7 +41,7 @@ export const EditForm = () => {
           res.status === 200 && window.location.reload();
     } else if (draftAlbum.status === 'published'){
       // Update published album
-      const formUpdate = {
+      const formUpdate: FinalAlbum = {
         artists: draftAlbum.artists,
         composers: draftAlbum.composers,
         genres: draftAlbum.genres,
@@ -54,8 +54,9 @@ export const EditForm = () => {
         desc: draftAlbum.desc,
         year: draftAlbum.year,
         dominantColor: draftAlbum.dominantColor,
+        status: draftAlbum.status
       }
-      const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${draft._id}`, {
+      const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/music/${draftAlbum.slug}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json' // Set the Content-Type header

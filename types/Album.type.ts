@@ -18,18 +18,20 @@ export type Song = {
   thumbnail: string,
   srcKey: string
 }
+export type Artist = {
+  name: string,
+  bio: {
+    content: string,
+    summary: string
+  },
+  avatar: string
+}
 export type FetchAlbum = {
   _id: string,
   format: string,
   title: string,
   slug: string,
-  artists: [
-    {
-      name: string,
-      bio: string,
-      avatar: string
-    }
-  ],
+  artists: Artist[],
   composers: string[],
   genres: string[],
   desc: string,
@@ -54,13 +56,7 @@ export type FinalAlbum = {
   format: string,
   title: string,
   slug: string,
-  artists: [
-    {
-      name: string,
-      bio: string,
-      avatar: string
-    }
-  ],
+  artists: Artist[],
   genres: string[],
   composers: string[],
   tags: string[],
@@ -80,13 +76,7 @@ export interface DraftAlbum {
   format: string,
   title: string,
   slug: string,
-  artists: [
-    {
-      name: string,
-      bio: string,
-      avatar: string
-    }
-  ],
+  artists: Artist[],
   genres: string[],
   songs: string[],
   composers: string[],

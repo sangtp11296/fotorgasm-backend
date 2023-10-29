@@ -1,4 +1,4 @@
-import { DraftAlbum } from "@/types/Album.type";
+import { Artist, DraftAlbum } from "@/types/Album.type";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: DraftAlbum = {
@@ -12,7 +12,10 @@ const initialState: DraftAlbum = {
     genres: [],
     artists: [{
         name: '',
-        bio: '',
+        bio: {
+            content: '',
+            summary: ''
+        },
         avatar: ''
     }],
     tags: [],
@@ -48,18 +51,8 @@ const AlbumSlice = createSlice({
         albumComposers: (state, action: PayloadAction<string[]>) => {
             state.composers = action.payload
         },
-        albumArtists: (state, action: PayloadAction<
-            {
-              name: string,
-              bio: string,
-              avatar: string
-            }[]>) => {
-            // Create a new artist object from the action payload
-            const newArtists  = action.payload;
-            // Push each new artist into the existing artists array
-            newArtists.forEach((newArtist) => {
-                state.artists.push(newArtist);
-            });
+        albumArtists: (state, action: PayloadAction<Artist[]>) => {
+            state.artists = action.payload;
         },
         albumSongs: (state, action: PayloadAction<string[]>) => {
             state.songs = action.payload

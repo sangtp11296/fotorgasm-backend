@@ -61,6 +61,7 @@
     height: 100%;
     overflow: scroll;
     position: relative;
+    padding-bottom: 8vh;
 }
 .albumContainer::after{
     bottom: 0%;
@@ -78,6 +79,17 @@
     padding-top: 1vh;
     font-size: 2vh;
     font-weight: 500;
+}
+.albumInfo .artistInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5vh;
+}
+.artistInfo img{
+    height: 2vh;
+    width: 2vh;
+    border-radius: 100%;
 }
 .albumInfo h2{
     padding-top: .5vh;
@@ -145,6 +157,7 @@
 }
 .songList{
     list-style: none;
+    padding-bottom: 1vh;
 }
 .song{
     display: flex;
@@ -200,4 +213,40 @@
     font-size: 1vh;
     font-weight: 400;
     color: var(--on-background-matte);
+}
+
+/* Album Desc */
+.albumDesc{
+    width: 100%;
+    overflow: hidden;
+    padding: 1vh;
+    border-radius: 10px;
+    transition: all .2s;
+}
+.albumDescContainer{
+    max-height: 10vh;
+    cursor: pointer;
+    
+}
+.albumDescContainer p{
+    word-spacing: .1vh;
+    font-size: 1.1vh;
+    font-weight: 400;
+}
+.albumDescContainer::-webkit-scrollbar{
+    display: none;
+}
+.albumDescContainer.deactive{
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    height: inherit;
+    overflow: hidden;
+}
+.albumDescContainer.active{
+    max-height: 100%;
+    overflow: auto;
+    color: var(--on-background);
+
 }

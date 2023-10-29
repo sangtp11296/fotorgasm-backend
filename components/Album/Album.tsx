@@ -2,7 +2,6 @@
 import { FetchAlbum, Song } from '@/types/Album.type'
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './Album.module.css'
-import { Shuffle } from '../ButtonIcon/Shuffle'
 import { OnPlayingPlayer } from '../OnPlayingPlayer/OnPlayingPlayer'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { togglePlay, toggleShuffle, updateCurrentSong, updateNextSong, updatePlaylist, updatePrevSong } from '@/redux/playlist/playlist.slice'
@@ -124,6 +123,11 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
     }
   }, [playlist.shuffle])
 
+  // Read more
+  const [readMore, setReadMore] = useState(false);
+  const handleReadMoreDesc = () => {
+    setReadMore(!readMore)
+  }
   return (
     <div className={styles.album}>
       <div 
@@ -143,7 +147,12 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
         <div className={styles.albumContainer} ref={albumContainerRef}>
           <div className={styles.albumInfo}>
             <h1>{album.title}</h1>
-            <h2>{album.artists}</h2>
+            <div className={styles.artistInfo}>
+              {
+                album.artists[0].avatar && <img src={album.artists[0].avatar} alt={album.artists[0].name}></img>
+              }
+              <h2>{album.artists.map(artist => artist.name).join(' • ')}</h2>
+            </div>
             <h3>Album • {album.year}</h3>
           </div>
           <div className={styles.playerFunction}>
@@ -196,6 +205,14 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
               })
             }
           </ul>
+          {/* Album Desc */}
+          <div className={styles.albumDesc} style={{backgroundColor: album.dominantColor}}>
+            <div className={`${styles.albumDescContainer} ${readMore ? styles.active : styles.deactive}`} onClick={handleReadMoreDesc}>
+                <p>
+                  {album.desc}
+                </p>
+            </div>
+          </div>
         </div>
       </div>
       <OnPlayingPlayer color={album.dominantColor}/>

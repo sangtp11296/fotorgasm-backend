@@ -22,7 +22,7 @@ export const AlbumThumbnail: React.FC<Props> = ({data}) => {
         </div>
         <div className={styles.albumInfo}>
             <h2>{data.title}</h2>
-            <h3>{data.artists}</h3>
+            <h3>{data.artists.map(artist => artist.name).join(' • ')}</h3>
         </div>
     </div>
   )

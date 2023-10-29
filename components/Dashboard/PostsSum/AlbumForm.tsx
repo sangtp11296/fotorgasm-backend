@@ -1,14 +1,56 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './PostSum.module.css'
 import { albumArtists, albumComposers, albumDesc, albumDistinctions, albumFormat, albumGenres, albumSlug, albumTags, albumTitle, albumYear, clearAlbum } from '@/redux/post/album.slice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { clearDraft, updateFormat } from '@/redux/post/draft.slice'
 import { toSlug } from '@/utils/common/toSlug'
+import { getArtistBio } from '@/utils/getArtistBio'
+import { Artist } from '@/types/Album.type'
 
 export const AlbumForm = () => {
     const draftAlbum = useAppSelector((state) => state.draftAlbum); 
     const dispatch = useAppDispatch();
+
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputText = e.target.value;
+        
+        if (timeoutId) {
+          clearTimeout(timeoutId); // Clear the previous timeout
+        }
+    
+        const newTimeoutId = setTimeout(() => {
+          handleArtistBio(inputText.split(', '));
+        }, 2000); // Wait for 2 seconds
+    
+        setTimeoutId(newTimeoutId);
+      };
+    const handleArtistBio = async (artists: string[]) => {
+        const artistArray: Artist[] = []
+        for (const artist of artists) {
+            if (artist !== 'Various Artists') {
+                try {
+                    const artistBio = await getArtistBio(artist);
+                    artistArray.push(artistBio)
+                } catch (error) {
+                    console.error('Error fetching artist bio:', error);
+                }
+            } else {
+                dispatch(albumArtists([{
+                    name: 'Various Artists',
+                    bio: {
+                        content: '',
+                        summary: ''
+                    },
+                    avatar: ''
+                }]));
+                return
+            }
+        }
+        dispatch(albumArtists(artistArray))
+    };
+    console.log(draftAlbum.artists)
   return (
     <>
         <div className={styles.textField}>
@@ -38,9 +80,7 @@ export const AlbumForm = () => {
         </div>
         <div className={styles.textField}>
             <label>Artists<span className={styles.textDanger}> *</span></label>
-            <input name='artists' type='text' defaultValue={draftAlbum.artists} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Artist...' onChange={(e) => {
-            dispatch(albumArtists(e.target.value.split(', ')));
-            }}/>
+            <input name='artists' type='text' defaultValue={draftAlbum.artists.map(artist => artist.name).join(', ')} required maxLength={500} className={styles.textInput} autoFocus={true} placeholder='Artist...' onChange={handleInputChange}/>
         </div>
         <div className={styles.textField}>
             <label>Composers<span className={styles.textDanger}> *</span></label>
