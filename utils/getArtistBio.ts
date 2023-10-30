@@ -1,5 +1,5 @@
-import { useEffect } from "react"
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const getArtistBio = async ( artist: string ) => {
     const newArtist = artist.replace(/ /g, '+')
@@ -10,7 +10,7 @@ export const getArtistBio = async ( artist: string ) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'grant_type=client_credentials&client_id=' + process.env.SPOTIFY_CLIENT_ID + '&client_secret=' + process.env.SPOTIFY_CLIENT_SECRET
+        body: 'grant_type=client_credentials&client_id=' + process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID + '&client_secret=' + process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET
     }
     const accessTokenResponse = await fetch('https://accounts.spotify.com/api/token', authParams);
     const accessTokenData = await accessTokenResponse.json();
@@ -25,7 +25,7 @@ export const getArtistBio = async ( artist: string ) => {
     const artistIdData = await artistIdRes.json();
     const artistId = artistIdData.artists.items[0];
 
-    const artistBioRes = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${newArtist}&api_key=${process.env.LASTFM_API_KEY}&format=json`);
+    const artistBioRes = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${newArtist}&api_key=${process.env.NEXT_PUBLIC_LASTFM_API_KEY}&format=json`);
     const artistBioData = await artistBioRes.json();
     const artistBio = artistBioData.artist.bio;
 

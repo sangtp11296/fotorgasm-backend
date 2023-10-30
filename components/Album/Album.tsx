@@ -133,7 +133,7 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
       <div 
         className={styles.albumBackground} 
         style={{
-          background: (dominantColorStop <= -35) ? `${album.dominantColor}` : `linear-gradient(180deg, ${album.dominantColor} ${dominantColorStop}vh, rgba(35, 35, 35, 1) ${substituteColorStop}vh)`,
+          background: (dominantColorStop <= -35) ? `${album.dominantColor}` : `linear-gradient(180deg, ${album.dominantColor} ${dominantColorStop}vh, rgba(30, 30, 30, 1) ${substituteColorStop}vh)`,
           height: (dominantColorStop <= -35) ? `6vh` : '100%'
         }}>
         {
@@ -205,12 +205,29 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
               })
             }
           </ul>
-          {/* Album Desc */}
-          <div className={styles.albumDesc} style={{backgroundColor: album.dominantColor}}>
-            <div className={`${styles.albumDescContainer} ${readMore ? styles.active : styles.deactive}`} onClick={handleReadMoreDesc}>
-                <p>
-                  {album.desc}
-                </p>
+          <div className={styles.infoSection}>
+            {/* Album Desc */}
+            <div className={`${styles.albumDesc} ${styles.wrapper}`} style={{backgroundColor: album.dominantColor}}>
+              <div className={styles.albumCover}>
+                <h4>About the Album</h4>
+                <img src={cover} alt={`${album.title} - ${album.artists}`}></img>
+              </div>
+              <div className={`${styles.albumDescContainer} ${readMore ? styles.active : styles.deactive}`} onClick={handleReadMoreDesc}>
+                  <p>
+                    {album.desc}
+                  </p>
+              </div>
+            </div>
+            <div className={`${styles.artistBio} ${styles.wrapper}`}>
+              <div className={styles.artistAvatar}>
+                <h4>About the Artist</h4>
+                <img src={album.artists[0].avatar} alt={`${album.artists[0].name}`}></img>
+              </div>
+              <div className={`${styles.albumDescContainer} ${readMore ? styles.active : styles.deactive}`} onClick={handleReadMoreDesc}>
+                  <p>
+                    {album.artists[0].bio.summary}
+                  </p>
+              </div>
             </div>
           </div>
         </div>
