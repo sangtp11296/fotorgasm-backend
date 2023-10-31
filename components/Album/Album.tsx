@@ -124,9 +124,13 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
   }, [playlist.shuffle])
 
   // Read more
-  const [readMore, setReadMore] = useState(false);
-  const handleReadMoreDesc = () => {
-    setReadMore(!readMore)
+  const [albumDesc, setAlbumDesc] = useState(false);
+  const handleAlbumDesc = () => {
+    setAlbumDesc(!albumDesc)
+  }
+  const [artistBio, setArtistBio] = useState(false);
+  const handleArtistBio = () => {
+    setArtistBio(!artistBio)
   }
   return (
     <div className={styles.album}>
@@ -207,25 +211,25 @@ export const AlbumPage: React.FC<Props> = ({ album, cover}) => {
           </ul>
           <div className={styles.infoSection}>
             {/* Album Desc */}
-            <div className={`${styles.albumDesc} ${styles.wrapper}`} style={{backgroundColor: album.dominantColor}}>
+            <div className={`${styles.albumDesc} ${styles.wrapper} ${artistBio && styles.hide}`} style={{backgroundColor: album.dominantColor}} onClick={handleAlbumDesc}>
               <div className={styles.albumCover}>
                 <h4>About the Album</h4>
                 <img src={cover} alt={`${album.title} - ${album.artists}`}></img>
               </div>
-              <div className={`${styles.albumDescContainer} ${readMore ? styles.active : styles.deactive}`} onClick={handleReadMoreDesc}>
-                  <p>
-                    {album.desc}
+              <div className={`${styles.albumDescContainer} ${albumDesc ? styles.active : styles.deactive}`} >
+                <h5>{album.title}</h5>
+                  <p dangerouslySetInnerHTML={{__html: album.desc}}>
                   </p>
               </div>
             </div>
-            <div className={`${styles.artistBio} ${styles.wrapper}`}>
+            <div className={`${styles.artistBio} ${styles.wrapper} ${albumDesc && styles.hide}`} onClick={handleArtistBio}>
               <div className={styles.artistAvatar}>
                 <h4>About the Artist</h4>
                 <img src={album.artists[0].avatar} alt={`${album.artists[0].name}`}></img>
               </div>
-              <div className={`${styles.albumDescContainer} ${readMore ? styles.active : styles.deactive}`} onClick={handleReadMoreDesc}>
-                  <p>
-                    {album.artists[0].bio.summary}
+              <div className={`${styles.artistContainer} ${artistBio ? styles.active : styles.deactive}`} >
+                <h5>{album.artists[0].name}</h5>
+                  <p dangerouslySetInnerHTML={{__html: artistBio ? album.artists[0].bio.content : album.artists[0].bio.summary}}>
                   </p>
               </div>
             </div>

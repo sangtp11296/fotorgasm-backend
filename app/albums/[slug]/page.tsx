@@ -24,8 +24,8 @@ type Props = {
     const previousImages = (await parent).openGraph?.images || []
    
     return {
-      title: `${album.title}: ${album.artists}`,
-      description: `${album.title} | ${album.artists}`,
+      title: `${album.title}: ${album.artists[0].name}`,
+      description: `${album.title} | ${album.artists[0].name}`,
       openGraph: {
         images: ['/some-specific-page-image.jpg', ...previousImages],
       },
