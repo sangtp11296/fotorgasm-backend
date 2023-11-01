@@ -1,12 +1,10 @@
-import { S3Client, ListObjectsV2Command, GetObjectCommand, DeleteObjectCommand,  DeleteObjectsCommand, CopyObjectCommand } from '@aws-sdk/client-s3';
-import { Responses } from '/opt/nodejs/functions/common/API_Responses.js';
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './variables.env' });
 import {connectToDatabase} from '/opt/nodejs/functions/connectDB.js';
 import { Album } from '/opt/nodejs/database/models/Album.js';
 import * as mm from 'music-metadata'
 import util from 'util';
-import { title } from 'process';
 
 
 const s3 = new S3Client({ region: process.env.region});
@@ -50,7 +48,7 @@ export async function createMetadata (event, context, callback) {
       trackNum: songMetadata.track.no,
       artists: songMetadata.artists[0].split(', '),
       album: songMetadata.album,
-      composers: songMetadata.composer[0].split(', '),
+      composers: songMetadata.composer[0].split(', ') || [],
       genres: songMetadata.genre[0].split(', '),
       year: songMetadata.year,
       date: songMetadata.date,
