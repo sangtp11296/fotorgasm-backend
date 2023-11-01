@@ -23,8 +23,8 @@
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 50px;
     row-gap: 70px;
-    padding-right: 35px;
-    padding-left: 35px;
+    padding-right: 40px;
+    padding-left: 40px;
     padding-bottom: 70px;
 }
 .albumWrapper{
