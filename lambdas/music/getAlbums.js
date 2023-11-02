@@ -19,7 +19,7 @@ export const getAlbums = async (event, context, callback) => {
         const totalAlbums = await Album.countDocuments(); 
 
         const albums = await Album.find()
-            .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
+            .sort({ createdAt: -1 }) //Sort by title in ascending order (1) or descending order (-1)
             .skip(skip)
             .limit(perPage);
 
