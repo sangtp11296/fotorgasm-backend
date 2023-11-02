@@ -78,10 +78,10 @@
 }
 .socialMenu a{
     margin-right: 15px;
-}
-.socialMenu svg{
     height: 25px;
     width: 25px;
+}
+.socialMenu svg{
     cursor: pointer;
     fill: var(--on-background-matte);
     transition: all .2s ease-out;

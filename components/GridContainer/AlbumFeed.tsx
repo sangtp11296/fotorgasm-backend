@@ -20,7 +20,7 @@ export const AlbumFeed: React.FC<Props> = ({ format }) => {
 
      // Get first time loading albums
     const handleGetalbums = async (page: number) => {
-        const res = getAlbums(page, 5);
+        const res = getAlbums(page, 4);
         setAlbums((await res).albums);
     }
 
@@ -33,7 +33,7 @@ export const AlbumFeed: React.FC<Props> = ({ format }) => {
     // Get more albums
     const getMoreItems = async () => {
         try{
-        const res = getAlbums(page, 5);
+        const res = getAlbums(page, 4);
         const albums = (await res).albums;
         if (albums.length > 0){
             setAlbums((prevAlbums) => [...prevAlbums, ...albums]);

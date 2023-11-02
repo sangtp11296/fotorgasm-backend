@@ -12,8 +12,6 @@ import { AlbumFeed } from './AlbumFeed'
 const GridContainer: React.FC = () => {
 
   const [posts, setPosts] = useState<FetchedPost[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [page, setPage] = useState<number>(2)
 
   const dispatch = useAppDispatch();
   const menu = useAppSelector(state => state.click.mainMenu);
@@ -29,23 +27,6 @@ const GridContainer: React.FC = () => {
   useEffect(() => {
     handleGetPosts(menu, 1);
   }, [])
-  
-  // Get more posts
-  const getMoreItems = async () => {
-    try{
-      const res = getPosts(menu, page, 5);
-      const posts = (await res).posts;
-      if (posts.length > 0){
-        setPosts((prevPhotos) => [...prevPhotos, ...posts]);
-        dispatch(updateFetchedPost(posts));
-        setPage((prevPage) => prevPage + 1)
-      } else {
-        setHasMore(false);
-      }
-    } catch (err) {
-      console.error('Error fetching posts:', err);
-    }
-  }
 
   return (
     <div className={styles.postFeed}>

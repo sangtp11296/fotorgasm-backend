@@ -16,6 +16,12 @@
     height: inherit;
     margin-top: -1px;
     transition: all .2s;
+    cursor: pointer;
+}
+.postSort button{
+    cursor: pointer;
+    height: 20px;
+    background-color: transparent;
 }
 .postSort span{
     font-family: 'Neue Helvetica';
@@ -28,9 +34,6 @@
 }
 .postSort i{
     scale: .8;
-}
-.postSort svg{
-    height: 20px;
 }
 
 @media screen and (max-width: 768px) {
