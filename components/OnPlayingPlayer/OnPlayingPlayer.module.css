@@ -29,6 +29,7 @@
     width: 4vh;
     border-radius: 100%;
     overflow: hidden;
+    aspect-ratio: 1/1;
 }
 @keyframes rotation {
     0% {
@@ -50,6 +51,12 @@
 .songCover img{
     height: 100%;
     width: 100%;
+    aspect-ratio: 1/1;
+}
+.songInfo{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 }
 .songInfo h3{
     font-size: 1.1vh;

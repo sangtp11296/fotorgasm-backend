@@ -85,6 +85,7 @@
     flex-direction: row;
     align-items: center;
     gap: .5vh;
+    padding-top: .5vh;
 }
 .artistInfo img{
     height: 2vh;
@@ -103,18 +104,37 @@
     font-weight: 300;
     word-spacing: .2vh;
 }
+.albumDistinctions {
+    padding-top: .6vh;
+    display: flex;
+    align-items: center;
+    gap: .3vh;
+}
+.distinction {
+    border: .11vh solid var(--on-background-matte);
+    padding: .3vh .7vh;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: .3vh;
+}
+.albumDistinctions img{
+    height: 1.5vh;
+}
+.albumDistinctions span{
+    font-size: .9vh;
+}
 .playerFunction{
-    margin-top: 1vh;
-    margin-bottom: .5vh;
     display: flex;
     flex-direction: row;
     justify-content: left;
     align-items: center;
     gap: 1vh;
+    margin-top: 1vh;
 }
 .playButton{
-    height: 6vh;
-    width: 6vh;
+    height: 4vh;
+    width: 4vh;
     cursor: pointer;
     transition: all .3s;
     display: flex;
@@ -125,10 +145,6 @@
 }
 .playButton:hover{
     opacity: 1;
-}
-.playButton svg{
-    height: 4vh;
-    width: 4vh;
 }
 .shuffleButton{
     height: 3vh;
@@ -149,10 +165,6 @@
 }
 .button{
     cursor: pointer;
-    height: 2.5vh;
-    width: 2.5vh;
-}
-.button svg{
     height: 2.5vh;
     width: 2.5vh;
 }
@@ -183,7 +195,7 @@
     font-size: 1.2vh;
 }
 
-.icon {
+.headIcon svg {
     display: none;
     height: 1.5vh;
     width: 1.5vh;
@@ -194,14 +206,14 @@
     display: none;
 }
 
-.song:hover .icon {
+.song:hover .headIcon svg {
     display: block;
 }
 .song.active .trackNumber {
     display: none;
 }
 
-.song.active .icon {
+.song.active .headIcon svg {
     display: block;
 }
 
