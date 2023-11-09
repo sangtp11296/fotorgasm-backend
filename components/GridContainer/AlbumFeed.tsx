@@ -7,6 +7,7 @@ import { SkeletonLoading } from '../SkeletonLoading/SkeletonLoading'
 import { FetchAlbum } from '@/types/Album.type'
 import { getAlbums } from '@/utils/getMusic'
 import { AlbumThumbnail } from '../AlbumThumbnail/AlbumThumbnail'
+import Image from 'next/image'
 
 type Props = {
     format: string
@@ -59,28 +60,31 @@ export const AlbumFeed: React.FC<Props> = ({ format }) => {
         }
     }, []);
     return(
-        <InfiniteScroll 
-            dataLength={albums.length}
-            next={getMoreItems}
-            hasMore={hasMore}
-            loader={<></>}
-            style={{ overflow: 'hidden' }}
-            scrollThreshold={0.7}
-        >
-            <div className={`${styles.masonryContainer} ${styles.albumGrid}`}>
-            {
-                albums.map((album) => {
-                    return(
-                        <Link key={album._id} onClick={(e) => handleClick(album._id)} href={`/albums/${album.slug}`} className={`${styles.albumWrapper}`}>
-                            <AlbumThumbnail data={album}/>
-                        </Link>
-                    )
-                })
-            }
-            {
-                hasMore && <SkeletonLoading format={format}/>
-            }
-            </div>
-        </InfiniteScroll>
+        <>
+            <InfiniteScroll 
+                dataLength={albums.length}
+                next={getMoreItems}
+                hasMore={hasMore}
+                loader={<></>}
+                style={{ overflow: 'hidden' }}
+                scrollThreshold={0.7}
+            >
+                <div className={`${styles.masonryContainer} ${styles.albumGrid}`}>
+                {
+                    albums.map((album) => {
+                        return(
+                            <Link key={album._id} onClick={(e) => handleClick(album._id)} href={`/albums/${album.slug}`} className={`${styles.albumWrapper}`}>
+                                <AlbumThumbnail data={album}/>
+                            </Link>
+                        )
+                    })
+                }
+                {
+                    hasMore && <SkeletonLoading format={format}/>
+                }
+                </div>
+            </InfiniteScroll>
+            <img src='/assets/props/record player storage.png' className={`${styles.endImage} ${!hasMore && styles.visible}`}/>
+        </>
     )
 }

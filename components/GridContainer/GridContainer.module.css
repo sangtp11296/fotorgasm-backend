@@ -44,6 +44,18 @@
     grid-column: span 3;
     grid-row: span 2;
 }
+.endImage{
+    height: auto;
+    width: 50%;
+    opacity: 0;
+    visibility: hidden;
+    transition: .5s all;
+}
+.endImage.visible{
+    opacity: 1;
+    visibility: visible;
+    transition: .5s all;
+}
 @media screen and (max-width: 1000px) {
     .masonryContainer{
         width: 700px;
