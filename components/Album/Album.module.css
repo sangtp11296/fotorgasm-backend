@@ -328,3 +328,9 @@
 .artistBio.hide{
     width: 0;
 }
+
+@media screen and (max-width: 650px) {
+    .album{
+        width: 100%;
+    }
+}
