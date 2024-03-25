@@ -1,0 +1,81 @@
+.profileAvatar{
+    /* margin-right: 30px; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    height: 10vw;
+    width: 10vw;
+}
+.logoBrand{
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    animation: breath  3s ease-in-out 0s infinite alternate;
+}
+.profileAvatar .ringOne{
+    position: absolute;
+    fill:none;
+    stroke:url('#linearRing1');
+    stroke-linecap: round;
+    stroke-width: 3;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    /* animation: drawCircle 3s ease-in infinite forwards; */
+    /* animation: drawCircle 3s ease-in-out 1 ; */
+} 
+@keyframes stroke-draw {
+    /* 0%{
+        stroke-dasharray: 8;
+    }
+    100%{
+        fill: transparent;
+        stroke-dasharray: 1;
+    } */
+    0% {
+        stroke-dasharray: 8;
+        transform-origin: center;
+        transform: rotate(0deg);
+    }
+    90% {
+        stroke-dasharray: 1;
+        transform-origin: center;
+        transform: rotate(360deg);
+    }
+    100% {
+        stroke-dasharray: 0;
+        transform-origin: center;
+        transform: rotate(360deg);
+    }
+}
+@keyframes drawCircle {
+    0% {
+        stroke-dasharray: 314 314; /* Initial circle */
+    }
+    100% {
+        stroke-dasharray: 0 314; /* Dot */
+    }
+  }
+
+@keyframes breath  {
+    0% {
+        opacity: 0.1;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    /* 0%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    } */
+}
