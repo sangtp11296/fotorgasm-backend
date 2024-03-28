@@ -7,16 +7,15 @@ import { Footer } from '@/components/Footer/Footer'
 import HomeLoading from '@/components/HomeLoading/HomeLoading'
 const Home = () => {
   return (
-    // <div className={styles.homePage}>
-    //   <div className={styles.centerContainer}>
-    //     <ProfileInfo/>
-    //     <SlickMenu/>
-    //     <PostGrid/>
-    //     <ScrollToTop/>
-    //     <Footer/>
-    //   </div>
-    // </div>
-    <HomeLoading/>
+    <div className={styles.homePage}>
+      <div className={styles.centerContainer}>
+        <ProfileInfo/>
+        <SlickMenu/>
+        <PostGrid/>
+        <ScrollToTop/>
+        <Footer/>
+      </div>
+    </div>
   )
 }
 

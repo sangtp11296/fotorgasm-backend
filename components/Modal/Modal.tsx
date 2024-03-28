@@ -31,7 +31,7 @@ export const Modal: React.FC<Props> = ({ children, params }) => {
                 setPrevPost(slugs[ind - 1]);
             }
         }
-    },[])
+    },[params.slug, slugs])
     const onDismiss = useCallback(() => {
         router.back();
     }, [router])
@@ -56,9 +56,6 @@ export const Modal: React.FC<Props> = ({ children, params }) => {
 
     // Decide whether on or off modal when using next, prev function
     const setModal = pathname.includes('/posts/') || pathname.includes('/albums/');
-    if (!setModal) {
-        return null;
-    } 
     useEffect(() => {
         // Add the CSS class to disable scrolling when the modal is open
         document.body.classList.add('no-scroll');
@@ -68,7 +65,9 @@ export const Modal: React.FC<Props> = ({ children, params }) => {
             document.body.classList.remove('no-scroll');
         }
     }, [setModal]);
-
+    if (!setModal) {
+        return null;
+    } 
    
   return (
     <div

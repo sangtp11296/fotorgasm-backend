@@ -1,23 +1,33 @@
-.profileAvatar{
-    /* margin-right: 30px; */
+.overlayBackground{
+    height: 100vh;
+    width: 100%;
+    background: radial-gradient(circle, rgba(18, 18, 18, 0.801) 30%, rgba(255,255,255,0) 100%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    cursor: pointer;
-    height: 10vw;
-    width: 10vw;
+    position: fixed;
+    z-index: 5;
+}
+.profileAvatar{
+    /* margin-right: 30px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vw;
+    width: 5vw;
 }
 .logoBrand{
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
     border-radius: 100%;
-    animation: breath  3s ease-in-out 0s infinite alternate;
+    animation: breath 3s ease-in-out infinite alternate;
 }
 .profileAvatar .ringOne{
+    height: inherit;
+    width: inherit;
     position: absolute;
     fill:none;
     stroke:url('#linearRing1');
@@ -25,9 +35,8 @@
     stroke-width: 3;
     stroke-dasharray: 1 1;
     stroke-dashoffset: 1;
-    /* animation: drawCircle 3s ease-in infinite forwards; */
-    /* animation: drawCircle 3s ease-in-out 1 ; */
-} 
+    animation: stroke-draw 3s ease-in-out infinite alternate ;
+}
 @keyframes stroke-draw {
     /* 0%{
         stroke-dasharray: 8;
@@ -52,30 +61,12 @@
         transform: rotate(360deg);
     }
 }
-@keyframes drawCircle {
-    0% {
-        stroke-dasharray: 314 314; /* Initial circle */
-    }
-    100% {
-        stroke-dasharray: 0 314; /* Dot */
-    }
-  }
 
 @keyframes breath  {
     0% {
-        opacity: 0.1;
-        transform: scale(0.8);
+        opacity: 0;
     }
     100% {
         opacity: 1;
-        transform: scale(1);
     }
-    /* 0%, 100% {
-        opacity: 0.3;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    } */
 }
