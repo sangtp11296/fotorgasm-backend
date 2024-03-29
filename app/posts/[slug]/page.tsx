@@ -12,27 +12,28 @@ type Props = {
 }
  
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  // read route params
-  const slug = params.slug;
- 
-  // fetch data post
-  const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${slug}`, {
-    method: "GET",
-    cache: 'no-store'
-  })
-  const data = await res.json();
-  const post: FetchedPost = data.post;
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || []
- 
-  return {
-    title: `${post.title}: ${post.author}`,
-    description: `${post.title} | ${post.author}`,
-    openGraph: {
-      images: ['/some-specific-page-image.jpg', ...previousImages],
-    },
-  }
+  if(params.slug){
+    // read route params
+    const slug = params.slug;
+    // fetch data post
+    const res = await fetch(`https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/post/${slug}`, {
+      method: "GET",
+      cache: 'no-store'
+    })
+    const data = await res.json();
+    const post: FetchedPost = data.post;
+  
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images || []
+    
+    return {
+      title: `${post.title}: ${post.author}`,
+      description: `${post.title} | ${post.author}`,
+      openGraph: {
+        images: ['/some-specific-page-image.jpg', ...previousImages],
+      },
+    }
+  } else return {}
 }
 export default async function PostPage ({ params }: { params: { slug: string } }){
   // read route params
@@ -61,7 +62,7 @@ export default async function PostPage ({ params }: { params: { slug: string } }
       </>
     )
   }
-  if (post.format === 'video'){
+  else if (post.format === 'video'){
     const videoUrl = [];
     const highVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: 'POST',

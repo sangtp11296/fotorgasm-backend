@@ -65,7 +65,7 @@ export default async function PostModal ({ params }: { params: { slug: string } 
       </Modal>
     )
   }
-  if (post.format === 'video'){
+  else if (post.format === 'video'){
     const videoUrl = [];
     const highVideo = await fetch('https://4esg1vvhi3.execute-api.ap-southeast-1.amazonaws.com/dev/get-file', {
         method: 'POST',

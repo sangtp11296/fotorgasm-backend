@@ -78,7 +78,7 @@ export const PostFeed: React.FC<Props> = ({ format }) => {
                 {
                     posts.map((post) => {
                         return(
-                            <Link key={post._id} onClick={(e) => handleClick(post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`} scroll={false}>
+                            <Link key={post._id} onClick={(e) => handleClick(post._id)} href={`/posts/${post.slug}`} className={`${styles.postWrapper} ${post.coverRes.width < post.coverRes.height ? styles.portrait : (post.coverRes.width > post.coverRes.height ? styles.landscape : styles.square)}`} passHref scroll={false}>
                                 <PostThumbnail data={post}/>
                             </Link>
                             )
