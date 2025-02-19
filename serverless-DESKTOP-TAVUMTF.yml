@@ -1,0 +1,340 @@
+
+
+service: fotorgasm-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: fotorgasm
+  memorySize: 128 # set the maximum memory of the Lambdas in Megabytes
+  timeout: 10 # the timeout is 10 seconds (default is 6 seconds)
+  stage: dev # setting the env stage to dev, this will be visible in the routes
+  region: ap-southeast-1
+  environment:
+    fotorgasmDataUpload: ${self:custom.fotorgasmDataUpload}
+    fotorgasmPublicData: ${self:custom.fotorgasmPublicData}
+    region: ${self:provider.region}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+          - dynamodb:*
+          - s3:*
+          - ses:*
+      Resource: '*'
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    binaryMediaTypes:
+      - 'multipart/form-data'
+
+layers:
+  fotorgasmLayer:
+    path: layers
+  
+custom:
+  fotorgasmDataUpload: fotorgasm-data-upload
+  fotorgasmPublicData: fotorgasm-public-data
+
+functions:
+  register:
+    handler: lambdas/admin/registerHandler.registerUser
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+  login:
+    handler: lambdas/admin/loginHandler.loginUser
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+  getPresignedUrl:
+    handler: lambdas/getPresignedUrl.getPresignedUrl
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: get-presigned-url # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  adminAvatarUpdate:
+    handler: lambdas/admin/updateAvatarHandler.updateAvatarHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes   
+  userInfoUpdate:
+    handler: lambdas/admin/updateInfoHandler.updateInfoHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: admin/{id}
+          method: put
+          cors: true
+  # Team member api
+
+  getMembers:
+    handler: lambdas/team/getMemberHandler.getMembers
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: team
+          method: get
+          cors: true
+  getAuthor:
+    handler: lambdas/team/getMemberHandler.getMember
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: author
+          method: get
+          cors: true
+  createMemberHandler:
+    handler: lambdas/team/createMemberHandler.createMemberHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: team
+          method: post
+          cors: true
+  updateMemberHandler:
+    handler: lambdas/team/updateMemberHandler.updateMemberHandler
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: team
+          method: put
+          cors: true
+  #Post API
+  getPost:
+    handler: lambdas/post/getPosts.getPost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: post/{slug} # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  getPosts:
+    handler: lambdas/post/getPosts.getPosts
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: post # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  updatePost:
+    handler: lambdas/post/updatePost.updatePost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: post/{slug} # path will be domain.name.com/dev/posts
+          method: put
+          cors: true
+  uploadDraftImage:
+    handler: lambdas/post/uploadFiles.uploadDraftImage
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: upload-draft-image # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  getDraftImage:
+    handler: lambdas/post/uploadFiles.getDraftImage
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: get-draft-image # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  deleteDraft:
+    handler: lambdas/post/deleteDraft.deleteDraft
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: delete-draft # path will be domain.name.com/dev/posts
+          method: delete
+          cors: true
+  deleteFile:
+    handler: lambdas/post/deleteDraft.deleteFile
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: delete-file # path will be domain.name.com/dev/posts
+          method: delete
+          cors: true
+  uploadPostThumbnail:
+    handler: lambdas/post/uploadFiles.uploadPostThumbnail
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: upload-thumbnail-image # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  createThumbnail:
+    handler: lambdas/post/createThumbnail.createThumbnail
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes   
+  createPost:
+    handler: lambdas/post/createPost.createPost
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: post # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  moveDraft:
+    handler: lambdas/post/deleteDraft.moveDraft
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: move-draft # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+    timeout: 20 # the timeout is 10 seconds (default is 6 seconds) 
+  startMultiPartUpload:
+    handler: lambdas/post/uploadFiles.startMultiPartUpload
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: start-multipart-upload # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  completeMultiPartUpload:
+    handler: lambdas/post/uploadFiles.completeMultiPartUpload
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: complete-multipart-upload # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  createQuote:
+    handler: lambdas/quotes.createQuote
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: quote # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  getQuote:
+    handler: lambdas/quotes.getQuote
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: quote # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  # Music API
+  uploadDraftSong:
+    handler: lambdas/post/uploadFiles.uploadDraftSong
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: upload-draft-song # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  createAlbum:
+    handler: lambdas/music/createMusic.createAlbum
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music # path will be domain.name.com/dev/posts
+          method: post
+          cors: true
+  createMetadata:
+    handler: lambdas/music/createMetadata.createMetadata
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    memorySize: 2048 # set the maximum memory of the Lambdas in Megabytes
+  getAlbum:
+    handler: lambdas/music/getAlbums.getAlbum
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music/{slug} # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  getAlbums:
+    handler: lambdas/music/getAlbums.getAlbums
+    layers:
+      - !Ref FotorgasmLayerLambdaLayer
+    events:
+      - http:
+          path: music # path will be domain.name.com/dev/posts
+          method: get
+          cors: true
+  
+resources:
+  Resources:   
+    fotorgasmPublicData:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fotorgasmPublicData}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+              - "*"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
+    fotorgasmDataUpload:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fotorgasmDataUpload}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - PUT
+                - GET
+                - POST
+                - DELETE
+              AllowedOrigins:
+                - "*"
+              
+              
+
+
