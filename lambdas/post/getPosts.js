@@ -20,7 +20,7 @@ export const getPosts = async (event, context, callback) => {
             const totalPosts = await Post.countDocuments({ format: format}); 
 
             const posts = await Post.find({ format: format})
-                .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
+                .sort({ createdAt: -1 }) //Sort by title in ascending order (1) or descending order (-1)
                 .skip(skip)
                 .limit(perPage);
             return Responses._200 ({
@@ -33,7 +33,7 @@ export const getPosts = async (event, context, callback) => {
             const totalPosts = await Post.countDocuments(); 
             
             const posts = await Post.find()
-                .sort({ title: 1 }) //Sort by title in ascending order (1) or descending order (-1)
+                .sort({ createdAt: -1 }) //Sort by title in ascending order (1) or descending order (-1)
                 .skip(skip)
                 .limit(perPage);
     
