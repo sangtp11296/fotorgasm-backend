@@ -26,7 +26,8 @@ export const getPosts = async (event, context, callback) => {
             return Responses._200 ({
                 message: 'Posts gotten successfully',
                 posts: posts,
-                totalPosts: totalPosts
+                totalPosts: totalPosts,
+                format:  format === 'blog' ? 'blog' : 'video'
             })
         } else {
             // Count total posts before applying skip and limit
@@ -40,7 +41,8 @@ export const getPosts = async (event, context, callback) => {
             return Responses._200 ({
                 message: 'Posts gotten successfully',
                 posts: posts,
-                totalPosts: totalPosts
+                totalPosts: totalPosts,
+                format: 'feed'
             })
         }
     } catch (error) {
