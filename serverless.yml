@@ -300,7 +300,6 @@ functions:
           path: music/{slug} # path will be domain.name.com/dev/posts
           method: put
           cors: true
-   
   
 resources:
   Resources:   
